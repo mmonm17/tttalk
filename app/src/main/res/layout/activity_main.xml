@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/red"
-        android:fontFamily="@font/telegraf"
+        android:fontFamily="@font/telegraf_bold"
         android:shadowColor="#89000000"
         android:shadowDx="-10"
         android:shadowDy="10"

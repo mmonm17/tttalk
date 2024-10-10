@@ -11,26 +11,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class SignUpActivity extends AppCompatActivity {
-    TextView txt_log_in;
-
+public class ForgotPassword extends AppCompatActivity {
+    TextView txt_sign_up;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_forgot_password);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        txt_log_in = findViewById(R.id.txt_log_in);
+        txt_sign_up = findViewById(R.id.txt_sign_up);
 
-        txt_log_in.setOnClickListener(new View.OnClickListener() {
+        txt_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+                Intent intent = new Intent(ForgotPassword.this, SignUpActivity.class);
                 startActivity(intent);
                 finish();
             }

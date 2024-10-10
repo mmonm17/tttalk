@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">T-T-Talk! Let\'s Get Talking</string>
     <string name="tagline">let\'s get talking!</string>
+
+    <string name="forgot_pass"><u>Forgot Password?</u></string>
+    <string name="register"><u>Register</u></string>
+    <string name="log_in"><u>Log In</u></string>
 </resources>
