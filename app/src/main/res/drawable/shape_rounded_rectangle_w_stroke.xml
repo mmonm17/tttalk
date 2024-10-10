@@ -12,7 +12,6 @@
     <stroke
         android:width="5dp"
         android:color="@color/white">
-
     </stroke>
 
 </shape>
