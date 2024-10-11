@@ -3,6 +3,7 @@ package com.t_t_talk;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SignUpActivity extends AppCompatActivity {
     TextView txt_log_in;
+    Button btn_sign_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +28,17 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         txt_log_in = findViewById(R.id.txt_log_in);
+        btn_sign_up = findViewById(R.id.btn_sign_up);
 
-        txt_log_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        txt_log_in.setOnClickListener(view -> {
+            Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+            intent.putExtra("isRegistered", false);
+            startActivity(intent);
+        });
+
+        btn_sign_up.setOnClickListener(view -> {
+            Intent intent = new Intent(SignUpActivity.this, VerifyEmailActivity.class);
+            startActivity(intent);
         });
     }
 }

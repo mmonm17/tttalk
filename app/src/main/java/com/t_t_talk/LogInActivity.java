@@ -42,22 +42,20 @@ public class LogInActivity extends AppCompatActivity {
         txt_sign_up = findViewById(R.id.txt_sign_up);
         txt_forgot_pass = findViewById(R.id.txt_forgot_pass);
 
-        txt_sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        txt_sign_up.setOnClickListener(view -> {
+            Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        txt_forgot_pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LogInActivity.this, ForgotPassword.class);
-                startActivity(intent);
-                finish();
-            }
+        txt_forgot_pass.setOnClickListener(view -> {
+            Intent intent = new Intent(LogInActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+            finish();
         });
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("isRegistered", false))
+            txt_forgot_pass.setVisibility(View.GONE);
     }
 }
