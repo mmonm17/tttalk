@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LanguagePickerActivity">
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_w_items"
+        android:alpha="0.9" />
+
+    <TextView
+        android:id="@+id/txt_language"
+        style="@style/shadowEffect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="128dp"
+        android:fontFamily="@font/candy_beans"
+        android:text="@string/Language"
+        android:textColor="@color/primary"
+        android:textSize="48sp"
+        app:flow_horizontalAlign="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/img_bg_overlay_en"
+        android:layout_width="280sp"
+        android:layout_height="220dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_language"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_corner_en"
+        />
+
+    <TextView
+        android:id="@+id/txt_en"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:fontFamily="@font/candy_beans"
+        android:text="@string/ENGLISH"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="@id/img_bg_overlay_en"
+        app:layout_constraintBottom_toBottomOf="@id/img_bg_overlay_en"
+        app:layout_constraintStart_toStartOf="@id/img_bg_overlay_en"
+        app:layout_constraintEnd_toEndOf="@id/img_bg_overlay_en"
+        />
+
+    <ImageView
+        android:id="@+id/img_bg_overlay_fil"
+        android:layout_width="280sp"
+        android:layout_height="220dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintTop_toBottomOf="@id/img_bg_overlay_en"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_corner_fil"
+        />
+
+
+    <TextView
+        android:id="@+id/txt_fil"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/candy_beans"
+        android:text="@string/TAGALOG"
+        android:textSize="48sp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="@id/img_bg_overlay_fil"
+        app:layout_constraintBottom_toBottomOf="@id/img_bg_overlay_fil"
+        app:layout_constraintStart_toStartOf="@id/img_bg_overlay_fil"
+        app:layout_constraintEnd_toEndOf="@id/img_bg_overlay_fil"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
