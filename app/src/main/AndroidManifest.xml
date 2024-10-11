@@ -17,6 +17,10 @@
             android:exported="false" />
         <activity
             android:name=".ForgotPassword"
+            android:name=".VerifyEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".LogInActivity"

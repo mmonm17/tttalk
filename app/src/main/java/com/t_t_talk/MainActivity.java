@@ -30,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LanguagePickerActivity.class);
+                //Intent intent = new Intent(MainActivity.this, LanguagePickerActivity.class);
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
         });
     }
