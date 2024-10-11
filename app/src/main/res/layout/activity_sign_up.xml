@@ -68,26 +68,28 @@
 
         <TextView
             android:id="@+id/txt_header1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
             android:fontFamily="@font/telegraf_bold"
             android:text="Hi, there!"
+            android:textAlignment="center"
             android:textColor="@color/secondary"
             android:textSize="40dp" />
 
         <TextView
             android:id="@+id/txt_header2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/telegraf_bold"
             android:text="Ready to start your adventure?"
+            android:textAlignment="center"
             android:textColor="@color/primary"
             android:textSize="20dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_input_email"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxCornerRadiusBottomEnd="30dp"
             app:boxCornerRadiusBottomStart="30dp"
@@ -98,7 +100,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_email"
-                android:layout_width="325dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:backgroundTintMode="src_over"
@@ -109,7 +111,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_input_pass"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:boxCornerRadiusBottomEnd="30dp"
@@ -121,7 +123,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_pass"
-                android:layout_width="325dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:backgroundTintMode="src_over"
@@ -134,7 +136,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_input_confirm_pass"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:boxCornerRadiusBottomEnd="30dp"
@@ -146,7 +148,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_confirm_pass"
-                android:layout_width="325dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:backgroundTintMode="src_over"
@@ -159,9 +161,11 @@
 
         <Button
             android:id="@+id/btn_send_link"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="40dp"
             android:backgroundTint="@color/primary"
             android:fontFamily="@font/telegraf_bold"
             android:text="Register"
@@ -172,7 +176,6 @@
             android:id="@+id/layout_log_in"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <TextView
@@ -181,6 +184,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/telegraf_regular"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:text="Don't have an account?"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/secondary"
@@ -193,7 +198,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:fontFamily="@font/telegraf_bold"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:text="@string/log_in"
                 android:textColor="@color/secondary"
                 android:textSize="16sp" />
