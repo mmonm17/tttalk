@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,12 +33,14 @@ public class LanguageActivity extends AppCompatActivity {
         txt_en.setOnClickListener(view -> {
             Intent intent = new Intent(LanguageActivity.this, LevelsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
         txt_fil.setOnClickListener(view -> {
             Intent intent = new Intent(LanguageActivity.this, LevelsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //Toast.makeText(LanguageActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
     }

@@ -70,6 +70,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_language_header" />
 
+    <ImageView
+        android:id="@+id/circular_flag_en"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/rounded_corner_en"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="@id/txt_en"
+        app:layout_constraintStart_toStartOf="@id/txt_en"
+        app:layout_constraintEnd_toEndOf="@id/txt_en"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintTop_toTopOf="@id/circular_flag_en"
+        app:layout_constraintStart_toStartOf="@id/circular_flag_en"
+        app:layout_constraintEnd_toEndOf="@id/circular_flag_en"
+        app:layout_constraintBottom_toBottomOf="@id/circular_flag_en"
+        >
+        <ImageView
+            android:src="@drawable/us1"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/txt_fil"
         android:layout_width="280dp"
@@ -92,5 +122,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_en"
         app:layout_constraintVertical_bias="0.50" />
+
+    <ImageView
+        android:id="@+id/circular_flag_fil"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/rounded_corner_fil"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="@id/txt_fil"
+        app:layout_constraintStart_toStartOf="@id/txt_fil"
+        app:layout_constraintEnd_toEndOf="@id/txt_fil"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintTop_toTopOf="@id/circular_flag_fil"
+        app:layout_constraintStart_toStartOf="@id/circular_flag_fil"
+        app:layout_constraintEnd_toEndOf="@id/circular_flag_fil"
+        app:layout_constraintBottom_toBottomOf="@id/circular_flag_fil"
+        >
+        <ImageView
+            android:src="@drawable/ph1"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
