@@ -1,6 +1,7 @@
 package com.t_t_talk;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,12 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class LanguagePickerActivity extends AppCompatActivity {
 
-    ImageView img_bg_overlay_en;
-    ImageView getImg_bg_overlay_fil;
-    TextView txt_en;
-    TextView txt_fil;
 
 
     @Override
@@ -33,45 +33,12 @@ public class LanguagePickerActivity extends AppCompatActivity {
             return insets;
         });
 
-
-        //img_bg_overlay_en = findViewById(R.id.img_bg_overlay_en);
-        //getImg_bg_overlay_fil = findViewById(R.id.img_bg_overlay_fil);
-//        img_bg_overlay_en.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(LanguagePickerActivity.this, "English", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        getImg_bg_overlay_fil.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(LanguagePickerActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        txt_en = findViewById(R.id.txt_en);
-        txt_fil = findViewById(R.id.txt_fil);
+        TextBoxComponent textBoxComponent = findViewById(R.id.textBoxComponent);
+        textBoxComponent.setTypeRead();
+        textBoxComponent.setHighlightedText("Sam the cat saw a snake in the grass", 'c', "@color/primary");
 
 
 
-        txt_en.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LanguagePickerActivity.this, MainActivity.class);
-                Toast.makeText(LanguagePickerActivity.this, "English", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        txt_fil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LanguagePickerActivity.this, MainActivity.class);
-                Toast.makeText(LanguagePickerActivity.this, "Tagalog", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        
     }
 
 
