@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -33,28 +34,31 @@ public class LanguagePickerActivity extends AppCompatActivity {
         });
 
 
-        img_bg_overlay_en = findViewById(R.id.img_bg_overlay_en);
-        getImg_bg_overlay_fil = findViewById(R.id.img_bg_overlay_fil);
+        //img_bg_overlay_en = findViewById(R.id.img_bg_overlay_en);
+        //getImg_bg_overlay_fil = findViewById(R.id.img_bg_overlay_fil);
+//        img_bg_overlay_en.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(LanguagePickerActivity.this, "English", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        getImg_bg_overlay_fil.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(LanguagePickerActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         txt_en = findViewById(R.id.txt_en);
         txt_fil = findViewById(R.id.txt_fil);
 
-        img_bg_overlay_en.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LanguagePickerActivity.this, "English", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        getImg_bg_overlay_fil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LanguagePickerActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         txt_en.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(LanguagePickerActivity.this, MainActivity.class);
                 Toast.makeText(LanguagePickerActivity.this, "English", Toast.LENGTH_SHORT).show();
             }
         });
@@ -62,6 +66,7 @@ public class LanguagePickerActivity extends AppCompatActivity {
         txt_fil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(LanguagePickerActivity.this, MainActivity.class);
                 Toast.makeText(LanguagePickerActivity.this, "Tagalog", Toast.LENGTH_SHORT).show();
             }
         });
