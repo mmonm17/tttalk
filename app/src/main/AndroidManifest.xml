@@ -13,10 +13,9 @@
         android:theme="@style/Theme.TTTalk"
         tools:targetApi="31">
         <activity
-            android:name=".LanguagePickerActivity"
+            android:name=".LanguageActivity"
             android:exported="false" />
         <activity
-            android:name=".ForgotPassword"
             android:name=".VerifyEmailActivity"
             android:exported="false" />
         <activity
