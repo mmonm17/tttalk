@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LanguageActivity">
+    tools:context=".LevelsActivityTagalog">
 
     <ImageView
         android:id="@+id/img_bg_1"
@@ -38,7 +38,7 @@
         app:srcCompat="@drawable/background_w_items"></ImageView>
 
     <com.t_t_talk.CurvedTextView
-        android:id="@+id/curved_language"
+        android:id="@+id/curved_levels"
         android:layout_width="385dp"
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,50 +47,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.100000024" />
-
-
-    <TextView
-        android:id="@+id/txt_english"
-        android:layout_width="280dp"
-        android:layout_height="220dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/shape_rnd_rect_english"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/candy_beans"
-        android:gravity="center"
-        android:shadowColor="@color/black"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="4"
-        android:text="ENGLISH"
-        android:textColor="@color/white"
-        android:textSize="52sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/curved_language" />
-
-    <TextView
-        android:id="@+id/txt_tagalog"
-        android:layout_width="280dp"
-        android:layout_height="220dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/shape_rnd_rect_tagalog"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/candy_beans"
-        android:gravity="center"
-        android:shadowColor="@color/black"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="4"
-        android:text="TAGALOG"
-        android:textColor="@color/white"
-        android:textSize="52sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_english"
-        app:layout_constraintVertical_bias="0.50" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
