@@ -7,4 +7,9 @@
     <color name="secondary">#6D6D6D</color>
     <color name="secondary_light">#B4B4B4</color>
     <color name="primary_stroke">#792300</color>
+    <color name="green">#70b045</color>
+    <color name="tertiary">#ffe8a8</color>
+    <color name="blue">#b6d5f0</color>
+
+    <color name="black_shadow">#99000000</color>
 </resources>
