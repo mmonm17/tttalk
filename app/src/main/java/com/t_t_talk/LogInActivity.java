@@ -28,16 +28,16 @@ public class LogInActivity extends AppCompatActivity {
             return insets;
         });
 
-//        btn_log_in = findViewById(R.id.btn_log_in);
-//
-//        btn_log_in.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        btn_log_in = findViewById(R.id.btn_log_in);
+
+        btn_log_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LogInActivity.this, LanguageActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         txt_sign_up = findViewById(R.id.txt_sign_up);
         txt_forgot_pass = findViewById(R.id.txt_forgot_pass);

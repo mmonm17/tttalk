@@ -13,7 +13,7 @@
         android:theme="@style/Theme.TTTalk"
         tools:targetApi="31">
         <activity
-            android:name=".LevelsActivity"
+            android:name=".LanguageActivity"
             android:exported="false" />
         <activity
             android:name=".VerifyEmailActivity"
