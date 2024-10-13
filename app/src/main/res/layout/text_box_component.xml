@@ -25,6 +25,7 @@
         android:textColor="@android:color/white"
         android:layout_marginStart="-24dp"
         android:textSize="20sp"
+        android:text="asd"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_play"
@@ -34,6 +35,7 @@
         />
 
     <EditText
+        android:visibility="gone"
         android:id="@+id/et_user_input"
         android:background="@color/yellow_dark"
         android:layout_width="240dp"

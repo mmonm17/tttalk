@@ -55,7 +55,8 @@ public class TextBoxComponent extends RelativeLayout {
         });
 
         btn_mic.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "Submitting answer...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Mic button...", Toast.LENGTH_SHORT).show();
+            setCorrectFeedback();
         });
 
     }
@@ -73,14 +74,11 @@ public class TextBoxComponent extends RelativeLayout {
 
     public void setTypeAnswer(){
         tv_dynamic_text.setVisibility(GONE);
-        //btnSubmit.setVisibility(VISIBLE);
-        //btnReadText.setVisibility(GONE);
     }
 
     public void setTypeRead(){
-        et_user_input.setVisibility(GONE);
-        //btnSubmit.setVisibility(GONE);
-        //btnReadText.setVisibility(VISIBLE);
+        et_user_input.setVisibility(INVISIBLE);
+        tv_dynamic_text.setVisibility(VISIBLE);
     }
 
     public void setCorrectFeedback(){
@@ -96,7 +94,7 @@ public class TextBoxComponent extends RelativeLayout {
     }
 
 
-    public void setHighlightedText(String text, char c, String color) {
+    public void setHighlightedText(String text, char c) {
         {
             SpannableString spannableString = new SpannableString(text);
 
@@ -104,7 +102,7 @@ public class TextBoxComponent extends RelativeLayout {
                 char currentChar = text.charAt(i);
                 if (currentChar == c || currentChar == c - 32 || currentChar == c + 32) {
                     spannableString.setSpan(
-                            new ForegroundColorSpan(Color.parseColor(color)), // Orange color
+                            new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
                             i, i + 1,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     );

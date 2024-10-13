@@ -28,7 +28,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         txt_log_in = findViewById(R.id.txt_log_in);
-        btn_sign_up = findViewById(R.id.btn_sign_up);
+        btn_sign_up = findViewById(R.id.btn_register);
 
         txt_log_in.setOnClickListener(view -> {
             Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
