@@ -1,9 +1,6 @@
 package com.t_t_talk;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +8,13 @@ import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.widget.TextView;
 
-public class EnglishTestActivity extends AppCompatActivity {
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class FilipinoTestActivity extends AppCompatActivity {
+
 
     TextView txt_lvl;
     TextBoxComponent textBoxComponent;
@@ -24,8 +25,7 @@ public class EnglishTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_english_test);
-
+        setContentView(R.layout.activity_filipino_test);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -38,7 +38,7 @@ public class EnglishTestActivity extends AppCompatActivity {
 
         textBoxComponent = findViewById(R.id.text_box_component);
         textBoxComponent.setTypeRead();
-        textBoxComponent.setHighlightedTextByChar("Sam the cat saw a snake in the grass.", 's');
+        textBoxComponent.setHighlightedTextBySubstring("Ibabato ni Babols ang bato.", "Ba");
 
         txt_lvl.setText("Level 1");
 
@@ -50,6 +50,5 @@ public class EnglishTestActivity extends AppCompatActivity {
         mic_animation.setOnClickListener(view -> {
             mic_animation.setVisibility(View.GONE);
         });
-
     }
 }

@@ -93,8 +93,12 @@ public class TextBoxComponent extends RelativeLayout {
         circular_feedback_close.setVisibility(VISIBLE);
     }
 
+    public void setBtnPlayColor(int color){
+        btn_play.setCardBackgroundColor(color);
+    }
 
-    public void setHighlightedText(String text, char c) {
+
+    public void setHighlightedTextByChar(String text, char c) {
         {
             SpannableString spannableString = new SpannableString(text);
 
@@ -111,5 +115,30 @@ public class TextBoxComponent extends RelativeLayout {
             tv_dynamic_text.setText(spannableString);
         }
     }
+
+    public void setHighlightedTextBySubstring(String text, String substring) {
+        SpannableString spannableString = new SpannableString(text);
+
+        // Convert both text and substring to lower case for case-insensitive comparison
+        String lowerCaseText = text.toLowerCase();
+        String lowerCaseSubstring = substring.toLowerCase();
+
+        int startIndex = lowerCaseText.indexOf(lowerCaseSubstring);
+
+        // Highlight all occurrences of the substring
+        while (startIndex >= 0) {
+            spannableString.setSpan(
+                    new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
+                    startIndex, startIndex + substring.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+
+            // Look for the next occurrence of the substring
+            startIndex = lowerCaseText.indexOf(lowerCaseSubstring, startIndex + lowerCaseSubstring.length());
+        }
+
+        tv_dynamic_text.setText(spannableString);
+    }
+
 
 }

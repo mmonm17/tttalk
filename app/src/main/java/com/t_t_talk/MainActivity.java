@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btn_start = findViewById(R.id.btn_start);
 
         btn_start.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, EnglishTestActivity.class);
+            Intent intent = new Intent(MainActivity.this, FilipinoTestActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
