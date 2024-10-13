@@ -20,14 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/background_w_items" />
+        app:srcCompat="@drawable/img_bg" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/kids_w_bg"
         android:layout_width="175dp"
         android:layout_height="75dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/shape_rounded_rectangle_w_stroke"
+        android:background="@drawable/shape_rnd_rect_orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -90,11 +90,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_start" />
 
-    <LinearLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteY="663dp"></LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/footer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="68dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        tools:layout_editor_absoluteY="663dp"></LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

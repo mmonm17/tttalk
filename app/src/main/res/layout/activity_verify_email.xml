@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/background_w_items" />
+        app:srcCompat="@drawable/img_bg" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/kids_w_bg"
         android:layout_width="175dp"
         android:layout_height="75dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/shape_rounded_rectangle_w_stroke"
+        android:background="@drawable/shape_rnd_rect_orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -46,7 +46,7 @@
         android:id="@+id/img_bg_overlay"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/white_bg"
+        android:background="@drawable/shape_white_bg"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +84,7 @@
             android:layout_height="wrap_content"
             android:text="@string/verification_instructions"
             android:layout_marginTop="8dp"
+            android:textAlignment="center"
             android:fontFamily="@font/telegraf_regular"
             android:textColor="@color/secondary"
             android:textSize="24dp"
@@ -101,10 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/telegraf_regular"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|end"
                 android:minHeight="48dp"
                 android:text="Didn't receive a code?"
-                android:textAlignment="viewEnd"
                 android:textColor="@color/secondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -136,7 +136,7 @@
 
         <Button
             android:id="@+id/btn_verify"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="12dp"
@@ -159,10 +159,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/telegraf_regular"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|end"
                 android:minHeight="48dp"
                 android:text="Wrong email address?"
-                android:textAlignment="viewEnd"
                 android:textColor="@color/secondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />

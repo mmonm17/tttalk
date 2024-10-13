@@ -2,7 +2,6 @@ package com.t_t_talk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,8 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class LanguageActivity extends AppCompatActivity {
-    TextView txt_en;
-    TextView txt_fil;
+    TextView txt_english;
+    TextView txt_tagalog;
+    CurvedTextView curved_language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +27,25 @@ public class LanguageActivity extends AppCompatActivity {
             return insets;
         });
 
-        txt_en = findViewById(R.id.txt_en);
-        txt_fil = findViewById(R.id.txt_fil);
+        txt_english = findViewById(R.id.txt_english);
+        txt_tagalog = findViewById(R.id.txt_tagalog);
+        curved_language = findViewById(R.id.curved_language);
 
-        txt_en.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageActivity.this, LevelsActivity.class);
+        txt_english.setOnClickListener(view -> {
+            Intent intent = new Intent(LanguageActivity.this, LevelsActivityEnglish.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
-        txt_fil.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageActivity.this, LevelsActivity.class);
+        txt_tagalog.setOnClickListener(view -> {
+            Intent intent = new Intent(LanguageActivity.this, LevelsActivityTagalog.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
+
+        curved_language.setText("LANGUAGE");
+
     }
 }

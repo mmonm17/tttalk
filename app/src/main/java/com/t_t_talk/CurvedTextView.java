@@ -12,20 +12,21 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-public class CurvedLanguageTextView extends View {
+public class CurvedTextView extends View {
 
     private Paint textPaint;
     private Paint strokePaint;
     private Path arcPath;
     private String text = "LANGUAGE";
     private Typeface candyBeansFont;
+    private RectF rectangle = new RectF(75, 150, 713, 400);
 
-    public CurvedLanguageTextView(Context context) {
+    public CurvedTextView(Context context) {
         super(context);
         init(context);
     }
 
-    public CurvedLanguageTextView(Context context, AttributeSet attrs) {
+    public CurvedTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
@@ -55,10 +56,26 @@ public class CurvedLanguageTextView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        arcPath.addArc(new RectF(50, 150, 950, 400), 180, 180);
+        arcPath.addArc(rectangle, 180, 180);
 
         canvas.drawTextOnPath(text, arcPath, 30, 0, strokePaint);
 
         canvas.drawTextOnPath(text, arcPath, 30, 0, textPaint);
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        invalidate();
+
+        float textLen = (float) text.length();
+        int left = (int) (150.0 - textLen * 12.5); //50  //300
+        int right = (int) (textLen / 8.0 * 950.0); //950 //937
+
+        this.rectangle = new RectF(left, 150, right, 400);
+    }
+
+    public void setColor(int textColor, int strokeColor){
+        textPaint.setColor(textColor);
+        strokePaint.setColor(strokeColor);
     }
 }
