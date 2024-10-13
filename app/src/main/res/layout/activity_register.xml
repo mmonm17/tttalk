@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:id="@+id/img_bg"
@@ -166,7 +166,7 @@
             app:boxStrokeColor="@color/secondary_light"
             app:boxStrokeWidth="2dp"
             app:layout_constraintTop_toBottomOf="@id/layout_input_pass"
-            app:layout_constraintBottom_toTopOf="@id/btn_sign_up"
+            app:layout_constraintBottom_toTopOf="@id/btn_register"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -184,7 +184,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_sign_up"
+            android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
@@ -206,7 +206,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_sign_up"
+            app:layout_constraintTop_toBottomOf="@id/btn_register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">

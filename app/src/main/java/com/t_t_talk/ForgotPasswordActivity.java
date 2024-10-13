@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-    TextView txt_sign_up;
+    TextView txt_register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +24,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             return insets;
         });
 
-        txt_sign_up = findViewById(R.id.txt_sign_up);
+        txt_register = findViewById(R.id.txt_register);
 
-        txt_sign_up.setOnClickListener(new View.OnClickListener() {
+        txt_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ForgotPasswordActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
