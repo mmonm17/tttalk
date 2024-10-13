@@ -5,6 +5,23 @@
     <string name="forgot_pass"><u>Forgot Password?</u></string>
     <string name="register"><u>Register</u></string>
     <string name="log_in"><u>Log In</u></string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+
+    <string name="Language">Language</string>
+    <string name="LANGUAGE">LANGUAGE</string>
+    <string name="ENGLISH">ENGLISH</string>
+    <string name="English">English</string>
+    <string name="TAGALOG">TAGALOG</string>
+    <string name="Tagalog">Tagalog</string>
     <string name="verification_instructions">We\'ve sent a 6-digit code to %1$s. Please enter the code below to verify your account</string>
     <string name="resend_code"><u>Resend Code</u></string>
     <string name="try_again">Try again in %1$ds</string>

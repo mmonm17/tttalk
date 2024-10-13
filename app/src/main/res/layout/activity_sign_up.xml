@@ -106,7 +106,9 @@
                 android:backgroundTintMode="src_over"
                 android:fontFamily="@font/telegraf_regular"
                 android:hint="Email"
-                android:paddingStart="20dp" />
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

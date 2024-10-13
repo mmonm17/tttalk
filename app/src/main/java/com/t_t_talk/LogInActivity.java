@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.intellij.lang.annotations.Language;
+
 public class LogInActivity extends AppCompatActivity {
     Button btn_log_in;
     TextView txt_sign_up;
@@ -26,6 +28,16 @@ public class LogInActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        btn_log_in = findViewById(R.id.btn_log_in);
+
+        btn_log_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LogInActivity.this, LanguagePickerActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         btn_log_in = findViewById(R.id.btn_log_in);
