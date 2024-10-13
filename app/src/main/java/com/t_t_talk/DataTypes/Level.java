@@ -3,11 +3,13 @@ package com.t_t_talk.DataTypes;
 public class Level {
     private int levelNumber;
     private int age;
+    private int color;
     private Phoneme[] phonemeList;
 
-    public Level(int levelNumber, int age, Phoneme[] phonemeList) {
+    public Level(int levelNumber, int age, int color, Phoneme[] phonemeList) {
         this.levelNumber = levelNumber;
         this.age = age;
+        this.color = color;
         this.phonemeList = phonemeList;
     }
 
@@ -33,5 +35,13 @@ public class Level {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
