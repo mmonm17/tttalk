@@ -12,8 +12,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import org.intellij.lang.annotations.Language;
-
 public class LogInActivity extends AppCompatActivity {
     Button btn_log_in;
     TextView txt_sign_up;
@@ -55,7 +53,7 @@ public class LogInActivity extends AppCompatActivity {
         txt_forgot_pass = findViewById(R.id.txt_forgot_pass);
 
         txt_sign_up.setOnClickListener(view -> {
-            Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+            Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
             startActivity(intent);
             finish();
         });

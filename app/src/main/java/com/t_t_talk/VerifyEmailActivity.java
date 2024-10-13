@@ -43,7 +43,7 @@ public class VerifyEmailActivity extends AppCompatActivity {
 
         txt_sign_up = findViewById(R.id.txt_sign_up);
         txt_sign_up.setOnClickListener(view -> {
-            Intent intent = new Intent(VerifyEmailActivity.this, SignUpActivity.class);
+            Intent intent = new Intent(VerifyEmailActivity.this, RegisterActivity.class);
             startActivity(intent);
             finish();
         });

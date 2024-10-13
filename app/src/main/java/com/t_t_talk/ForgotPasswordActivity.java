@@ -29,7 +29,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         txt_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ForgotPasswordActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
