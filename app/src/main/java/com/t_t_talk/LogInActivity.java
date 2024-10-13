@@ -4,18 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class LogInActivity extends AppCompatActivity {
     Button btn_log_in;
-    TextView txt_sign_up;
+    TextView txt_register;
     TextView txt_forgot_pass;
+    LinearLayout layout_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,10 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        txt_sign_up = findViewById(R.id.txt_sign_up);
+        txt_register = findViewById(R.id.txt_register);
         txt_forgot_pass = findViewById(R.id.txt_forgot_pass);
 
-        txt_sign_up.setOnClickListener(view -> {
+        txt_register.setOnClickListener(view -> {
             Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
             startActivity(intent);
             finish();
@@ -64,8 +67,10 @@ public class LogInActivity extends AppCompatActivity {
             finish();
         });
 
+        layout_register = findViewById(R.id.layout_register);
+
         Intent intent = getIntent();
         if(intent.getBooleanExtra("isRegistered", false))
-            txt_forgot_pass.setVisibility(View.GONE);
+            layout_register.setVisibility(View.GONE);
     }
 }

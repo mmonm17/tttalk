@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView txt_log_in;
-    Button btn_sign_up;
+    Button btn_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +27,19 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         txt_log_in = findViewById(R.id.txt_log_in);
-        btn_sign_up = findViewById(R.id.btn_register);
+        btn_register = findViewById(R.id.btn_register);
 
         txt_log_in.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
             intent.putExtra("isRegistered", false);
             startActivity(intent);
+            finish();
         });
 
-        btn_sign_up.setOnClickListener(view -> {
+        btn_register.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterActivity.this, VerifyEmailActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 }

@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class VerifyEmailActivity extends AppCompatActivity {
     Button btn_verify;
-    TextView txt_sign_up;
+    TextView txt_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,8 @@ public class VerifyEmailActivity extends AppCompatActivity {
             finish();
         });
 
-        txt_sign_up = findViewById(R.id.txt_sign_up);
-        txt_sign_up.setOnClickListener(view -> {
+        txt_register = findViewById(R.id.txt_register);
+        txt_register.setOnClickListener(view -> {
             Intent intent = new Intent(VerifyEmailActivity.this, RegisterActivity.class);
             startActivity(intent);
             finish();
