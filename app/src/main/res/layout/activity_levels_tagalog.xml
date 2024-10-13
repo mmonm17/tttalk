@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/base_background"
+        app:srcCompat="@drawable/img_bg_empty"
         >
 
     </ImageView>
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/background_w_items"></ImageView>
+        app:srcCompat="@drawable/img_bg"></ImageView>
 
     <com.t_t_talk.CurvedTextView
         android:id="@+id/curved_levels"

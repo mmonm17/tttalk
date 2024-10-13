@@ -22,9 +22,6 @@
             android:name=".LanguageActivity"
             android:exported="false" />
         <activity
-            android:name=".LanguagePickerActivity"
-            android:exported="false" />
-        <activity
             android:name=".VerifyEmailActivity"
             android:exported="false" />
         <activity

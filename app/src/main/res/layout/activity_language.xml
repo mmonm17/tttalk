@@ -17,10 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/base_background"
-        >
-
-    </ImageView>
+        app:srcCompat="@drawable/img_bg_empty" />
 
     <ImageView
         android:id="@+id/img_bg_2"
@@ -35,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/background_w_items"></ImageView>
+        app:srcCompat="@drawable/img_bg" />
 
     <com.t_t_talk.CurvedTextView
         android:id="@+id/curved_language"
@@ -48,13 +45,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.100000024" />
 
-
     <TextView
         android:id="@+id/txt_english"
         android:layout_width="280dp"
         android:layout_height="220dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/shape_rnd_rect_english"
+        android:background="@drawable/shape_rnd_rect_blue"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/candy_beans"
@@ -71,29 +67,30 @@
         app:layout_constraintTop_toBottomOf="@+id/curved_language" />
 
     <ImageView
-        android:id="@+id/circular_flag_en"
+        android:id="@+id/img_flag_english_stroke"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:src="@drawable/rounded_corner_en"
+        android:src="@drawable/shape_rnd_rect_blue"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="@id/txt_en"
-        app:layout_constraintStart_toStartOf="@id/txt_en"
-        app:layout_constraintEnd_toEndOf="@id/txt_en"
+        app:layout_constraintTop_toTopOf="@id/txt_english"
+        app:layout_constraintStart_toStartOf="@id/txt_english"
+        app:layout_constraintEnd_toEndOf="@id/txt_english"
         />
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_flag_english"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:cardCornerRadius="50dp"
-        app:layout_constraintTop_toTopOf="@id/circular_flag_en"
-        app:layout_constraintStart_toStartOf="@id/circular_flag_en"
-        app:layout_constraintEnd_toEndOf="@id/circular_flag_en"
-        app:layout_constraintBottom_toBottomOf="@id/circular_flag_en"
+        app:layout_constraintTop_toTopOf="@id/img_flag_english_stroke"
+        app:layout_constraintStart_toStartOf="@id/img_flag_english_stroke"
+        app:layout_constraintEnd_toEndOf="@id/img_flag_english_stroke"
+        app:layout_constraintBottom_toBottomOf="@id/img_flag_english_stroke"
         >
         <ImageView
-            android:src="@drawable/us1"
+            android:src="@drawable/img_flag_us"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -105,7 +102,7 @@
         android:layout_width="280dp"
         android:layout_height="220dp"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/shape_rnd_rect_tagalog"
+        android:background="@drawable/shape_rnd_rect_green"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/candy_beans"
@@ -124,29 +121,30 @@
         app:layout_constraintVertical_bias="0.50" />
 
     <ImageView
-        android:id="@+id/circular_flag_fil"
+        android:id="@+id/img_flag_tagalog_stroke"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:src="@drawable/rounded_corner_fil"
+        android:src="@drawable/shape_rnd_rect_green"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="@id/txt_fil"
-        app:layout_constraintStart_toStartOf="@id/txt_fil"
-        app:layout_constraintEnd_toEndOf="@id/txt_fil"
+        app:layout_constraintTop_toTopOf="@id/txt_tagalog"
+        app:layout_constraintStart_toStartOf="@id/txt_tagalog"
+        app:layout_constraintEnd_toEndOf="@id/txt_tagalog"
         />
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_flag_tagalog"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:cardCornerRadius="50dp"
-        app:layout_constraintTop_toTopOf="@id/circular_flag_fil"
-        app:layout_constraintStart_toStartOf="@id/circular_flag_fil"
-        app:layout_constraintEnd_toEndOf="@id/circular_flag_fil"
-        app:layout_constraintBottom_toBottomOf="@id/circular_flag_fil"
+        app:layout_constraintTop_toTopOf="@id/img_flag_tagalog_stroke"
+        app:layout_constraintStart_toStartOf="@id/img_flag_tagalog_stroke"
+        app:layout_constraintEnd_toEndOf="@id/img_flag_tagalog_stroke"
+        app:layout_constraintBottom_toBottomOf="@id/img_flag_tagalog_stroke"
         >
         <ImageView
-            android:src="@drawable/ph1"
+            android:src="@drawable/img_flag_ph"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
