@@ -34,7 +34,7 @@ public class LogInActivity extends AppCompatActivity {
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LogInActivity.this, LanguagePickerActivity.class);
+                Intent intent = new Intent(LogInActivity.this, LanguageActivity.class);
                 startActivity(intent);
                 finish();
             }

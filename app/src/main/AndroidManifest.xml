@@ -13,10 +13,10 @@
         android:theme="@style/Theme.TTTalk"
         tools:targetApi="31">
         <activity
-            android:name=".LanguageActivity"
+            android:name=".EnglishTest"
             android:exported="false" />
         <activity
-            android:name=".LanguagePickerActivity"
+            android:name=".LanguageActivity"
             android:exported="false" />
         <activity
             android:name=".VerifyEmailActivity"
