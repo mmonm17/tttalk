@@ -209,12 +209,12 @@
             android:textSize="20sp"
             app:cornerRadius="15dp"
             app:layout_constraintTop_toBottomOf="@id/layout_remember_forgot"
-            app:layout_constraintBottom_toTopOf="@id/layout_sign_up"
+            app:layout_constraintBottom_toTopOf="@id/layout_register"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
-            android:id="@+id/layout_sign_up"
+            android:id="@+id/layout_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -237,7 +237,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_sign_up"
+                android:id="@+id/txt_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
