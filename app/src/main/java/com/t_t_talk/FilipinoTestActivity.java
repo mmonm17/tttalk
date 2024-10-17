@@ -38,7 +38,7 @@ public class FilipinoTestActivity extends AppCompatActivity {
 
         textBoxComponent = findViewById(R.id.text_box_component);
         textBoxComponent.setTypeRead();
-        textBoxComponent.setHighlightedTextBySubstring("Ibabato ni Babols ang bato.", "Ba");
+        textBoxComponent.setHighlightedTextBySubstring(FilipinoTestActivity.this,"Ibabato ni Babols ang bato.", "Ba");
 
         txt_lvl.setText("Level 1");
 

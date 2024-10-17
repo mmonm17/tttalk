@@ -21,5 +21,7 @@
     <color name="blue">#b6d5f0</color>
     <color name="yellow_dark">#f9de68</color>
 
+    <color name="text_highlight">#FF9900</color>
+
 
 </resources>

@@ -38,7 +38,7 @@ public class EnglishTestActivity extends AppCompatActivity {
 
         textBoxComponent = findViewById(R.id.text_box_component);
         textBoxComponent.setTypeRead();
-        textBoxComponent.setHighlightedTextByChar("Sam the cat saw a snake in the grass.", 's');
+        textBoxComponent.setHighlightedTextByChar(EnglishTestActivity.this,"Sam the cat saw a snake in the grass.", 's');
 
         txt_lvl.setText("Level 1");
 

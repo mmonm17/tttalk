@@ -11,6 +11,7 @@ import android.widget.*;
 import androidx.cardview.widget.CardView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class TextBoxComponent extends RelativeLayout {
 
@@ -39,7 +40,6 @@ public class TextBoxComponent extends RelativeLayout {
     }
 
     private void init(Context context) {
-        // Inflate the layout
         LayoutInflater.from(context).inflate(R.layout.text_box_component, this, true);
 
         tv_dynamic_text = findViewById(R.id.tv_dynamic_text);
@@ -98,7 +98,7 @@ public class TextBoxComponent extends RelativeLayout {
     }
 
 
-    public void setHighlightedTextByChar(String text, char c) {
+    public void setHighlightedTextByChar(Context context, String text, char c) {
         {
             SpannableString spannableString = new SpannableString(text);
 
@@ -106,7 +106,7 @@ public class TextBoxComponent extends RelativeLayout {
                 char currentChar = text.charAt(i);
                 if (currentChar == c || currentChar == c - 32 || currentChar == c + 32) {
                     spannableString.setSpan(
-                            new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
+                            new ForegroundColorSpan(ContextCompat.getColor(context, R.color.primary)),
                             i, i + 1,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     );
@@ -116,7 +116,7 @@ public class TextBoxComponent extends RelativeLayout {
         }
     }
 
-    public void setHighlightedTextBySubstring(String text, String substring) {
+    public void setHighlightedTextBySubstring(Context context, String text, String substring) {
         SpannableString spannableString = new SpannableString(text);
 
         // Convert both text and substring to lower case for case-insensitive comparison
@@ -128,7 +128,7 @@ public class TextBoxComponent extends RelativeLayout {
         // Highlight all occurrences of the substring
         while (startIndex >= 0) {
             spannableString.setSpan(
-                    new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
+                    new ForegroundColorSpan(ContextCompat.getColor(context, R.color.primary)),
                     startIndex, startIndex + substring.length(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             );
@@ -139,6 +139,4 @@ public class TextBoxComponent extends RelativeLayout {
 
         tv_dynamic_text.setText(spannableString);
     }
-
-
 }
