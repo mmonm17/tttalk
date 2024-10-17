@@ -6,14 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
     String[] sentences;
-    char highlighted;
+    String highlighted;
     Context context;
 
-    public SentenceAdapter(String[] sentences, char highlighted, PhonemeEnglishActivity activity){
+    public SentenceAdapter(String[] sentences, String highlighted, AppCompatActivity activity){
         this.sentences = sentences;
         this.highlighted = highlighted;
         this.context = activity;
@@ -33,7 +34,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
         String current = sentences[position];
         holder.sentenceViewBox.setText(current);
         holder.sentenceViewBox.setTypeRead();
-        holder.sentenceViewBox.setHighlightedTextByChar(context, current, highlighted);
+        holder.sentenceViewBox.setHighlightedText(context, current, highlighted);
     }
 
     @Override

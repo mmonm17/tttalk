@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PhonemeEnglishActivity extends AppCompatActivity {
-
     TextView txt_lvl;
     private CardView mic_animation;
-
     RecyclerView recyclerView;
 
     @Override
@@ -52,8 +50,7 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
                 "The snake said, \"sss,\" and Sam said, \"Hi!\""
         };
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, 's', PhonemeEnglishActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, "s", PhonemeEnglishActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
-
     }
 }

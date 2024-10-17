@@ -101,26 +101,7 @@ public class TextBoxComponent extends LinearLayout {
         btn_play.setCardBackgroundColor(color);
     }
 
-
-    public void setHighlightedTextByChar(Context context, String text, char c) {
-        {
-            SpannableString spannableString = new SpannableString(text);
-
-            for (int i = 0; i < text.length(); i++) {
-                char currentChar = text.charAt(i);
-                if (currentChar == c || currentChar == c - 32 || currentChar == c + 32) {
-                    spannableString.setSpan(
-                            new ForegroundColorSpan(ContextCompat.getColor(context, R.color.primary)),
-                            i, i + 1,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    );
-                }
-            }
-            tv_dynamic_text.setText(spannableString);
-        }
-    }
-
-    public void setHighlightedTextBySubstring(Context context, String text, String substring) {
+    public void setHighlightedText(Context context, String text, String substring) {
         SpannableString spannableString = new SpannableString(text);
 
         // Convert both text and substring to lower case for case-insensitive comparison

@@ -8,18 +8,17 @@ import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class PhonemeTagalogActivity extends AppCompatActivity {
-
-
     TextView txt_lvl;
-    TextBoxComponent textBoxComponent;
-    private CardView btn_mic;
     private CardView mic_animation;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +32,25 @@ public class PhonemeTagalogActivity extends AppCompatActivity {
         });
 
         txt_lvl = findViewById(R.id.txt_lvl);
-        btn_mic = findViewById(R.id.btn_mic);
         mic_animation = findViewById(R.id.mic_animation);
-
-        textBoxComponent = findViewById(R.id.text_box_component);
-        textBoxComponent.setTypeRead();
-        textBoxComponent.setHighlightedTextBySubstring(PhonemeTagalogActivity.this,"Ibabato ni Babols ang bato.", "Ba");
-
-        txt_lvl.setText("Level 1");
-
-        btn_mic.setOnClickListener(view -> {
-            Toast.makeText(this, "Mic button...", Toast.LENGTH_SHORT).show();
-            mic_animation.setVisibility(View.VISIBLE);
-        });
+        txt_lvl.setText("Lebel 1");
 
         mic_animation.setOnClickListener(view -> {
             mic_animation.setVisibility(View.GONE);
         });
+
+        String[] sentences = new String[]{
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+        };
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, "Ba", PhonemeTagalogActivity.this);
+        recyclerView.setAdapter(sentenceAdapter);
     }
 }
