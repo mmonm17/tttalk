@@ -3,7 +3,6 @@ package com.t_t_talk;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,14 +31,14 @@ public class LanguageActivity extends AppCompatActivity {
         curved_language = findViewById(R.id.curved_language);
 
         cl_english.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageActivity.this, LevelsActivityEnglish.class);
+            Intent intent = new Intent(LanguageActivity.this, LevelsEnglishActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
         cl_tagalog.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageActivity.this, LevelsActivityTagalog.class);
+            Intent intent = new Intent(LanguageActivity.this, LevelsTagalogActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
             startActivity(intent);

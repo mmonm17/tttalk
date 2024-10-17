@@ -15,7 +15,7 @@ import com.t_t_talk.DataTypes.Level;
 
 import java.util.ArrayList;
 
-public class LevelsActivityTagalog extends AppCompatActivity {
+public class LevelsTagalogActivity extends AppCompatActivity {
     CurvedTextView curved_levels;
     RecyclerView level_display;
     LinearLayoutManager layoutManager;

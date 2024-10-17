@@ -1,19 +1,20 @@
 package com.t_t_talk;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.*;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
-public class TextBoxComponent extends RelativeLayout {
-
+public class TextBoxComponent extends LinearLayout {
     private TextView tv_dynamic_text;
     private EditText et_user_input;
     private CardView btn_play;
@@ -23,24 +24,23 @@ public class TextBoxComponent extends RelativeLayout {
     private CardView circular_feedback_check;
     private CardView circular_feedback_close;
 
-    public TextBoxComponent(Context context) {
+    public TextBoxComponent(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public TextBoxComponent(Context context, @Nullable AttributeSet attrs) {
+    public TextBoxComponent(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public TextBoxComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TextBoxComponent(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
-        // Inflate the layout
-        LayoutInflater.from(context).inflate(R.layout.text_box_component, this, true);
+        LayoutInflater.from(context).inflate(R.layout.text_box_component_template, this, true);
 
         tv_dynamic_text = findViewById(R.id.tv_dynamic_text);
         et_user_input = findViewById(R.id.et_user_input);
@@ -72,6 +72,10 @@ public class TextBoxComponent extends RelativeLayout {
     }
      */
 
+    public void setText(String sentence) {
+        tv_dynamic_text.setText(sentence);
+    }
+
     public void setTypeAnswer(){
         tv_dynamic_text.setVisibility(GONE);
     }
@@ -97,26 +101,7 @@ public class TextBoxComponent extends RelativeLayout {
         btn_play.setCardBackgroundColor(color);
     }
 
-
-    public void setHighlightedTextByChar(String text, char c) {
-        {
-            SpannableString spannableString = new SpannableString(text);
-
-            for (int i = 0; i < text.length(); i++) {
-                char currentChar = text.charAt(i);
-                if (currentChar == c || currentChar == c - 32 || currentChar == c + 32) {
-                    spannableString.setSpan(
-                            new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
-                            i, i + 1,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    );
-                }
-            }
-            tv_dynamic_text.setText(spannableString);
-        }
-    }
-
-    public void setHighlightedTextBySubstring(String text, String substring) {
+    public void setHighlightedText(Context context, String text, String substring) {
         SpannableString spannableString = new SpannableString(text);
 
         // Convert both text and substring to lower case for case-insensitive comparison
@@ -128,7 +113,7 @@ public class TextBoxComponent extends RelativeLayout {
         // Highlight all occurrences of the substring
         while (startIndex >= 0) {
             spannableString.setSpan(
-                    new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
+                    new ForegroundColorSpan(ContextCompat.getColor(context, R.color.primary)),
                     startIndex, startIndex + substring.length(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             );
@@ -139,6 +124,4 @@ public class TextBoxComponent extends RelativeLayout {
 
         tv_dynamic_text.setText(spannableString);
     }
-
-
 }
