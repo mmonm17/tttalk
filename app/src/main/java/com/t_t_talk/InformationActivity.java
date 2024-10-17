@@ -1,16 +1,24 @@
 package com.t_t_talk;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import android.view.View;
 import android.widget.*;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import com.t_t_talk.DataTypes.Info;
 
 public class InformationActivity extends AppCompatActivity {
     String[] bullets = {
@@ -26,20 +34,28 @@ public class InformationActivity extends AppCompatActivity {
             " Prolongations in stuttering",
             "  e.g. sssseven"
     };
+    String[] sampleText = {
+            "This is a sample text",
+            " This is another sample text in a bullet"
+    };
+    String sampleText2 = "Speaking slowly can be helpful for stuttering because it allows individuals to have more control over their speech. When speaking at a slower pace, it gives the person more time to plan and coordinate their words, which can reduce the likelihood of stuttering. It can also help decrease the tension and anxiety that often accompany stuttering.";
 
 
-    private InfoBoxComponent info_box_component;
-    private TextView info_text;
-    private TextView strategies_text;
-    private TextView partners_text;
+     InfoBoxComponent info_box_component;
+     TextView info_text;
+     TextView strategies_text;
+     TextView partners_text;
 
-    private ImageView info_icon;
-    private ImageView strategies_icon;
-    private ImageView partners_icon;
+     ImageView info_icon;
+     ImageView strategies_icon;
+     ImageView partners_icon;
 
-    private LinearLayout info_section;
-    private LinearLayout strategies_section;
-    private LinearLayout partners_section;
+     LinearLayout info_section;
+     LinearLayout strategies_section;
+     LinearLayout partners_section;
+
+     RecyclerView recycler_view;
+     LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +68,22 @@ public class InformationActivity extends AppCompatActivity {
             return insets;
         });
 
-        info_box_component = findViewById(R.id.info_box);
+        ArrayList<Info> data_info = new ArrayList<>();
+        data_info.add(new Info("What are the characteristics of stuttered speech?", bullets));
+        data_info.add(new Info("What are the main causes of stuttering?", sampleText));
+        data_info.add(new Info("Question 3?", sampleText));
+        data_info.add(new Info("Question 4?", sampleText));
+
+        ArrayList<Info> data_strategies = new ArrayList<>();
+        data_strategies.add(new Info("Avoid Trigger Words", sampleText));
+        data_strategies.add(new Info("Practice Speaking Slowly", sampleText2));
+
+        ArrayList<Info> data_partners = new ArrayList<>();
+        data_partners.add(new Info("Caloocan, NCR, Philippines", sampleText2));
+        data_partners.add(new Info("Makati, NCR, Philippines", sampleText2));
+
+
+        //info_box_component = findViewById(R.id.info_box);
         info_text = findViewById(R.id.info_text);
         strategies_text = findViewById(R.id.strategies_text);
         partners_text = findViewById(R.id.partners_text);
@@ -65,30 +96,57 @@ public class InformationActivity extends AppCompatActivity {
         strategies_section = findViewById(R.id.strategies_section);
         partners_section = findViewById(R.id.partners_section);
 
-        //setTextBullets(setTextBullets(bullets);
-        info_box_component.setTextBullets(bullets);
+        setUpRecyclerView(data_info);
 
         info_section.setOnClickListener(v -> {
-            //info_text.setVisibility(info_text.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            //info_icon.setImageResource(info_text.getVisibility() == View.VISIBLE ? R.drawable.ic_baseline_keyboard_arrow_up_24 : R.drawable.ic_baseline_keyboard_arrow_down_24);
-            Toast.makeText(this, "Info section clicked", Toast.LENGTH_SHORT).show();
+            clearRecyclerView();
+            setUpRecyclerView(data_info);
+
+            info_text.setTextColor(ContextCompat.getColor(this, R.color.primary));
+            info_icon.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
+            strategies_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+            strategies_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
+            partners_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
+            partners_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         });
 
         strategies_section.setOnClickListener(v -> {
-            //strategies_text.setVisibility(strategies_text.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            //strategies_icon.setImageResource(strategies_text.getVisibility() == View.VISIBLE ? R.drawable.ic_baseline_keyboard_arrow_up_24 : R.drawable.ic_baseline_keyboard_arrow_down_24);
-            Toast.makeText(this, "Strategies section clicked", Toast.LENGTH_SHORT).show();
+           clearRecyclerView();
+           setUpRecyclerView(data_strategies);
+
+            info_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+            info_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
+            strategies_text.setTextColor(ContextCompat.getColor(this, R.color.primary));
+            strategies_icon.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
+            partners_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+            partners_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
         });
 
         partners_section.setOnClickListener(v -> {
-            //partners_text.setVisibility(partners_text.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            //partners_icon.setImageResource(partners_text.getVisibility() == View.VISIBLE ? R.drawable.ic_baseline_keyboard_arrow_up_24 : R.drawable.ic_baseline_keyboard_arrow_down_24);
-            Toast.makeText(this, "Partners section clicked", Toast.LENGTH_SHORT).show();
+            clearRecyclerView();
+            setUpRecyclerView(data_partners);
+            info_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+            info_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
+            strategies_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+            strategies_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
+            partners_text.setTextColor(ContextCompat.getColor(this, R.color.primary));
+            partners_icon.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
+
         });
 
     }
 
-    public void setTextBullets(String[] text) {
-        info_box_component.setTextBullets(text);
+    private void setUpRecyclerView(ArrayList<Info> data) {
+        this.recycler_view = findViewById(R.id.recycler_view);
+        this.layoutManager = new LinearLayoutManager(this);
+        this.recycler_view.setLayoutManager(layoutManager);
+
+        InfoBoxAdapter adapter = new InfoBoxAdapter(data);
+        this.recycler_view.setAdapter(adapter);
     }
+
+    private void clearRecyclerView() {
+        this.recycler_view.setAdapter(null);
+    }
+
 }

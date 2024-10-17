@@ -6,7 +6,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.BulletSpan;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.LeadingMarginSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -46,11 +45,6 @@ public class InfoBoxComponent extends RelativeLayout {
 
     public void setTitle(String titleText) {
         title.setText(titleText);
-    }
-
-    public void setContent(String contentText) {
-        content.setText(contentText);
-        //might improve this later
     }
 
     public void setCardTitleColor(int color) {
