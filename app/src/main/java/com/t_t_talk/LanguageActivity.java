@@ -47,5 +47,11 @@ public class LanguageActivity extends AppCompatActivity {
 
         curved_language.setText("LANGUAGE");
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment())
+                .commit();
+
+
     }
 }

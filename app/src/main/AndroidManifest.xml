@@ -13,10 +13,16 @@
         android:theme="@style/Theme.TTTalk"
         tools:targetApi="31">
         <activity
-            android:name=".LevelsActivityTagalog"
+            android:name=".FilipinoTestActivity"
             android:exported="false" />
         <activity
             android:name=".LevelsActivityEnglish"
+            android:exported="false" />
+        <activity
+            android:name=".LevelsActivityTagalog"
+            android:exported="false" />
+        <activity
+            android:name=".EnglishTestActivity"
             android:exported="false" />
         <activity
             android:name=".LanguageActivity"

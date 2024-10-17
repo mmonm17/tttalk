@@ -8,16 +8,20 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.*;
+import androidx.cardview.widget.CardView;
 
 import androidx.annotation.Nullable;
 
 public class TextBoxComponent extends RelativeLayout {
 
-    private TextView tvDynamicText;
-    private EditText etUserInput;
-    private Button btnReadText;
-    private Button btnSubmit;
-    private ImageView circularFeedback;
+    private TextView tv_dynamic_text;
+    private EditText et_user_input;
+    private CardView btn_play;
+    private CardView btn_mic;
+
+    private ImageView circular_feedback;
+    private CardView circular_feedback_check;
+    private CardView circular_feedback_close;
 
     public TextBoxComponent(Context context) {
         super(context);
@@ -38,19 +42,21 @@ public class TextBoxComponent extends RelativeLayout {
         // Inflate the layout
         LayoutInflater.from(context).inflate(R.layout.text_box_component, this, true);
 
-        // Initialize your views
-        tvDynamicText = findViewById(R.id.tv_dynamic_text);
-        etUserInput = findViewById(R.id.et_user_input);
-        btnReadText = findViewById(R.id.btn_read_text);
-        btnSubmit = findViewById(R.id.btn_submit);
-        circularFeedback = findViewById(R.id.circular_feedback);
+        tv_dynamic_text = findViewById(R.id.tv_dynamic_text);
+        et_user_input = findViewById(R.id.et_user_input);
+        btn_play = findViewById(R.id.btn_play);
+        btn_mic = findViewById(R.id.btn_mic);
+        circular_feedback = findViewById(R.id.circular_feedback);
+        circular_feedback_check = findViewById(R.id.circular_feedback_check);
+        circular_feedback_close = findViewById(R.id.circular_feedback_close);
 
-        btnReadText.setOnClickListener(view -> {
+        btn_play.setOnClickListener(view -> {
             Toast.makeText(getContext(), "Reading text...", Toast.LENGTH_SHORT).show();
         });
 
-        btnSubmit.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "Submitting answer...", Toast.LENGTH_SHORT).show();
+        btn_mic.setOnClickListener(view -> {
+            Toast.makeText(getContext(), "Mic button...", Toast.LENGTH_SHORT).show();
+            setCorrectFeedback();
         });
 
     }
@@ -58,29 +64,41 @@ public class TextBoxComponent extends RelativeLayout {
     // CUSTOM METHODS (Programmable from the caller)
     /*
     public void setReadTextClickListener(OnClickListener listener) {
-        btnReadText.setOnClickListener(listener);
+        btn_play.setOnClickListener(listener);
     }
 
     public void setSubmitClickListener(OnClickListener listener) {
-        btnSubmit.setOnClickListener(listener);
+        btn_mic.setOnClickListener(listener);
     }
-
      */
 
     public void setTypeAnswer(){
-        tvDynamicText.setVisibility(GONE);
-        //btnSubmit.setVisibility(VISIBLE);
-        //btnReadText.setVisibility(GONE);
+        tv_dynamic_text.setVisibility(GONE);
     }
 
     public void setTypeRead(){
-        etUserInput.setVisibility(GONE);
-        //btnSubmit.setVisibility(GONE);
-        //btnReadText.setVisibility(VISIBLE);
+        et_user_input.setVisibility(INVISIBLE);
+        tv_dynamic_text.setVisibility(VISIBLE);
+    }
+
+    public void setCorrectFeedback(){
+        circular_feedback.setVisibility(VISIBLE);
+        circular_feedback_check.setVisibility(VISIBLE);
+        circular_feedback_close.setVisibility(GONE);
+    }
+
+    public void setIncorrectFeedback(){
+        circular_feedback.setVisibility(VISIBLE);
+        circular_feedback_check.setVisibility(GONE);
+        circular_feedback_close.setVisibility(VISIBLE);
+    }
+
+    public void setBtnPlayColor(int color){
+        btn_play.setCardBackgroundColor(color);
     }
 
 
-    public void setHighlightedText(String text, char c, String color) {
+    public void setHighlightedTextByChar(String text, char c) {
         {
             SpannableString spannableString = new SpannableString(text);
 
@@ -88,17 +106,39 @@ public class TextBoxComponent extends RelativeLayout {
                 char currentChar = text.charAt(i);
                 if (currentChar == c || currentChar == c - 32 || currentChar == c + 32) {
                     spannableString.setSpan(
-                            new ForegroundColorSpan(Color.parseColor(color)), // Orange color
+                            new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
                             i, i + 1,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     );
                 }
             }
-
-            // Set the SpannableString to the TextView
-            tvDynamicText.setText(spannableString);
+            tv_dynamic_text.setText(spannableString);
         }
     }
 
-    // Add any other methods you need for your component
+    public void setHighlightedTextBySubstring(String text, String substring) {
+        SpannableString spannableString = new SpannableString(text);
+
+        // Convert both text and substring to lower case for case-insensitive comparison
+        String lowerCaseText = text.toLowerCase();
+        String lowerCaseSubstring = substring.toLowerCase();
+
+        int startIndex = lowerCaseText.indexOf(lowerCaseSubstring);
+
+        // Highlight all occurrences of the substring
+        while (startIndex >= 0) {
+            spannableString.setSpan(
+                    new ForegroundColorSpan(Color.parseColor("#FF9900")), // Orange color
+                    startIndex, startIndex + substring.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+
+            // Look for the next occurrence of the substring
+            startIndex = lowerCaseText.indexOf(lowerCaseSubstring, startIndex + lowerCaseSubstring.length());
+        }
+
+        tv_dynamic_text.setText(spannableString);
+    }
+
+
 }
