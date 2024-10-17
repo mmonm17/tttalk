@@ -52,5 +52,9 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
 
         SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, "s", PhonemeEnglishActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .commit();
     }
 }
