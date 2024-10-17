@@ -12,7 +12,7 @@ import com.t_t_talk.R;
 
 public class StrokedTextView extends androidx.appcompat.widget.AppCompatTextView {
 
-    private static final int DEFAULT_STROKE_WIDTH = 1;
+    private static final float DEFAULT_STROKE_WIDTH = 1.2f;
 
     // fields
     private int _strokeColor;

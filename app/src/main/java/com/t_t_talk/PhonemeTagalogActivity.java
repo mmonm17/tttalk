@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FilipinoTestActivity extends AppCompatActivity {
+public class PhonemeTagalogActivity extends AppCompatActivity {
 
 
     TextView txt_lvl;
@@ -25,7 +25,7 @@ public class FilipinoTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_filipino_test);
+        setContentView(R.layout.activity_phoneme_tagalog);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -38,7 +38,7 @@ public class FilipinoTestActivity extends AppCompatActivity {
 
         textBoxComponent = findViewById(R.id.text_box_component);
         textBoxComponent.setTypeRead();
-        textBoxComponent.setHighlightedTextBySubstring(FilipinoTestActivity.this,"Ibabato ni Babols ang bato.", "Ba");
+        textBoxComponent.setHighlightedTextBySubstring(PhonemeTagalogActivity.this,"Ibabato ni Babols ang bato.", "Ba");
 
         txt_lvl.setText("Level 1");
 

@@ -8,13 +8,14 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.*;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 public class TextBoxComponent extends RelativeLayout {
-
     private TextView tv_dynamic_text;
     private EditText et_user_input;
     private CardView btn_play;
@@ -24,17 +25,17 @@ public class TextBoxComponent extends RelativeLayout {
     private CardView circular_feedback_check;
     private CardView circular_feedback_close;
 
-    public TextBoxComponent(Context context) {
+    public TextBoxComponent(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public TextBoxComponent(Context context, @Nullable AttributeSet attrs) {
+    public TextBoxComponent(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public TextBoxComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TextBoxComponent(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
