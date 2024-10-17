@@ -71,11 +71,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/info_section"
-                app:layout_constraintEnd_toStartOf="@id/idea_section"
+                app:layout_constraintEnd_toStartOf="@id/strategies_section"
                 />
 
             <LinearLayout
-                android:id="@+id/idea_section"
+                android:id="@+id/strategies_section"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -89,14 +89,14 @@
                 >
 
                 <ImageView
-                    android:id="@+id/idea_icon"
+                    android:id="@+id/strategies_icon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:tint="@android:color/darker_gray"
                     android:src="@drawable/ic_idea" />
 
                 <TextView
-                    android:id="@+id/idea_text"
+                    android:id="@+id/strategies_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ideas"
@@ -112,12 +112,12 @@
                 android:background="@android:color/darker_gray"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/idea_section"
-                app:layout_constraintEnd_toStartOf="@id/support_section"
+                app:layout_constraintStart_toEndOf="@id/strategies_section"
+                app:layout_constraintEnd_toStartOf="@id/partners_section"
                 />
 
             <LinearLayout
-                android:id="@+id/support_section"
+                android:id="@+id/partners_section"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -131,7 +131,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/support_icon"
+                    android:id="@+id/partners_icon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:tint="@android:color/darker_gray"
@@ -139,7 +139,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/support_text"
+                    android:id="@+id/partners_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Support"

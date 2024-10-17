@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.BulletSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.LeadingMarginSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.*;
@@ -52,6 +55,30 @@ public class InfoBoxComponent extends RelativeLayout {
 
     public void setCardTitleColor(int color) {
         card_title.setCardBackgroundColor(color);
+    }
+
+    public void setTextBullets(String[] bullets) {
+        SpannableStringBuilder spannableBuilder = new SpannableStringBuilder();
+
+        for (String bullet : bullets) {
+            int indentLevel = 0;
+            while (bullet.startsWith(" ")) {
+                indentLevel++;
+                bullet = bullet.substring(1);
+            }
+
+            SpannableString spannableBullet = new SpannableString(bullet.trim());
+            int bulletMargin = 40 * indentLevel;
+
+            if (indentLevel > 0) {
+                spannableBullet.setSpan(new LeadingMarginSpan.Standard(bulletMargin), 0, bullet.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            spannableBullet.setSpan(new BulletSpan(20), 0, bullet.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            spannableBuilder.append(spannableBullet).append("\n");
+        }
+
+        content.setText(spannableBuilder);
     }
 
 }
