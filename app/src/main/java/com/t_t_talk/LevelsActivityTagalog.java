@@ -46,6 +46,10 @@ public class LevelsActivityTagalog extends AppCompatActivity {
         curved_levels.setText("MGA LEBEL");
 
         setupRecyclerView();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .commit();
     }
 
     private void setupRecyclerView() {

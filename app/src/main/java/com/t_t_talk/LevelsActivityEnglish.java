@@ -46,6 +46,11 @@ public class LevelsActivityEnglish extends AppCompatActivity {
         curved_levels.setText("LEVELS");
 
         setupRecyclerView();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .commit();
     }
 
     private void setupRecyclerView() {
