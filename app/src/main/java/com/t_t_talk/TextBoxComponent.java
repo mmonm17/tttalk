@@ -1,7 +1,6 @@
 package com.t_t_talk;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -15,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-public class TextBoxComponent extends RelativeLayout {
+public class TextBoxComponent extends LinearLayout {
     private TextView tv_dynamic_text;
     private EditText et_user_input;
     private CardView btn_play;
@@ -41,7 +40,7 @@ public class TextBoxComponent extends RelativeLayout {
     }
 
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.text_box_component, this, true);
+        LayoutInflater.from(context).inflate(R.layout.text_box_component_template, this, true);
 
         tv_dynamic_text = findViewById(R.id.tv_dynamic_text);
         et_user_input = findViewById(R.id.et_user_input);
@@ -72,6 +71,10 @@ public class TextBoxComponent extends RelativeLayout {
         btn_mic.setOnClickListener(listener);
     }
      */
+
+    public void setText(String sentence) {
+        tv_dynamic_text.setText(sentence);
+    }
 
     public void setTypeAnswer(){
         tv_dynamic_text.setVisibility(GONE);
