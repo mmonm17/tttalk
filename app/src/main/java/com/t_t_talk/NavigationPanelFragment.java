@@ -11,9 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class NavigationPanelFragment extends Fragment {
+    private boolean isSettingVisible = false, isNextVisible = false;
 
     // Constructor (empty) - required for fragments
-    public NavigationPanelFragment() {
+    public NavigationPanelFragment(boolean isSettingVisible, boolean isNextVisible) {
+        this.isSettingVisible = isSettingVisible;
+        this.isNextVisible = isNextVisible;
     }
 
     @Nullable
@@ -28,6 +31,11 @@ public class NavigationPanelFragment extends Fragment {
         ImageButton btnInfo = view.findViewById(R.id.btn_info);
         ImageButton btnHome = view.findViewById(R.id.btn_home);
         ImageButton btnSettings = view.findViewById(R.id.btn_settings);
+        ImageButton btnNext = view.findViewById(R.id.btn_next);
+
+        // Set visibility of buttons based on parameters
+        btnSettings.setVisibility(isSettingVisible ? View.VISIBLE : View.GONE);
+        btnNext.setVisibility(isNextVisible ? View.VISIBLE : View.GONE);
 
         // Set up click listeners if needed
         btnInfo.setOnClickListener(v -> {
