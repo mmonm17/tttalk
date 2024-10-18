@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:alpha="0.9"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_bg" />
+        android:src="@drawable/img_bg_en" />
 
     <FrameLayout
         android:id="@+id/fragment_flag_en"
