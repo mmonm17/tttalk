@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InformationActivity"
+    android:background="@drawable/img_bg"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/info_selection"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="28dp"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Information Section -->
+            <LinearLayout
+                android:id="@+id/info_section"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/divider1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                >
+
+                <ImageView
+                    android:id="@+id/info_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:tint="@color/primary"
+                    android:src="@drawable/ic_information" />
+
+                <TextView
+                    android:id="@+id/info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Information"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/candy_beans" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/info_section"
+                app:layout_constraintEnd_toStartOf="@id/strategies_section"
+                />
+
+            <LinearLayout
+                android:id="@+id/strategies_section"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@id/divider1"
+                app:layout_constraintEnd_toStartOf="@id/divider2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                >
+
+                <ImageView
+                    android:id="@+id/strategies_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:tint="@android:color/darker_gray"
+                    android:src="@drawable/ic_idea" />
+
+                <TextView
+                    android:id="@+id/strategies_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ideas"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/telegraf_regular" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/strategies_section"
+                app:layout_constraintEnd_toStartOf="@id/partners_section"
+                />
+
+            <LinearLayout
+                android:id="@+id/partners_section"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@id/divider2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                >
+
+                <ImageView
+                    android:id="@+id/partners_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:tint="@android:color/darker_gray"
+                    android:src="@drawable/ic_support"
+                    />
+
+                <TextView
+                    android:id="@+id/partners_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Support"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/telegraf_regular" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/info_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
