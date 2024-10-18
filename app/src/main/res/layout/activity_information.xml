@@ -11,11 +11,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/info_selection"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="32dp"
+        app:cardCornerRadius="45dp"
         app:cardElevation="4dp"
         app:cardBackgroundColor="@color/white"
         app:cardUseCompatPadding="true"
@@ -29,7 +27,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+            >
 
             <!-- Information Section -->
             <LinearLayout
@@ -99,10 +98,10 @@
                     android:id="@+id/strategies_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ideas"
+                    android:fontFamily="@font/candy_beans"
+                    android:text="Strategies"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/telegraf_regular" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <View
@@ -142,10 +141,10 @@
                     android:id="@+id/partners_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/candy_beans"
                     android:text="Support"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/telegraf_regular" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
