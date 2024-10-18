@@ -56,5 +56,10 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
                 .commit();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_us))
+                .commit();
     }
 }

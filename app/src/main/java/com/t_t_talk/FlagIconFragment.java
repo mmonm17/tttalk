@@ -13,8 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class FlagIconFragment extends Fragment{
-
-    public FlagIconFragment() {
+    private int imageResource;
+    public FlagIconFragment(int imageResource) {
+        this.imageResource = imageResource;
     }
 
     @Nullable
@@ -26,6 +27,8 @@ public class FlagIconFragment extends Fragment{
 
         ImageView img_flag_stroke = view.findViewById(R.id.img_flag_stroke);
         ImageView img_flag_content = view.findViewById(R.id.img_flag_content);
+
+        img_flag_content.setImageResource(imageResource);
 
 
         img_flag_stroke.setOnClickListener(

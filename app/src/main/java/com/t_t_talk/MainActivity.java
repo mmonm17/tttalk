@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         btn_start = findViewById(R.id.btn_start);
 
         btn_start.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+            Intent intent = new Intent(MainActivity.this, PhonemeTagalogActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
