@@ -7,62 +7,132 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <com.t_t_talk.StrokedTextView
-            android:id="@+id/phoneme_display"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:fontFamily="@font/candy_beans"
-            android:gravity="bottom|center"
-            android:text="S"
-            android:textColor="@color/primary"
-            android:textSize="124sp"/>
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/stars_display_holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
 
-            <ImageView
-                android:id="@+id/star1_display"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_star"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="116dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <ImageView
-                android:id="@+id/star2_display"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_star"
-                android:layout_marginStart="116dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <ImageView
-                android:id="@+id/star3_display"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_star"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+            <com.t_t_talk.StrokedTextView
+                android:id="@+id/phoneme_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/candy_beans"
+                android:text="SSS"
+                android:textColor="@color/primary"
+                android:textSize="124sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.0"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_star_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/img_trophy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/img_star_1_1"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_star_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-30dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/img_trophy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/img_star_2_1"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:rotation="-10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_star_2_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star" />
+
+            <ImageView
+                android:id="@+id/img_star_2_2"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:rotation="10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_star_2_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_star_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-45dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/img_trophy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/img_star_3_1"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:rotation="-10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_star_3_2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_star" />
+
+            <ImageView
+                android:id="@+id/img_star_3_2"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                app:layout_constraintEnd_toStartOf="@+id/img_star_3_3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_star_3_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_star" />
+
+            <ImageView
+                android:id="@+id/img_star_3_3"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:rotation="10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_star_3_2"
+                app:srcCompat="@drawable/ic_star" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 </LinearLayout>
