@@ -57,7 +57,7 @@
                     android:id="@+id/info_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Information"
+                    android:text="@string/information"
                     android:textColor="@color/primary"
                     android:textSize="16sp"
                     android:fontFamily="@font/candy_beans" />
@@ -99,10 +99,10 @@
                     android:id="@+id/strategies_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ideas"
+                    android:text="@string/strategies"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="16sp"
-                    android:fontFamily="@font/telegraf_regular" />
+                    android:fontFamily="@font/candy_beans" />
             </LinearLayout>
 
             <View
@@ -142,10 +142,10 @@
                     android:id="@+id/partners_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Support"
+                    android:text="@string/partners"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="16sp"
-                    android:fontFamily="@font/telegraf_regular" />
+                    android:fontFamily="@font/candy_beans" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -155,7 +155,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="500dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="100dp"
         android:orientation="vertical"

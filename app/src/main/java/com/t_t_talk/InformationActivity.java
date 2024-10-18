@@ -22,17 +22,17 @@ import com.t_t_talk.DataTypes.Info;
 
 public class InformationActivity extends AppCompatActivity {
     String[] bullets = {
-            " Struggling to repeat",
-            "  An oral stop consonant or cluster",
-            "   e.g. /tr/ in ‘electr-tr-tronically’",
-            " Whole syllable",
-            "  e.g. /au/ in ‘au-au-australia’",
-            " Short words",
-            "  pronoun I in ‘I I I work’",
-            " Stuttered block",
-            "  e.g. elect : : : : : ronically",
-            " Prolongations in stuttering",
-            "  e.g. sssseven"
+            "Struggling to repeat",
+            " An oral stop consonant or cluster",
+            "  e.g. /tr/ in ‘electr-tr-tronically’",
+            "Whole syllable",
+            " e.g. /au/ in ‘au-au-australia’",
+            "Short words",
+            " pronoun I in ‘I I I work’",
+            "Stuttered block",
+            " e.g. elect : : : : : ronically",
+            "Prolongations in stuttering",
+            " e.g. sssseven"
     };
     String[] sampleText = {
             "This is a sample text",
@@ -40,6 +40,28 @@ public class InformationActivity extends AppCompatActivity {
     };
     String sampleText2 = "Speaking slowly can be helpful for stuttering because it allows individuals to have more control over their speech. When speaking at a slower pace, it gives the person more time to plan and coordinate their words, which can reduce the likelihood of stuttering. It can also help decrease the tension and anxiety that often accompany stuttering.";
 
+    String[] partnersText1 = {
+            "**Decode Intervention and Tutorial Center**",
+            "Unit C Taas Road, Brgy, Bagumbong",
+            "+63 927 421 7241/ 887-10",
+            "__decodeitc@gmail.com__",
+            "**Wordabilities Speech and Occupational Therapy Clinic**",
+            "207 M.H. Del Pilar St., East Grace Park, Brgy. 106, District 2 Caloocan City",
+            "+63 915 449 1000",
+            "__wordabilitiestherapyclinic@gmail.com__"
+    };
+
+    String[] partnersText2 = {
+            "**Help Therapy Center**",
+            "#2515, Centuria Medical Makati, Kalayaan Avenue, Brgy. Poblacion, Makati City",
+            "+63 917 896 5195",
+            "__helptherapy@gmail.com__",
+
+            "**Spark Discovery Center**",
+            "34 Jupiter St., Bel-Air, Makati City",
+            "+63 977 823 1515",
+            "__sparkdiscoverycenter@gmail.com__"
+    };
 
      InfoBoxComponent info_box_component;
      TextView info_text;
@@ -79,7 +101,7 @@ public class InformationActivity extends AppCompatActivity {
         data_strategies.add(new Info("Practice Speaking Slowly", sampleText2));
 
         ArrayList<Info> data_partners = new ArrayList<>();
-        data_partners.add(new Info("Caloocan, NCR, Philippines", sampleText2));
+        data_partners.add(new Info("Caloocan, NCR, Philippines", sampleText));
         data_partners.add(new Info("Makati, NCR, Philippines", sampleText2));
 
 
