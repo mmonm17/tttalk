@@ -16,16 +16,16 @@
             android:name=".ProgressActivity"
             android:exported="false" />
         <activity
-            android:name=".FilipinoTestActivity"
+            android:name=".PhonemeTagalogActivity"
             android:exported="false" />
         <activity
-            android:name=".LevelsActivityEnglish"
+            android:name=".LevelsEnglishActivity"
             android:exported="false" />
         <activity
-            android:name=".LevelsActivityTagalog"
+            android:name=".LevelsTagalogActivity"
             android:exported="false" />
         <activity
-            android:name=".EnglishTestActivity"
+            android:name=".PhonemeEnglishActivity"
             android:exported="false" />
         <activity
             android:name=".LanguageActivity"

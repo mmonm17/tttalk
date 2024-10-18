@@ -1,9 +1,6 @@
 package com.t_t_talk;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,21 +8,23 @@ import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class EnglishTestActivity extends AppCompatActivity {
-
+public class PhonemeTagalogActivity extends AppCompatActivity {
     TextView txt_lvl;
-    TextBoxComponent textBoxComponent;
-    private CardView btn_mic;
     private CardView mic_animation;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_english_test);
-
+        setContentView(R.layout.activity_phoneme_tagalog);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -33,23 +32,25 @@ public class EnglishTestActivity extends AppCompatActivity {
         });
 
         txt_lvl = findViewById(R.id.txt_lvl);
-        btn_mic = findViewById(R.id.btn_mic);
         mic_animation = findViewById(R.id.mic_animation);
-
-        textBoxComponent = findViewById(R.id.text_box_component);
-        textBoxComponent.setTypeRead();
-        textBoxComponent.setHighlightedTextByChar(EnglishTestActivity.this,"Sam the cat saw a snake in the grass.", 's');
-
-        txt_lvl.setText("Level 1");
-
-        btn_mic.setOnClickListener(view -> {
-            Toast.makeText(this, "Mic button...", Toast.LENGTH_SHORT).show();
-            mic_animation.setVisibility(View.VISIBLE);
-        });
+        txt_lvl.setText("Lebel 1");
 
         mic_animation.setOnClickListener(view -> {
             mic_animation.setVisibility(View.GONE);
         });
 
+        String[] sentences = new String[]{
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+        };
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, "Ba", PhonemeTagalogActivity.this);
+        recyclerView.setAdapter(sentenceAdapter);
     }
 }
