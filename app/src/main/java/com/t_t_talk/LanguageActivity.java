@@ -6,13 +6,13 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class LanguageActivity extends AppCompatActivity {
-    TextView txt_english;
-    TextView txt_tagalog;
+    ConstraintLayout cl_english, cl_tagalog;
     CurvedTextView curved_language;
 
     @Override
@@ -26,18 +26,18 @@ public class LanguageActivity extends AppCompatActivity {
             return insets;
         });
 
-        txt_english = findViewById(R.id.txt_english);
-        txt_tagalog = findViewById(R.id.txt_tagalog);
+        cl_english = findViewById(R.id.cl_english);
+        cl_tagalog = findViewById(R.id.cl_tagalog);
         curved_language = findViewById(R.id.curved_language);
 
-        txt_english.setOnClickListener(view -> {
+        cl_english.setOnClickListener(view -> {
             Intent intent = new Intent(LanguageActivity.this, LevelsEnglishActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
-        txt_tagalog.setOnClickListener(view -> {
+        cl_tagalog.setOnClickListener(view -> {
             Intent intent = new Intent(LanguageActivity.this, LevelsTagalogActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
@@ -48,9 +48,7 @@ public class LanguageActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment())
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
                 .commit();
-
-
     }
 }
