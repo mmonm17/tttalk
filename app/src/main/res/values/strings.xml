@@ -33,4 +33,6 @@
     <string name="TayoyMagsimula">Tayo\'y magsimula!</string>
     <string name="TypeYourAnswerHere">Type your answer here</string>
 
+    <string name="sound">%1$s \"%2$s\"</string>
+
 </resources>
