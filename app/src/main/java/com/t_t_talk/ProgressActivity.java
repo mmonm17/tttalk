@@ -19,6 +19,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class ProgressActivity extends AppCompatActivity {
 
@@ -38,10 +39,15 @@ public class ProgressActivity extends AppCompatActivity {
         ImageView img_star_3_2 = findViewById(R.id.img_star_3_2);
         ImageView img_star_3_3 = findViewById(R.id.img_star_3_3);
         ProgressBar progressBar = findViewById(R.id.progress_bar);
+        TextView txt_sound = findViewById(R.id.txt_sound);
 
         // Get the number of stars from intent
         Intent intent = getIntent();
         int starCount = intent.getIntExtra("star_count", 3); // Default to 3 stars
+        String soundText = (intent.getStringExtra("language").equals("English")) ? "Sound" : "Tunog";
+
+        //Set text display
+        txt_sound.setText(getString(R.string.sound, soundText, intent.getStringExtra("phoneme")));
 
         // Add animation to star
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce);
