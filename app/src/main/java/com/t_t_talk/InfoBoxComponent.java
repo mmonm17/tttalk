@@ -8,10 +8,11 @@ import android.text.style.BulletSpan;
 import android.text.style.LeadingMarginSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.*;
-import androidx.cardview.widget.CardView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
 public class InfoBoxComponent extends RelativeLayout {
     private TextView title;

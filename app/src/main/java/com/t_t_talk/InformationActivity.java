@@ -2,6 +2,9 @@ package com.t_t_talk;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,16 +12,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import android.view.View;
-import android.widget.*;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import com.t_t_talk.DataTypes.Info;
+
+import java.util.ArrayList;
 
 public class InformationActivity extends AppCompatActivity {
     String[] bullets = {
