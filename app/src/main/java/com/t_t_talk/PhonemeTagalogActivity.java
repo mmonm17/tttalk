@@ -57,7 +57,7 @@ public class PhonemeTagalogActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, PhonemeTagalogActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "Tagalog", PhonemeTagalogActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()
