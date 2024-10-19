@@ -1,6 +1,7 @@
 package com.t_t_talk;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -43,11 +44,14 @@ public class NavigationPanelFragment extends Fragment {
 
         // Set up click listeners if needed
         btnInfo.setOnClickListener(v -> {
-            // Handle info button click
+            Intent intent = new Intent(this.getContext(), InformationActivity.class);
+            startActivity(intent);
         });
 
         btnHome.setOnClickListener(v -> {
-            // Handle home button click
+            Intent intent = new Intent(this.getContext(), LanguageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
 
         btnSettings.setOnClickListener(v -> {
