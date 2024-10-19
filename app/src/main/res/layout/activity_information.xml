@@ -154,14 +154,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="540dp"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="100dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/info_selection"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_selection" />
 
     <FrameLayout
         android:id="@+id/fragment_navigation_panel"
