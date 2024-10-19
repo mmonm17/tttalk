@@ -14,58 +14,24 @@
         android:layout_height="match_parent"
         android:alpha="0.9"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_bg" />
+        android:src="@drawable/img_bg_tag" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/flag_tagalog"
+    <FrameLayout
+        android:id="@+id/fragment_flag_ta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/txt_lvl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:name="com.t_t_talk.FlagIconFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="spread">
-
-        <ImageView
-            android:id="@+id/img_flag_tagalog_stroke"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/shape_rnd_rect_blue"
-            app:layout_constraintBottom_toBottomOf="@id/card_flag_tagalog"
-            app:layout_constraintEnd_toEndOf="@id/card_flag_tagalog"
-            app:layout_constraintStart_toStartOf="@id/card_flag_tagalog"
-            app:layout_constraintTop_toTopOf="@id/card_flag_tagalog" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_flag_tagalog"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:cardCornerRadius="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_flag_ph" />
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        />
 
     <TextView
         android:id="@+id/txt_lvl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/shape_level_box"
@@ -83,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flag_tagalog" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_flag_ta" />
 
 
     <TextView

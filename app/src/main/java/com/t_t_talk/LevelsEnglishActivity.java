@@ -49,8 +49,15 @@ public class LevelsEnglishActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
+                .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_us))
+                .commit();
+
+        getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
                 .commit();
+
+
     }
 
     private void setupRecyclerView() {

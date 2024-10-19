@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".LevelsTagalogActivity">
 
+
+
     <ImageView
         android:id="@+id/img_bg_1"
         android:layout_width="match_parent"
@@ -41,7 +43,7 @@
         android:layout_width="385dp"
         android:layout_height="100dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintBottom_toTopOf="@+id/level_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -69,5 +71,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/level_display" />
+
+    <FrameLayout
+        android:id="@+id/fragment_flag_ta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.t_t_talk.FlagIconFragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

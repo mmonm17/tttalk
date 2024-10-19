@@ -32,5 +32,8 @@
     <string name="AlmostThere">Almost there!</string>
     <string name="TayoyMagsimula">Tayo\'y magsimula!</string>
     <string name="TypeYourAnswerHere">Type your answer here</string>
+    <string name="partners">Partners</string>
+    <string name="information">Information</string>
+    <string name="strategies">Strategies</string>
 
 </resources>
