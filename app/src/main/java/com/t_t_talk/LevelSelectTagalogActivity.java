@@ -16,7 +16,7 @@ import com.t_t_talk.DataTypes.Phoneme;
 
 import java.util.ArrayList;
 
-public class LevelsTagalogActivity extends AppCompatActivity {
+public class LevelSelectTagalogActivity extends AppCompatActivity {
     CurvedTextView curved_levels;
     RecyclerView level_display;
     LinearLayoutManager layoutManager;
@@ -27,7 +27,7 @@ public class LevelsTagalogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_levels_tagalog);
+        setContentView(R.layout.activity_level_select_tagalog);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -67,7 +67,7 @@ public class LevelsTagalogActivity extends AppCompatActivity {
                 .commit();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LevelsTagalogActivity.this,true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LevelSelectTagalogActivity.this,true, false))
                 .commit();
     }
 
@@ -77,7 +77,7 @@ public class LevelsTagalogActivity extends AppCompatActivity {
         this.layoutManager = new LinearLayoutManager(this);
         this.level_display.setLayoutManager(layoutManager);
 
-        this.adapter = new LevelBoxAdapter(LevelsTagalogActivity.this, this.data, "Tagalog");
+        this.adapter = new LevelBoxAdapter(LevelSelectTagalogActivity.this, this.data, "Tagalog");
         this.level_display.setAdapter(this.adapter);
     }
 }

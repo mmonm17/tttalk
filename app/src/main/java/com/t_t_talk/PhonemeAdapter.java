@@ -29,7 +29,7 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
     @Override
     public PhonemeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.phoneme_box_component, parent, false);
+        View view = inflater.inflate(R.layout.component_phoneme_box, parent, false);
         return new PhonemeViewHolder(view);
     }
 
@@ -43,9 +43,9 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
             public void onClick(View view) {
                 Intent i;
                 if(language.equals("English")) {
-                    i = new Intent(context, PhonemeEnglishActivity.class);
+                    i = new Intent(context, PhonemeSoundEnglishActivity.class);
                 } else {
-                    i = new Intent(context, PhonemeTagalogActivity.class);
+                    i = new Intent(context, PhonemeSoundTagalogActivity.class);
                 }
                 i.putExtra("Sentences", current.getSentences());
                 i.putExtra("PhonemeCode", current.getCode());

@@ -7,11 +7,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class DialogSettings {
+public class SettingsDialog {
     private Dialog settingsDialog;
     private ConstraintLayout cl_setMusic;
     private Button btn_setMusic;
@@ -19,7 +18,7 @@ public class DialogSettings {
     private Button logOutButton;
     private Button closeButton;
 
-    public DialogSettings(Context context) {
+    public SettingsDialog(Context context) {
         this.settingsDialog = new Dialog(context);
         this.settingsDialog.setContentView(R.layout.dialog_settings);
         this.settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -2,8 +2,6 @@ package com.t_t_talk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +12,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PhonemeEnglishActivity extends AppCompatActivity {
+import android.view.View;
+import android.widget.TextView;
+
+public class PhonemeSoundTagalogActivity extends AppCompatActivity {
     TextView txt_lvl;
     private CardView mic_animation;
     RecyclerView recyclerView;
@@ -24,8 +25,7 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_phoneme_english);
-
+        setContentView(R.layout.activity_phoneme_sound_tagalog);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -35,7 +35,8 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
         txt_lvl = findViewById(R.id.txt_lvl);
         mic_animation = findViewById(R.id.mic_animation);
         btn_mic = findViewById(R.id.btn_mic);
-        txt_lvl.setText("Level 1");
+
+        txt_lvl.setText("Lebel 1");
 
         btn_mic.setOnClickListener(view -> {
             mic_animation.setVisibility(View.VISIBLE);
@@ -45,24 +46,24 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
             mic_animation.setVisibility(View.GONE);
         });
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "English", PhonemeEnglishActivity.this);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "Tagalog", PhonemeSoundTagalogActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(PhonemeEnglishActivity.this,true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(PhonemeSoundTagalogActivity.this,true, false))
                 .commit();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_us))
+                .replace(R.id.fragment_flag_ta, new FlagIconFragment(R.drawable.img_flag_ph))
                 .commit();
     }
 }

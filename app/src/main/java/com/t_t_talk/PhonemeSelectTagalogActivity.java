@@ -15,7 +15,7 @@ import com.t_t_talk.DataTypes.Phoneme;
 
 import java.util.ArrayList;
 
-public class PhonemeSelectEnglish extends AppCompatActivity {
+public class PhonemeSelectTagalogActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CurvedTextView level_display;
     GridLayoutManager layoutManager;
@@ -26,7 +26,7 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_phoneme_select_english);
+        setContentView(R.layout.activity_phoneme_select_tagalog);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -34,7 +34,7 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
         });
 
         level_display = findViewById(R.id.level_display);
-        level_display.setText("Level 1");
+        level_display.setText("Lebel 1");
 
         Intent i = getIntent();
         Bundle phonemes = i.getBundleExtra("Phonemes");
@@ -42,14 +42,14 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
         data = (ArrayList<Phoneme>) phonemes.getSerializable("Phonemes");
 
         setRecyclerView();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(PhonemeSelectEnglish.this,true, false))
-                .commit();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_us))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(PhonemeSelectTagalogActivity.this,true, false))
+                .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_ph))
                 .commit();
     }
 
@@ -59,7 +59,7 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(PhonemeSelectEnglish.this, this.data, "English");
+        this.adapter = new PhonemeAdapter(PhonemeSelectTagalogActivity.this, this.data, "Tagalog");
         this.recyclerView.setAdapter(this.adapter);
     }
 }

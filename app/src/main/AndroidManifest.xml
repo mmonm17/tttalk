@@ -13,10 +13,10 @@
         android:theme="@style/Theme.TTTalk"
         tools:targetApi="31">
         <activity
-            android:name=".PhonemeSelectTagalog"
+            android:name=".PhonemeSelectTagalogActivity"
             android:exported="false" />
         <activity
-            android:name=".PhonemeSelectEnglish"
+            android:name=".PhonemeSelectEnglishActivity"
             android:exported="false" />
         <activity
             android:name=".InformationActivity"
@@ -25,19 +25,19 @@
             android:name=".ProgressActivity"
             android:exported="false" />
         <activity
-            android:name=".PhonemeTagalogActivity"
+            android:name=".PhonemeSoundTagalogActivity"
             android:exported="false" />
         <activity
-            android:name=".LevelsEnglishActivity"
+            android:name=".LevelSelectEnglishActivity"
             android:exported="false" />
         <activity
-            android:name=".LevelsTagalogActivity"
+            android:name=".LevelSelectTagalogActivity"
             android:exported="false" />
         <activity
-            android:name=".PhonemeEnglishActivity"
+            android:name=".PhonemeSoundEnglishActivity"
             android:exported="false" />
         <activity
-            android:name=".LanguageActivity"
+            android:name=".LanguageSelectActivity"
             android:exported="false" />
         <activity
             android:name=".VerifyEmailActivity"

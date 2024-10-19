@@ -1,18 +1,15 @@
 package com.t_t_talk;
 
-import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
+public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     String[] sentences;
     boolean[] sentenceCompletions;
     int[] mistakeCount;
@@ -58,15 +55,15 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
 
     @NonNull
     @Override
-    public SentenceView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SentenceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.sentence_view, parent,false);
-        SentenceView viewHolder = new SentenceView(view);
+        View view = layoutInflater.inflate(R.layout.view_holder_sentence, parent,false);
+        SentenceViewHolder viewHolder = new SentenceViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SentenceView holder, int position) {
+    public void onBindViewHolder(@NonNull SentenceViewHolder holder, int position) {
         String current = sentences[position];
         holder.sentenceViewBox.setText(current);
         holder.sentenceViewBox.setTypeRead();

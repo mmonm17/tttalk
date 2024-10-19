@@ -231,7 +231,7 @@
         android:background="@drawable/shape_progress_bg"
         android:max="100"
         android:progress="25"
-        android:progressDrawable="@drawable/custom_progress_drawable"
+        android:progressDrawable="@drawable/ic_progress"
         app:layout_constraintBottom_toTopOf="@+id/fragment_navigation_panel"
         app:layout_constraintEnd_toEndOf="@+id/img_trophy"
         app:layout_constraintHorizontal_bias="0.5"

@@ -16,7 +16,7 @@ import com.t_t_talk.DataTypes.Phoneme;
 
 import java.util.ArrayList;
 
-public class LevelsEnglishActivity extends AppCompatActivity {
+public class LevelSelectEnglishActivity extends AppCompatActivity {
     CurvedTextView curved_levels;
     RecyclerView level_display;
     LinearLayoutManager layoutManager;
@@ -27,7 +27,7 @@ public class LevelsEnglishActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_levels_english);
+        setContentView(R.layout.activity_level_select_english);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -68,7 +68,7 @@ public class LevelsEnglishActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LevelsEnglishActivity.this,true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LevelSelectEnglishActivity.this,true, false))
                 .commit();
     }
 
@@ -78,7 +78,7 @@ public class LevelsEnglishActivity extends AppCompatActivity {
         this.layoutManager = new LinearLayoutManager(this);
         this.level_display.setLayoutManager(layoutManager);
 
-        this.adapter = new LevelBoxAdapter(LevelsEnglishActivity.this, this.data, "English");
+        this.adapter = new LevelBoxAdapter(LevelSelectEnglishActivity.this, this.data, "English");
         this.level_display.setAdapter(this.adapter);
     }
 }

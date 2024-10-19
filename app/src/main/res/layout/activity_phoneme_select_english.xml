@@ -42,7 +42,7 @@
                 android:background="@drawable/shape_progress_bg"
                 android:max="100"
                 android:progress="25"
-                android:progressDrawable="@drawable/custom_progress_drawable"
+                android:progressDrawable="@drawable/ic_progress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

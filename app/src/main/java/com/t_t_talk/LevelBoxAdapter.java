@@ -31,7 +31,7 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
     @Override
     public LevelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.level_box_component, parent, false);
+        View view = inflater.inflate(R.layout.component_level_box, parent, false);
         return new LevelViewHolder(view);
     }
 
@@ -50,9 +50,9 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
             public void onClick(View view) {
                 Intent i;
                 if(language.equals("English")) {
-                    i = new Intent(context, PhonemeSelectEnglish.class);
+                    i = new Intent(context, PhonemeSelectEnglishActivity.class);
                 } else {
-                    i = new Intent(context, PhonemeSelectTagalog.class);
+                    i = new Intent(context, PhonemeSelectTagalogActivity.class);
                 }
 
                 Bundle phonemes = new Bundle();

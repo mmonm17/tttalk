@@ -13,7 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class LanguageActivity extends AppCompatActivity {
+public class LanguageSelectActivity extends AppCompatActivity {
     ConstraintLayout cl_english, cl_tagalog;
     CurvedTextView curved_language;
 
@@ -21,7 +21,7 @@ public class LanguageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_language);
+        setContentView(R.layout.activity_language_select);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -32,7 +32,7 @@ public class LanguageActivity extends AppCompatActivity {
         cl_tagalog = findViewById(R.id.cl_tagalog);
         curved_language = findViewById(R.id.curved_language);
 
-        Drawable bg = ContextCompat.getDrawable(LanguageActivity.this, R.drawable.shape_rnd_rect_blue_thick);
+        Drawable bg = ContextCompat.getDrawable(LanguageSelectActivity.this, R.drawable.shape_rnd_rect_blue_thick);
         assert bg != null;
 
         GradientDrawable bg_alter = (GradientDrawable) bg.mutate();
@@ -41,14 +41,14 @@ public class LanguageActivity extends AppCompatActivity {
 
 
         cl_english.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageActivity.this, LevelsEnglishActivity.class);
+            Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
         cl_tagalog.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageActivity.this, LevelsTagalogActivity.class);
+            Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
             startActivity(intent);
@@ -58,7 +58,7 @@ public class LanguageActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LanguageActivity.this, true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LanguageSelectActivity.this, true, false))
                 .commit();
     }
 }

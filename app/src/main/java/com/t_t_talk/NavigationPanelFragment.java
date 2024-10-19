@@ -56,14 +56,14 @@ public class NavigationPanelFragment extends Fragment {
         });
 
         btnHome.setOnClickListener(v -> {
-            Intent intent = new Intent(this.getContext(), LanguageActivity.class);
+            Intent intent = new Intent(this.getContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
 
         btnSettings.setOnClickListener(v -> {
             // Handle settings button click
-            DialogSettings settingsDialog = new DialogSettings(this.getContext());
+            SettingsDialog settingsDialog = new SettingsDialog(this.getContext());
             settingsDialog.show();
         });
 
