@@ -77,10 +77,12 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="@id/txt_title"
-        app:layout_constraintStart_toEndOf="@id/txt_title"
+        app:layout_constraintEnd_toEndOf="@id/txt_title"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_title"
         app:layout_constraintTop_toTopOf="@+id/txt_title"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.0"
+        >
 
         <ImageView
             android:layout_width="24dp"

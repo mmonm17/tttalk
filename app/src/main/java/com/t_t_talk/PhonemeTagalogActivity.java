@@ -19,6 +19,7 @@ public class PhonemeTagalogActivity extends AppCompatActivity {
     TextView txt_lvl;
     private CardView mic_animation;
     RecyclerView recyclerView;
+    private CardView btn_mic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,13 @@ public class PhonemeTagalogActivity extends AppCompatActivity {
 
         txt_lvl = findViewById(R.id.txt_lvl);
         mic_animation = findViewById(R.id.mic_animation);
+        btn_mic = findViewById(R.id.btn_mic);
+
         txt_lvl.setText("Lebel 1");
+
+        btn_mic.setOnClickListener(view -> {
+            mic_animation.setVisibility(View.VISIBLE);
+        });
 
         mic_animation.setOnClickListener(view -> {
             mic_animation.setVisibility(View.GONE);

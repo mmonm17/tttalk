@@ -60,6 +60,11 @@ public class NavigationPanelFragment extends Fragment {
             settingsDialog.show();
         });
 
+        btnNext.setOnClickListener(v -> {
+            // Handle next button click
+
+        });
+
         return view;
     }
 }
