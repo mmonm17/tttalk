@@ -14,8 +14,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.t_t_talk.DataTypes.Phoneme;
-
 public class PhonemeEnglishActivity extends AppCompatActivity {
     TextView txt_lvl;
     private CardView mic_animation;
@@ -67,6 +65,4 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
                 .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_us))
                 .commit();
     }
-
-
 }
