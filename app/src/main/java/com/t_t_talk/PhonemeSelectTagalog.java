@@ -49,7 +49,7 @@ public class PhonemeSelectTagalog extends AppCompatActivity {
                 .commit();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_ph))
+                .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_ph))
                 .commit();
     }
 

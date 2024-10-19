@@ -49,7 +49,7 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_us))
+                .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_us))
                 .commit();
     }
 
