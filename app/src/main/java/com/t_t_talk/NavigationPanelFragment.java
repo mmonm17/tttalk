@@ -1,6 +1,10 @@
 package com.t_t_talk;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +52,8 @@ public class NavigationPanelFragment extends Fragment {
 
         btnSettings.setOnClickListener(v -> {
             // Handle settings button click
+            DialogSettings settingsDialog = new DialogSettings(this.getContext());
+            settingsDialog.show();
         });
 
         return view;
