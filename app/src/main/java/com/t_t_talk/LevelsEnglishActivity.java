@@ -34,11 +34,18 @@ public class LevelsEnglishActivity extends AppCompatActivity {
             return insets;
         });
 
+        String[] sentences = new String[]{
+                "Sam the cat saw a snake in the grass",
+                "The snake was small and slid fast",
+                "Sam sat and watched the snake go by",
+                "The snake said, \"sss,\" and Sam said, \"Hi!\""
+        };
+
         ArrayList<Phoneme> phonemes = new ArrayList<>();
-        phonemes.add(new Phoneme(null, 2, "S"));
-        phonemes.add(new Phoneme(null, 1, "A"));
-        phonemes.add(new Phoneme(null, 3, "T"));
-        phonemes.add(new Phoneme(null, 0, "P"));
+        phonemes.add(new Phoneme(sentences, 2, "S"));
+        phonemes.add(new Phoneme(sentences, 1, "A"));
+        phonemes.add(new Phoneme(sentences, 3, "T"));
+        phonemes.add(new Phoneme(sentences, 0, "P"));
 
         data = new ArrayList<>();
         data.add(new Level(1, 3, Color.rgb(249, 222, 104), phonemes));
