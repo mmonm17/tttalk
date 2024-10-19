@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t_t_talk.DataTypes.Phoneme;
-import com.t_t_talk.DataTypes.PhonemeCode;
 
 import java.util.ArrayList;
 
@@ -37,10 +36,10 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
         level_display.setText("Level 1");
 
         data = new ArrayList<>();
-        data.add(new Phoneme(null, 2, PhonemeCode.S1));
-        data.add(new Phoneme(null, 1, PhonemeCode.A));
-        data.add(new Phoneme(null, 3, PhonemeCode.T));
-        data.add(new Phoneme(null, 0, PhonemeCode.P));
+        data.add(new Phoneme(null, 2, "S"));
+        data.add(new Phoneme(null, 1, "A"));
+        data.add(new Phoneme(null, 3, "T"));
+        data.add(new Phoneme(null, 0, "P"));
 
         setRecyclerView();
     }

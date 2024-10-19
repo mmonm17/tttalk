@@ -30,7 +30,7 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
     public void onBindViewHolder(@NonNull PhonemeViewHolder holder, int position) {
         Phoneme current = data.get(position);
         holder.setStar(current.getStarCount());
-        holder.setText(current.getCode().getStr());
+        holder.setText(current.getCode());
     }
 
     @Override
