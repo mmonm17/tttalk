@@ -133,7 +133,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/shape_rnd_rect_green"
+            android:src="@drawable/shape_rnd_rect_blue_thick"
 
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

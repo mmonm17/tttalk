@@ -1,6 +1,11 @@
 package com.t_t_talk;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -55,8 +60,29 @@ public class TextBoxComponent extends LinearLayout {
         });
 
         btn_mic.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "Mic button...", Toast.LENGTH_SHORT).show();
-            setCorrectFeedback();
+            Toast.makeText(getContext(), "Mic button for 3 secs", Toast.LENGTH_SHORT).show();
+
+            resetFeedback();
+
+            // Set the button tint to red
+            btn_mic.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.red)));
+
+            new CountDownTimer(3000, 50) {
+
+                @Override
+                public void onTick(long arg0) {
+                    // No action needed on each tick
+                }
+
+                @Override
+                public void onFinish() {
+                    // Change the tint to orange after the timer finishes
+                    btn_mic.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.orange)));
+                    // Change the feedback to check
+                    setCorrectFeedback();
+                }
+            }.start();
+
         });
 
     }
@@ -83,6 +109,12 @@ public class TextBoxComponent extends LinearLayout {
     public void setTypeRead(){
         et_user_input.setVisibility(INVISIBLE);
         tv_dynamic_text.setVisibility(VISIBLE);
+    }
+
+    public void resetFeedback(){
+        circular_feedback.setVisibility(GONE);
+        circular_feedback_check.setVisibility(GONE);
+        circular_feedback_close.setVisibility(GONE);
     }
 
     public void setCorrectFeedback(){

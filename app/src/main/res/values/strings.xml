@@ -36,4 +36,6 @@
     <string name="information">Information</string>
     <string name="strategies">Strategies</string>
 
+    <string name="sound">%1$s \"%2$s\"</string>
+
 </resources>
