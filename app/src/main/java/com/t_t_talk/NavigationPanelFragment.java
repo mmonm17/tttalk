@@ -17,11 +17,17 @@ import androidx.fragment.app.Fragment;
 
 public class NavigationPanelFragment extends Fragment {
     private boolean isSettingVisible = false, isNextVisible = false;
-
+    private boolean isEnglish = true;
     // Constructor (empty) - required for fragments
     public NavigationPanelFragment(boolean isSettingVisible, boolean isNextVisible) {
         this.isSettingVisible = isSettingVisible;
         this.isNextVisible = isNextVisible;
+    }
+
+    public NavigationPanelFragment(boolean isSettingVisible, boolean isNextVisible, boolean isEnglish) {
+        this.isSettingVisible = isSettingVisible;
+        this.isNextVisible = isNextVisible;
+        this.isEnglish = isEnglish;
     }
 
     @Nullable
@@ -62,7 +68,16 @@ public class NavigationPanelFragment extends Fragment {
 
         btnNext.setOnClickListener(v -> {
             // Handle next button click
+            Intent intent;
+            if(isEnglish){
 
+                intent = new Intent(this.getContext(), PhonemeSelectEnglish.class);
+            }
+            else{
+                intent = new Intent(this.getContext(), PhonemeSelectTagalog.class);
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
         });
 
         return view;
