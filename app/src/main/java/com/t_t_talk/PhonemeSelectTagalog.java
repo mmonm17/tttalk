@@ -42,6 +42,15 @@ public class PhonemeSelectTagalog extends AppCompatActivity {
         data.add(new Phoneme(null, 0, "BO"));
         data.add(new Phoneme(null, 1, "BU"));
         setRecyclerView();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_flag_en, new FlagIconFragment(R.drawable.img_flag_ph))
+                .commit();
     }
 
     private void setRecyclerView() {
