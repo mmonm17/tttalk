@@ -50,7 +50,7 @@ public class PhonemeSelectTagalog extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(this.data);
+        this.adapter = new PhonemeAdapter(PhonemeSelectTagalog.this, this.data, "Tagalog");
         this.recyclerView.setAdapter(this.adapter);
     }
 }

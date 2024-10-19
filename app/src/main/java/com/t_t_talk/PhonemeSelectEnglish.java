@@ -50,7 +50,7 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(this.data);
+        this.adapter = new PhonemeAdapter(PhonemeSelectEnglish.this, this.data, "English");
         this.recyclerView.setAdapter(this.adapter);
     }
 }
