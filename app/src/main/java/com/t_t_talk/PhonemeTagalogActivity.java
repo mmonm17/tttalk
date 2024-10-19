@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -46,18 +47,15 @@ public class PhonemeTagalogActivity extends AppCompatActivity {
             mic_animation.setVisibility(View.GONE);
         });
 
-        String[] sentences = new String[]{
-                "Ibabato ni Babols ang bato.",
-                "Ibabato ni Babols ang bato.",
-                "Ibabato ni Babols ang bato.",
-                "Ibabato ni Babols ang bato.",
-        };
+        Intent i = getIntent();
+        String[] sentences = i.getStringArrayExtra("Sentences");
+        String highlighted = i.getStringExtra("PhonemeCode");
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, "Ba", PhonemeTagalogActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, PhonemeTagalogActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()

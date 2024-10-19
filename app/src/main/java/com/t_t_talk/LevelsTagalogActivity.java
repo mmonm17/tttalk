@@ -34,12 +34,19 @@ public class LevelsTagalogActivity extends AppCompatActivity {
             return insets;
         });
 
+        String[] sentences = new String[]{
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+                "Ibabato ni Babols ang bato.",
+        };
+
         ArrayList<Phoneme> phonemes = new ArrayList<>();
-        phonemes.add(new Phoneme(null, 2, "BA"));
-        phonemes.add(new Phoneme(null, 1, "BE"));
-        phonemes.add(new Phoneme(null, 3, "BI"));
-        phonemes.add(new Phoneme(null, 0, "BO"));
-        phonemes.add(new Phoneme(null, 1, "BU"));
+        phonemes.add(new Phoneme(sentences, 2, "BA"));
+        phonemes.add(new Phoneme(sentences, 1, "BE"));
+        phonemes.add(new Phoneme(sentences, 3, "BI"));
+        phonemes.add(new Phoneme(sentences, 0, "BO"));
+        phonemes.add(new Phoneme(sentences, 1, "BU"));
 
         data = new ArrayList<>();
         data.add(new Level(1, 3, Color.rgb(249, 222, 104), phonemes));

@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.t_t_talk.DataTypes.Phoneme;
 
 public class PhonemeEnglishActivity extends AppCompatActivity {
     TextView txt_lvl;
@@ -48,15 +51,11 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // String[] sentences = Phoneme.getSentences();
-        String[] sentences = new String[]{
-                "Sam the cat saw a snake in the grass",
-                "The snake was small and slid fast",
-                "Sam sat and watched the snake go by",
-                "The snake said, \"sss,\" and Sam said, \"Hi!\""
-        };
+        Intent i = getIntent();
+        String[] sentences = i.getStringArrayExtra("Sentences");
+        String highlighted = i.getStringExtra("PhonemeCode");
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, "s", PhonemeEnglishActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, PhonemeEnglishActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()
