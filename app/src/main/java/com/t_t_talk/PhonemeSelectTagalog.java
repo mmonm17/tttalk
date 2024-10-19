@@ -45,7 +45,7 @@ public class PhonemeSelectTagalog extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(PhonemeSelectTagalog.this,true, false))
                 .commit();
         getSupportFragmentManager()
                 .beginTransaction()

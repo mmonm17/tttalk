@@ -89,7 +89,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, true, isEnglish))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(ProgressActivity.this,false, true, isEnglish))
                 .commit();
     }
 }

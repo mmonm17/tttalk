@@ -1,11 +1,7 @@
 package com.t_t_talk;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +9,23 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public class NavigationPanelFragment extends Fragment {
     private boolean isSettingVisible = false, isNextVisible = false;
     private boolean isEnglish = true;
+    private AppCompatActivity activity;
+
     // Constructor (empty) - required for fragments
-    public NavigationPanelFragment(boolean isSettingVisible, boolean isNextVisible) {
+    public NavigationPanelFragment(AppCompatActivity activity, boolean isSettingVisible, boolean isNextVisible) {
+        this.activity = activity;
         this.isSettingVisible = isSettingVisible;
         this.isNextVisible = isNextVisible;
     }
 
-    public NavigationPanelFragment(boolean isSettingVisible, boolean isNextVisible, boolean isEnglish) {
+    public NavigationPanelFragment(AppCompatActivity activity, boolean isSettingVisible, boolean isNextVisible, boolean isEnglish) {
+        this.activity = activity;
         this.isSettingVisible = isSettingVisible;
         this.isNextVisible = isNextVisible;
         this.isEnglish = isEnglish;
@@ -68,16 +69,7 @@ public class NavigationPanelFragment extends Fragment {
 
         btnNext.setOnClickListener(v -> {
             // Handle next button click
-            Intent intent;
-            if(isEnglish){
-
-                intent = new Intent(this.getContext(), PhonemeSelectEnglish.class);
-            }
-            else{
-                intent = new Intent(this.getContext(), PhonemeSelectTagalog.class);
-            }
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
+            this.activity.finish();
         });
 
         return view;

@@ -61,7 +61,7 @@ public class PhonemeTagalogActivity extends AppCompatActivity {
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(PhonemeTagalogActivity.this,true, false))
                 .commit();
 
         getSupportFragmentManager()
