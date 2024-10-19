@@ -36,7 +36,7 @@ public class LevelsEnglishActivity extends AppCompatActivity {
 
         String[] sentences = new String[]{
                 "Sam the cat saw a snake in the grass",
-                "The snake was small and slid fast",
+                "The snake slid fast",
                 "Sam sat and watched the snake go by",
                 "The snake said, \"sss,\" and Sam said, \"Hi!\""
         };

@@ -81,6 +81,7 @@ public class TextBoxComponent extends LinearLayout {
                     btn_mic.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.orange)));
                     // Change the feedback to check
                     setCorrectFeedback();
+                    Toast.makeText(getContext(), "Complete all 4 to star up", Toast.LENGTH_SHORT).show();
                 }
             }.start();
 
