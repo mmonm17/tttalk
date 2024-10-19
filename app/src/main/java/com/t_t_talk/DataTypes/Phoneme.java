@@ -1,9 +1,15 @@
 package com.t_t_talk.DataTypes;
 
-public class Phoneme {
+import java.io.Serializable;
+
+public class Phoneme implements Serializable {
     private String code;
     private String[] sentences;
     private int starCount;
+
+    public Phoneme() {
+
+    }
 
     public Phoneme(String[] sentences, int starCount, String code) {
         this.sentences = sentences;
