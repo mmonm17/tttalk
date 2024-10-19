@@ -44,16 +44,14 @@ public class NavigationPanelFragment extends Fragment {
 
         // Set up click listeners if needed
         btnInfo.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), InformationActivity.class);
+            Intent intent = new Intent(this.getContext(), InformationActivity.class);
             startActivity(intent);
-            getActivity().finish();
         });
 
         btnHome.setOnClickListener(v -> {
-            // Handle home button click
-            Intent intent = new Intent(getContext(), LanguageActivity.class);
+            Intent intent = new Intent(this.getContext(), LanguageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            getActivity().finish();
         });
 
         btnSettings.setOnClickListener(v -> {
