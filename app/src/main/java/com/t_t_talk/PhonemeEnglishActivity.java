@@ -53,7 +53,7 @@ public class PhonemeEnglishActivity extends AppCompatActivity {
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, PhonemeEnglishActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "English", PhonemeEnglishActivity.this);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()

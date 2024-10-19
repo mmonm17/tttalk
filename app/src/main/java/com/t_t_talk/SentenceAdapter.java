@@ -19,8 +19,9 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
     String highlighted;
     Context context;
     EventCallback callback;
+    String language;
 
-    public SentenceAdapter(String[] sentences, String highlighted, AppCompatActivity activity){
+    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity){
         this.sentences = sentences;
         this.sentenceCompletions = new boolean[this.sentences.length];
 
@@ -35,6 +36,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
         }
 
         this.highlighted = highlighted;
+        this.language = language;
         this.context = activity;
         this.callback = new EventCallback() {
             @Override
@@ -45,6 +47,8 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
                 if(checkAllForCompletion()) {
                     Intent i = new Intent(context, ProgressActivity.class);
                     i.putExtra("star_count", computeStars());
+                    i.putExtra("language", language);
+                    i.putExtra("phoneme", highlighted);
                     context.startActivity(i);
                 }
             }
