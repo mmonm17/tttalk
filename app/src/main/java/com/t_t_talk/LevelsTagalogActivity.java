@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t_t_talk.DataTypes.Level;
+import com.t_t_talk.DataTypes.Phoneme;
 
 import java.util.ArrayList;
 
@@ -33,14 +34,21 @@ public class LevelsTagalogActivity extends AppCompatActivity {
             return insets;
         });
 
+        ArrayList<Phoneme> phonemes = new ArrayList<>();
+        phonemes.add(new Phoneme(null, 2, "BA"));
+        phonemes.add(new Phoneme(null, 1, "BE"));
+        phonemes.add(new Phoneme(null, 3, "BI"));
+        phonemes.add(new Phoneme(null, 0, "BO"));
+        phonemes.add(new Phoneme(null, 1, "BU"));
+
         data = new ArrayList<>();
-        data.add(new Level(1, 3, Color.rgb(249, 222, 104), null));
-        data.add(new Level(2, 3, Color.rgb(179, 179, 179), null));
-        data.add(new Level(3, 4, Color.rgb(238, 118, 24), null));
-        data.add(new Level(4, 4, Color.rgb(112, 176, 69), null));
-        data.add(new Level(5, 4, Color.rgb(182, 213, 240), null));
-        data.add(new Level(6, 5, Color.rgb(135, 162, 122), null));
-        data.add(new Level(7, 5, Color.rgb(219, 153, 5), null));
+        data.add(new Level(1, 3, Color.rgb(249, 222, 104), phonemes));
+        data.add(new Level(2, 3, Color.rgb(179, 179, 179), phonemes));
+        data.add(new Level(3, 4, Color.rgb(238, 118, 24), phonemes));
+        data.add(new Level(4, 4, Color.rgb(112, 176, 69), phonemes));
+        data.add(new Level(5, 4, Color.rgb(182, 213, 240), phonemes));
+        data.add(new Level(6, 5, Color.rgb(135, 162, 122), phonemes));
+        data.add(new Level(7, 5, Color.rgb(219, 153, 5), phonemes));
 
         curved_levels = findViewById(R.id.curved_levels);
         curved_levels.setText("MGA LEBEL");
@@ -54,8 +62,6 @@ public class LevelsTagalogActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
                 .commit();
-
-
     }
 
     private void setupRecyclerView() {
@@ -64,7 +70,7 @@ public class LevelsTagalogActivity extends AppCompatActivity {
         this.layoutManager = new LinearLayoutManager(this);
         this.level_display.setLayoutManager(layoutManager);
 
-        this.adapter = new LevelBoxAdapter(this.data, "Tagalog");
+        this.adapter = new LevelBoxAdapter(LevelsTagalogActivity.this, this.data, "Tagalog");
         this.level_display.setAdapter(this.adapter);
     }
 }

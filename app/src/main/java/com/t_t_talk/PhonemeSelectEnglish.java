@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -35,11 +36,10 @@ public class PhonemeSelectEnglish extends AppCompatActivity {
         level_display = findViewById(R.id.level_display);
         level_display.setText("Level 1");
 
-        data = new ArrayList<>();
-        data.add(new Phoneme(null, 2, "S"));
-        data.add(new Phoneme(null, 1, "A"));
-        data.add(new Phoneme(null, 3, "T"));
-        data.add(new Phoneme(null, 0, "P"));
+        Intent i = getIntent();
+        Bundle phonemes = i.getBundleExtra("Phonemes");
+        assert phonemes != null;
+        data = (ArrayList<Phoneme>) phonemes.getSerializable("Phonemes");
 
         setRecyclerView();
         getSupportFragmentManager()

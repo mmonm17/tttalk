@@ -68,8 +68,8 @@ public class CurvedTextView extends View {
         invalidate();
 
         float textLen = (float) text.length();
-        int left = (int) (150.0 - textLen * 12.5); //50  //300
-        int right = (int) (textLen / 8.0 * 950.0); //950 //937
+        int left = (int) (150.0 - textLen * 12.5);
+        int right = (int) (textLen / 8.0 * 950.0);
 
         this.rectangle = new RectF(left, 150, right, 400);
     }

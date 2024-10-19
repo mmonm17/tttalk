@@ -20,4 +20,8 @@ public class LevelViewHolder extends RecyclerView.ViewHolder {
     public void setBackgroundColor(int color) {
         this.textBox.setBackgroundColor(color);
     }
+
+    public void setOnclickListener(View.OnClickListener listener) {
+        textBox.setOnClickListener(listener);
+    }
 }

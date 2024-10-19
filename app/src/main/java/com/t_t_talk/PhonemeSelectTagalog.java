@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -35,12 +36,11 @@ public class PhonemeSelectTagalog extends AppCompatActivity {
         level_display = findViewById(R.id.level_display);
         level_display.setText("Lebel 1");
 
-        data = new ArrayList<>();
-        data.add(new Phoneme(null, 2, "BA"));
-        data.add(new Phoneme(null, 1, "BE"));
-        data.add(new Phoneme(null, 3, "BI"));
-        data.add(new Phoneme(null, 0, "BO"));
-        data.add(new Phoneme(null, 1, "BU"));
+        Intent i = getIntent();
+        Bundle phonemes = i.getBundleExtra("Phonemes");
+        assert phonemes != null;
+        data = (ArrayList<Phoneme>) phonemes.getSerializable("Phonemes");
+
         setRecyclerView();
 
         getSupportFragmentManager()
