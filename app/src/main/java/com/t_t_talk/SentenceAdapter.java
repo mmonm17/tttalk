@@ -17,7 +17,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
     boolean[] sentenceCompletions;
     int[] mistakeCount;
     String highlighted;
-    Context context;
+    AppCompatActivity context;
     EventCallback callback;
     String language;
 
@@ -50,6 +50,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceView> {
                     i.putExtra("language", language);
                     i.putExtra("phoneme", highlighted);
                     context.startActivity(i);
+                    context.finish();
                 }
             }
         };

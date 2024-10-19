@@ -67,7 +67,7 @@ public class LevelsTagalogActivity extends AppCompatActivity {
                 .commit();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LevelsTagalogActivity.this,true, false))
                 .commit();
     }
 

@@ -44,7 +44,8 @@ public class ProgressActivity extends AppCompatActivity {
         // Get the number of stars from intent
         Intent intent = getIntent();
         int starCount = intent.getIntExtra("star_count", 3); // Default to 3 stars
-        String soundText = (intent.getStringExtra("language").equals("English")) ? "Sound" : "Tunog";
+        boolean isEnglish = intent.getStringExtra("language").equals("English");
+        String soundText = (isEnglish) ? "Sound" : "Tunog";
 
         //Set text display
         txt_sound.setText(getString(R.string.sound, soundText, intent.getStringExtra("phoneme")));
@@ -88,7 +89,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(true, false))
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(ProgressActivity.this,false, true, isEnglish))
                 .commit();
     }
 }
