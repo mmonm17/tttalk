@@ -20,7 +20,7 @@ public class PhonemeViewHolder extends RecyclerView.ViewHolder {
 
     public void setStar(int starNum) {
         for(int i = 0; i < 3; i++) {
-            if(i == starNum) {
+            if(i + 1 == starNum) {
                 this.layout_stars[i].setVisibility(View.VISIBLE);
             } else {
                 this.layout_stars[i].setVisibility(View.GONE);
