@@ -1,10 +1,7 @@
 package com.t_t_talk;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -19,12 +16,16 @@ import androidx.cardview.widget.CardView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import java.util.Random;
+
 public class TextBoxComponent extends LinearLayout {
+    private boolean submitted;
+    private int position;
     private TextView tv_dynamic_text;
     private EditText et_user_input;
     private CardView btn_play;
     private CardView btn_mic;
-
+    private SentenceAdapter.EventCallback callback;
     private ImageView circular_feedback;
     private CardView circular_feedback_check;
     private CardView circular_feedback_close;
@@ -84,7 +85,7 @@ public class TextBoxComponent extends LinearLayout {
             }.start();
 
         });
-
+        submitted = false;
     }
 
     // CUSTOM METHODS (Programmable from the caller)
@@ -115,18 +116,25 @@ public class TextBoxComponent extends LinearLayout {
         circular_feedback.setVisibility(GONE);
         circular_feedback_check.setVisibility(GONE);
         circular_feedback_close.setVisibility(GONE);
+        submitted = false;
     }
 
     public void setCorrectFeedback(){
         circular_feedback.setVisibility(VISIBLE);
         circular_feedback_check.setVisibility(VISIBLE);
         circular_feedback_close.setVisibility(GONE);
+        submitted = true;
+
+        Random random = new Random();
+        int mistakes = random.nextInt(2);
+        callback.onClick(this.position, mistakes);
     }
 
     public void setIncorrectFeedback(){
         circular_feedback.setVisibility(VISIBLE);
         circular_feedback_check.setVisibility(GONE);
         circular_feedback_close.setVisibility(VISIBLE);
+        submitted = true;
     }
 
     public void setBtnPlayColor(int color){
@@ -155,5 +163,17 @@ public class TextBoxComponent extends LinearLayout {
         }
 
         tv_dynamic_text.setText(spannableString);
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public boolean getSubmitted() {
+        return submitted;
+    }
+
+    public void setCallback(SentenceAdapter.EventCallback callback) {
+        this.callback = callback;
     }
 }

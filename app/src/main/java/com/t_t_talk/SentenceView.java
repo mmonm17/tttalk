@@ -13,4 +13,8 @@ public class SentenceView extends RecyclerView.ViewHolder {
         super(itemView);
         sentenceViewBox = itemView.findViewById(R.id.sentence_view_box);
     }
+
+    public boolean getSubmitted() {
+        return sentenceViewBox.getSubmitted();
+    }
 }
