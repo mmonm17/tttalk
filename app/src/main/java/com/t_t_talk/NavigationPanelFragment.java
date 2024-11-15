@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +9,26 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public class NavigationPanelFragment extends Fragment {
     private boolean isSettingVisible = false, isNextVisible = false;
+    private boolean isEnglish = true;
+    private AppCompatActivity activity;
 
     // Constructor (empty) - required for fragments
-    public NavigationPanelFragment(boolean isSettingVisible, boolean isNextVisible) {
+    public NavigationPanelFragment(AppCompatActivity activity, boolean isSettingVisible, boolean isNextVisible) {
+        this.activity = activity;
         this.isSettingVisible = isSettingVisible;
         this.isNextVisible = isNextVisible;
+    }
+
+    public NavigationPanelFragment(AppCompatActivity activity, boolean isSettingVisible, boolean isNextVisible, boolean isEnglish) {
+        this.activity = activity;
+        this.isSettingVisible = isSettingVisible;
+        this.isNextVisible = isNextVisible;
+        this.isEnglish = isEnglish;
     }
 
     @Nullable
@@ -39,15 +51,25 @@ public class NavigationPanelFragment extends Fragment {
 
         // Set up click listeners if needed
         btnInfo.setOnClickListener(v -> {
-            // Handle info button click
+            Intent intent = new Intent(this.getContext(), InformationActivity.class);
+            startActivity(intent);
         });
 
         btnHome.setOnClickListener(v -> {
-            // Handle home button click
+            Intent intent = new Intent(this.getContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
 
         btnSettings.setOnClickListener(v -> {
             // Handle settings button click
+            SettingsDialog settingsDialog = new SettingsDialog(this.getContext());
+            settingsDialog.show();
+        });
+
+        btnNext.setOnClickListener(v -> {
+            // Handle next button click
+            this.activity.finish();
         });
 
         return view;

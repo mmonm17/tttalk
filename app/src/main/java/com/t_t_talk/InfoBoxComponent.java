@@ -1,7 +1,6 @@
 package com.t_t_talk;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -9,10 +8,11 @@ import android.text.style.BulletSpan;
 import android.text.style.LeadingMarginSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.*;
-import androidx.cardview.widget.CardView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
 public class InfoBoxComponent extends RelativeLayout {
     private TextView title;
@@ -36,7 +36,7 @@ public class InfoBoxComponent extends RelativeLayout {
 
     private void init(Context context) {
         // Inflate the layout
-        LayoutInflater.from(context).inflate(R.layout.info_box_component, this, true);
+        LayoutInflater.from(context).inflate(R.layout.component_info_box, this, true);
 
         title = findViewById(R.id.title);
         content = findViewById(R.id.content);

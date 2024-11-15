@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +32,7 @@ public class FlagIconFragment extends Fragment{
 
         img_flag_stroke.setOnClickListener(
                 v -> {
-                    Intent intent = new Intent(getActivity(), LanguageActivity.class);
+                    Intent intent = new Intent(getActivity(), LanguageSelectActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     getActivity().finish();

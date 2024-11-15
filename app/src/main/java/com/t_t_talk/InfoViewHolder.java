@@ -5,8 +5,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.BulletSpan;
 import android.text.style.LeadingMarginSpan;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 

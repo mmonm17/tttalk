@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,11 +33,12 @@ public class MainActivity extends AppCompatActivity {
         }
         //should probably have a screen explaining why this is necessary...
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         btn_start = findViewById(R.id.btn_start);
 
         btn_start.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, PhonemeTagalogActivity.class);
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });

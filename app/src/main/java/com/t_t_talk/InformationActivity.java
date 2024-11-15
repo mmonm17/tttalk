@@ -2,6 +2,9 @@ package com.t_t_talk;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,16 +12,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import android.view.View;
-import android.widget.*;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import com.t_t_talk.DataTypes.Info;
+
+import java.util.ArrayList;
 
 public class InformationActivity extends AppCompatActivity {
     String[] bullets = {
@@ -118,6 +117,11 @@ public class InformationActivity extends AppCompatActivity {
         strategies_section = findViewById(R.id.strategies_section);
         partners_section = findViewById(R.id.partners_section);
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(InformationActivity.this, true, false))
+                .commit();
+
         setUpRecyclerView(data_info);
 
         info_section.setOnClickListener(v -> {
@@ -130,6 +134,12 @@ public class InformationActivity extends AppCompatActivity {
             strategies_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
             partners_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
             partners_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, true))
+//                    .commit();
+
         });
 
         strategies_section.setOnClickListener(v -> {
@@ -142,6 +152,11 @@ public class InformationActivity extends AppCompatActivity {
             strategies_icon.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
             partners_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
             partners_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
+
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, true))
+//                    .commit();
         });
 
         partners_section.setOnClickListener(v -> {
@@ -153,6 +168,11 @@ public class InformationActivity extends AppCompatActivity {
             strategies_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
             partners_text.setTextColor(ContextCompat.getColor(this, R.color.primary));
             partners_icon.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
+
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, false))
+//                    .commit();
 
         });
 

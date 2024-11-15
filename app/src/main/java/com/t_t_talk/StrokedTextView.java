@@ -4,11 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
-
-import com.t_t_talk.R;
 
 public class StrokedTextView extends androidx.appcompat.widget.AppCompatTextView {
 

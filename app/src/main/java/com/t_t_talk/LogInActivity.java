@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -35,7 +34,7 @@ public class LogInActivity extends AppCompatActivity {
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LogInActivity.this, LanguageActivity.class);
+                Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -46,7 +45,7 @@ public class LogInActivity extends AppCompatActivity {
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LogInActivity.this, LanguageActivity.class);
+                Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
                 startActivity(intent);
                 finish();
             }
