@@ -2,7 +2,9 @@ package com.t_t_talk;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -19,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import java.util.Map;
 import java.util.Random;
 
 public class SentenceBoxComponent extends LinearLayout {
@@ -32,6 +35,13 @@ public class SentenceBoxComponent extends LinearLayout {
     private ImageView circular_feedback;
     private CardView circular_feedback_check;
     private CardView circular_feedback_close;
+
+
+    private Map<String, String> phonemeAudioMap;
+
+    public void setPhonemeAudioMap(Map<String, String> phonemeAudioMap) {
+        this.phonemeAudioMap = phonemeAudioMap;
+    }
 
     public SentenceBoxComponent(@NonNull Context context) {
         super(context);
@@ -59,9 +69,35 @@ public class SentenceBoxComponent extends LinearLayout {
         circular_feedback_check = findViewById(R.id.circular_feedback_check);
         circular_feedback_close = findViewById(R.id.circular_feedback_close);
 
-        btn_play.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "Reading text...", Toast.LENGTH_SHORT).show();
-        });
+        /*btn_play.setOnClickListener(view -> {
+            if (phonemeAudioMap == null) {
+                Toast.makeText(getContext(), "Audio map not available", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String phoneme = tv_dynamic_text.getText().toString(); // Get phoneme dynamically
+            String key = "Tagalog_" + phoneme; // Example: hardcoded "Tagalog" for now
+            String audioFileName = phonemeAudioMap.get(key);
+
+            if (audioFileName != null) {
+                int resId = getContext().getResources().getIdentifier(audioFileName.replace(".mp3", ""), "raw", getContext().getPackageName());
+                if (resId != 0) {
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), resId);
+                    mediaPlayer.setOnCompletionListener(mp -> mp.release());
+                    mediaPlayer.start();
+                } else {
+                    *//*TextToSpeech tts = new TextToSpeech(context, status -> {
+                        if (status == TextToSpeech.SUCCESS) {
+                            tts.speak("Audio unavailable for " + phoneme, TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                    });*//*
+                    Toast.makeText(getContext(), "Audio file not found", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "No audio mapping for this sentence", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
 
         btn_mic.setOnClickListener(view -> {
             Toast.makeText(getContext(), "Mic button for 3 secs", Toast.LENGTH_SHORT).show();
@@ -102,6 +138,9 @@ public class SentenceBoxComponent extends LinearLayout {
         btn_mic.setOnClickListener(listener);
     }
      */
+    public void setPlayButtonListener(OnClickListener listener) {
+        btn_play.setOnClickListener(listener); // Delegate playback logic to adapter
+    }
 
     public void setText(String sentence) {
         tv_dynamic_text.setText(sentence);

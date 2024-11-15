@@ -49,6 +49,11 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
 
+        sentences[0] = "a 1Ang ay isang tunog sa wikang Filipino.";
+        sentences[1] = "a 2Ang ay isang tunog sa wikang Filipino.";
+        sentences[2] = "a 3Ang ay isang tunog sa wikang Filipino.";
+        sentences[3] = "a 4Ang ay isang tunog sa wikang Filipino.";
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
