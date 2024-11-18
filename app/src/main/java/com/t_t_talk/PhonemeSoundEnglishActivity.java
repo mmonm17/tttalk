@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PhonemeSoundEnglishActivity extends AppCompatActivity {
     TextView txt_lvl;
+    TextView txt_title;
     private CardView mic_animation;
     RecyclerView recyclerView;
     private CardView btn_mic;
@@ -33,6 +34,7 @@ public class PhonemeSoundEnglishActivity extends AppCompatActivity {
         });
 
         txt_lvl = findViewById(R.id.txt_lvl);
+        txt_title = findViewById(R.id.txt_title);
         mic_animation = findViewById(R.id.mic_animation);
         btn_mic = findViewById(R.id.btn_mic);
         txt_lvl.setText("Level 1");
@@ -52,6 +54,7 @@ public class PhonemeSoundEnglishActivity extends AppCompatActivity {
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
+        txt_title.setText(String.format("\" %s \" ", highlighted.toUpperCase()));
 
         SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "English", PhonemeSoundEnglishActivity.this);
         recyclerView.setAdapter(sentenceAdapter);

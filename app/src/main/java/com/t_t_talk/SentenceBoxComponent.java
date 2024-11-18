@@ -69,37 +69,8 @@ public class SentenceBoxComponent extends LinearLayout {
         circular_feedback_check = findViewById(R.id.circular_feedback_check);
         circular_feedback_close = findViewById(R.id.circular_feedback_close);
 
-        /*btn_play.setOnClickListener(view -> {
-            if (phonemeAudioMap == null) {
-                Toast.makeText(getContext(), "Audio map not available", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
-            String phoneme = tv_dynamic_text.getText().toString(); // Get phoneme dynamically
-            String key = "Tagalog_" + phoneme; // Example: hardcoded "Tagalog" for now
-            String audioFileName = phonemeAudioMap.get(key);
-
-            if (audioFileName != null) {
-                int resId = getContext().getResources().getIdentifier(audioFileName.replace(".mp3", ""), "raw", getContext().getPackageName());
-                if (resId != 0) {
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), resId);
-                    mediaPlayer.setOnCompletionListener(mp -> mp.release());
-                    mediaPlayer.start();
-                } else {
-                    *//*TextToSpeech tts = new TextToSpeech(context, status -> {
-                        if (status == TextToSpeech.SUCCESS) {
-                            tts.speak("Audio unavailable for " + phoneme, TextToSpeech.QUEUE_FLUSH, null, null);
-                        }
-                    });*//*
-                    Toast.makeText(getContext(), "Audio file not found", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getContext(), "No audio mapping for this sentence", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-
-        btn_mic.setOnClickListener(view -> {
+        /*btn_mic.setOnClickListener(view -> {
             Toast.makeText(getContext(), "Mic button for 3 secs", Toast.LENGTH_SHORT).show();
 
             resetFeedback();
@@ -124,8 +95,12 @@ public class SentenceBoxComponent extends LinearLayout {
                 }
             }.start();
 
-        });
+        });*/
         submitted = false;
+    }
+
+    public void setMicButtonListener(OnClickListener listener) {
+        btn_mic.setOnClickListener(listener);
     }
 
     public void setPlayButtonListener(OnClickListener listener) {
@@ -172,6 +147,10 @@ public class SentenceBoxComponent extends LinearLayout {
 
     public void setBtnPlayColor(int color){
         btn_play.setCardBackgroundColor(color);
+    }
+
+    public void setBtnMicColor(int color){
+        btn_mic.setCardBackgroundColor(color);
     }
 
     public void setHighlightedText(Context context, String text, String substring) {

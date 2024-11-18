@@ -1,8 +1,11 @@
 package com.t_t_talk;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +31,14 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     AppCompatActivity context;
     EventCallback callback;
     String language;
-    String phoneme;
-    String language_lowercase;
     private Map<String, String> phonemeAudioMap = new HashMap<>();
+    int currentlyPlaying = -1;
+    boolean isPlaying;
+    int currentRecording = -1;
+    boolean isRecording;
+    private SentenceViewHolder currentlySpeakingHolder;
+    private SentenceViewHolder previousSpeakingHolder;
+    private Handler uiHandler;
 
     public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity){
         this.sentences = sentences;
@@ -80,19 +88,16 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             String sentence = sentences[j];
             String baseKey = language + "_" + phoneme;
 
-            // Use the sentence index (starting from 1) as the variant index
-            int variantIndex = j + 1; // Start with _1 for the first sentence
+            int variantIndex = j + 1;
             String variantKey = baseKey + "_" + variantIndex;
             String audioFileName = variantKey + ".mp3";
 
-            // Map the variantKey to its corresponding audio file
             phonemeAudioMap.put(variantKey, audioFileName);
             Log.d("Audio Map", "Mapped: " + variantKey + " -> " + audioFileName);
         }
     }
 
     private void initializeTextToSpeech() {
-        // Initialize TTS only if it is not already initialized
         if (textToSpeech == null) {
             textToSpeech = new TextToSpeech(context, status -> {
                 if (status == TextToSpeech.SUCCESS) {
@@ -103,18 +108,51 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                         Log.w("TTS", "Tagalog TTS not available, falling back to default locale");
                         textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
                     }
+                    uiHandler = new Handler(context.getMainLooper());
+                    // Set the UtteranceProgressListener here
+                    textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override
+                        public void onStart(String utteranceId) {
+                            Log.d("TTS", "Speech started for utterance ID: " + utteranceId);
+                            currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
+                        }
 
-                    Log.d("TTS", "TextToSpeech engine initialized successfully");
+                        @Override
+                        public void onDone(String utteranceId) {
+                            Log.d("TTS", "Speech completed for utterance ID: " + utteranceId);
+                            // Reset button color or handle post-speech logic
+                            context.runOnUiThread(() -> {
+                                isPlaying = false;
+                                currentlyPlaying = -1;
+                                currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
+                            });
+                        }
+
+                        @Override
+                        public void onStop(String utteranceId, boolean interrupted) {
+                            super.onStop(utteranceId, interrupted);
+                            Log.d("TTS", "Speech stopped for utterance ID: " + utteranceId);
+                            uiHandler.post(() -> {
+                                isPlaying = false;
+                                currentlyPlaying = -1;
+                                previousSpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
+                            });
+                        }
+
+                        @Override
+                        public void onError(String utteranceId) {
+                            Log.e("TTS", "Error occurred for utterance ID: " + utteranceId);
+                        }
+                    });
                 } else {
                     Log.e("TTS", "TextToSpeech initialization failed");
                 }
             });
         } else {
-            // Already initialized, log it or update the state as needed
             Log.d("TTS", "TextToSpeech already initialized");
         }
     }
-
+    
 
     @NonNull
     @Override
@@ -135,12 +173,33 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         holder.sentenceViewBox.setPosition(position);
 
         holder.sentenceViewBox.setPlayButtonListener(view -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
+            if(isPlaying && mediaPlayer != null) {
+                if (currentlyPlaying == holder.getAdapterPosition()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    isPlaying = false;
+                    currentlyPlaying = -1;
+                    holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
+                    return;
+                } else {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    isPlaying = false;
+                    currentlyPlaying = -1;
+                    currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
+                }
             }
+            else if (isPlaying) {
 
+            }
+            previousSpeakingHolder = currentlySpeakingHolder;
+            currentlySpeakingHolder = holder;
+            isPlaying = true;
+            currentlyPlaying = holder.getAdapterPosition();
+
+            holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
             String phoneme = highlighted.toLowerCase();
             language = language.toLowerCase();
             String baseKey = language + "_" + phoneme;
@@ -149,7 +208,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             String variantKey = baseKey + "_" + variantIndex;
             String audioFileName = phonemeAudioMap.get(variantKey);
 
-            Log.d("PlayButton", "Variant Key: " + variantKey + ", File: " + audioFileName);
 
             if (audioFileName != null) {
                 int resId = context.getResources().getIdentifier(audioFileName.replace(".mp3", ""), "raw", context.getPackageName());
@@ -158,31 +216,47 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     mediaPlayer.setOnCompletionListener(mp -> {
                         mp.release();
                         mediaPlayer = null;
+                        isPlaying = false;
+                        currentlyPlaying = -1;
+                        holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                     });
                     mediaPlayer.start();
                     playedAudio = true;
                 } else {
-                    Toast.makeText(context, "Audio file not found in resources: " + audioFileName, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Audio file not found in resources: " + audioFileName, Toast.LENGTH_SHORT).show();
                     playedAudio = false;
                 }
             } else {
-                Toast.makeText(context, "Audio mapping not found for " + variantKey, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Audio mapping not found for " + variantKey, Toast.LENGTH_SHORT).show();
                 playedAudio = false;
             }
 
             if (!playedAudio) {
                 Log.d("TTS", "Fallback to TextToSpeech");
-
                 if (textToSpeech != null) {
-                    textToSpeech.speak(current, TextToSpeech.QUEUE_FLUSH, null, "TTS_AudioUnavailable");
-                    Log.d("TTS", "Speaking text: " + current);
-                } else {
-                    Log.e("TTS", "TextToSpeech not initialized yet.");
+                    textToSpeech.speak(current, TextToSpeech.QUEUE_FLUSH, null, "TTS_" + position);
                 }
             }
         });
 
+        holder.sentenceViewBox.setMicButtonListener(view -> {
+            //check if another component is playing
+            //check if the component is already submitted
+            //check if another component is recording
 
+
+            holder.sentenceViewBox.resetFeedback();
+            //holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
+            holder.sentenceViewBox.setCorrectFeedback();
+                Toast.makeText(context, "Mic button clicked for position " + position, Toast.LENGTH_SHORT).show();
+
+                // Add recording logic here
+                startRecordingForSentence(position);
+        });
+    }
+
+    private void startRecordingForSentence(int position) {
+        Toast.makeText(context, "Recording for sentence " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
