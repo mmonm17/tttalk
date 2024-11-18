@@ -1,9 +1,14 @@
 package com.t_t_talk;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -16,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -39,6 +46,9 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     private SentenceViewHolder currentlySpeakingHolder;
     private SentenceViewHolder previousSpeakingHolder;
     private Handler uiHandler;
+
+    private MediaRecorder mediaRecorder;
+    private Uri audioUri;
 
     public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity){
         this.sentences = sentences;
@@ -152,7 +162,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             Log.d("TTS", "TextToSpeech already initialized");
         }
     }
-    
+
 
     @NonNull
     @Override
@@ -241,22 +251,81 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
 
         holder.sentenceViewBox.setMicButtonListener(view -> {
             //check if another component is playing
-            //check if the component is already submitted
+            //check if the component is already submitted -> might remove this tbh
             //check if another component is recording
 
+            if(isPlaying || (isRecording && currentRecording != holder.getAdapterPosition()) || holder.sentenceViewBox.getSubmitted()) {
+                return;
+            }
 
-            holder.sentenceViewBox.resetFeedback();
-            //holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
-            holder.sentenceViewBox.setCorrectFeedback();
-                Toast.makeText(context, "Mic button clicked for position " + position, Toast.LENGTH_SHORT).show();
+            if (isRecording) {
+                stopRecording();
+                holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.orange));
+                isRecording = false;
+            } else {
+                isRecording = true;
+                currentRecording = holder.getAdapterPosition();
+                holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
+                //holder.sentenceViewBox.resetFeedback();
+                //holder.sentenceViewBox.setCorrectFeedback();
 
-                // Add recording logic here
                 startRecordingForSentence(position);
+            }
         });
     }
 
     private void startRecordingForSentence(int position) {
-        Toast.makeText(context, "Recording for sentence " + position, Toast.LENGTH_SHORT).show();
+        // Get the content resolver
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "sentence_" + position + ".3gp"); // Display name
+        values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/3gpp"); // Audio format
+        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_MUSIC); // Save in Music folder
+
+        // Insert into MediaStore to get a Uri
+        audioUri = context.getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+
+        if (audioUri == null) {
+            Log.e("Recording", "Failed to create new MediaStore entry");
+            return;
+        }
+
+        try {
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecorder.setOutputFile(context.getContentResolver().openFileDescriptor(audioUri, "w").getFileDescriptor()); // Output to MediaStore URI
+
+            mediaRecorder.prepare();
+            mediaRecorder.start();
+            Log.d("Recording", "Recording started for sentence " + position);
+            Toast.makeText(context, "Recording started for sentence " + position, Toast.LENGTH_SHORT).show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Recording", "Error preparing or starting recording");
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            Log.e("Recording", "Permission denied for recording");
+        }
+    }
+
+    private void stopRecording() {
+        if (mediaRecorder != null) {
+            mediaRecorder.stop();  // Stop recording
+            mediaRecorder.release(); // Release the mediaRecorder resources
+            mediaRecorder = null;
+            isRecording = false; // Reset the recording flag
+            Log.d("Recording", "Recording stopped");
+            //Toast.makeText(context, "Recording stopped", Toast.LENGTH_SHORT).show();
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Audio.Media.DATE_MODIFIED, System.currentTimeMillis() / 1000);
+            context.getContentResolver().update(audioUri, values, null, null); // Update metadata
+
+            Toast.makeText(context, "Recording saved", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

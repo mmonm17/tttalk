@@ -36,7 +36,6 @@ public class SentenceBoxComponent extends LinearLayout {
     private CardView circular_feedback_check;
     private CardView circular_feedback_close;
 
-
     private Map<String, String> phonemeAudioMap;
 
     public void setPhonemeAudioMap(Map<String, String> phonemeAudioMap) {
