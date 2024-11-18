@@ -25,6 +25,7 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_phoneme_sound_tagalog);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -34,7 +35,6 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         txt_lvl = findViewById(R.id.txt_lvl);
         mic_animation = findViewById(R.id.mic_animation);
         btn_mic = findViewById(R.id.btn_mic);
-
         txt_lvl.setText("Lebel 1");
 
         btn_mic.setOnClickListener(view -> {
@@ -48,11 +48,6 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
-
-        sentences[0] = "a 1Ang ay isang tunog sa wikang Filipino.";
-        sentences[1] = "a 2Ang ay isang tunog sa wikang Filipino.";
-        sentences[2] = "a 3Ang ay isang tunog sa wikang Filipino.";
-        sentences[3] = "a 4Ang ay isang tunog sa wikang Filipino.";
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);

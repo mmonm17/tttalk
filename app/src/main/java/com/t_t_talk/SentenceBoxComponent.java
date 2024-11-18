@@ -128,18 +128,8 @@ public class SentenceBoxComponent extends LinearLayout {
         submitted = false;
     }
 
-    // CUSTOM METHODS (Programmable from the caller)
-    /*
-    public void setReadTextClickListener(OnClickListener listener) {
-        btn_play.setOnClickListener(listener);
-    }
-
-    public void setSubmitClickListener(OnClickListener listener) {
-        btn_mic.setOnClickListener(listener);
-    }
-     */
     public void setPlayButtonListener(OnClickListener listener) {
-        btn_play.setOnClickListener(listener); // Delegate playback logic to adapter
+        btn_play.setOnClickListener(listener);
     }
 
     public void setText(String sentence) {

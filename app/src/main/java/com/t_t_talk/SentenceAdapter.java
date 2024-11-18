@@ -2,6 +2,7 @@ package com.t_t_talk;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
+    MediaPlayer mediaPlayer;
+    TextToSpeech textToSpeech;
+    boolean playedAudio = false;
     String[] sentences;
     boolean[] sentenceCompletions;
     int[] mistakeCount;
@@ -23,11 +28,13 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     AppCompatActivity context;
     EventCallback callback;
     String language;
+    String phoneme;
+    String language_lowercase;
     private Map<String, String> phonemeAudioMap = new HashMap<>();
 
     public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity){
         this.sentences = sentences;
-        populatePhonemeAudioMap(sentences, language);
+        populatePhonemeAudioMap(sentences, highlighted, language.toLowerCase());
 
         this.sentenceCompletions = new boolean[this.sentences.length];
 
@@ -50,7 +57,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 sentenceCompletions[position] = true;
                 mistakeCount[position] = mistakes;
 
-                if(checkAllForCompletion()) {
+                if (checkAllForCompletion()) {
                     Intent i = new Intent(context, ProgressActivity.class);
                     i.putExtra("star_count", computeStars());
                     i.putExtra("language", language);
@@ -59,31 +66,55 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     context.finish();
                 }
             }
-        };
-    }
-    private void populatePhonemeAudioMap(String[] sentences, String language) {
-        for (int j=0; j<sentences.length; j++) {
-            String sentence = sentences[j];
-            String[] words = sentence.split(" ");
-            if (words.length > 0) {
-                String phoneme = words[0]; // Example logic: First word as phoneme
-                //set language first letter to lowercase
-                language = language.substring(0, 1).toLowerCase() + language.substring(1);
-                phoneme = phoneme.toLowerCase();
-                String baseKey = language + "_" + phoneme;
 
-                // Map all possible variants for this phoneme
-                for (int i = 1; i <= 10; i++) { // Adjust max index as needed
-                    String variantKey = baseKey + "_" + i;
-                    String audioFileName = variantKey + ".mp3";
-                    phonemeAudioMap.put(variantKey, audioFileName);
-                    Log.d("Audio Map", "Phoneme: " + phoneme + ", Audio File: " + audioFileName);
-                }
-            }
-            //remove the first word
-            //sentences[j] = sentence.substring(sentence.indexOf(" ") + 1);
+        };
+
+        initializeTextToSpeech();
+    }
+    private void populatePhonemeAudioMap(String[] sentences, String phoneme, String language) {
+        // Ensure phoneme and language are lowercase for consistency
+        phoneme = phoneme.toLowerCase();
+        language = language.toLowerCase();
+
+        for (int j = 0; j < sentences.length; j++) {
+            String sentence = sentences[j];
+            String baseKey = language + "_" + phoneme;
+
+            // Use the sentence index (starting from 1) as the variant index
+            int variantIndex = j + 1; // Start with _1 for the first sentence
+            String variantKey = baseKey + "_" + variantIndex;
+            String audioFileName = variantKey + ".mp3";
+
+            // Map the variantKey to its corresponding audio file
+            phonemeAudioMap.put(variantKey, audioFileName);
+            Log.d("Audio Map", "Mapped: " + variantKey + " -> " + audioFileName);
         }
     }
+
+    private void initializeTextToSpeech() {
+        // Initialize TTS only if it is not already initialized
+        if (textToSpeech == null) {
+            textToSpeech = new TextToSpeech(context, status -> {
+                if (status == TextToSpeech.SUCCESS) {
+                    Locale targetLocale = new Locale("tl", "PH"); // Tagalog (Philippines)
+                    if (textToSpeech.isLanguageAvailable(targetLocale) >= TextToSpeech.LANG_AVAILABLE) {
+                        textToSpeech.setLanguage(targetLocale);
+                    } else {
+                        Log.w("TTS", "Tagalog TTS not available, falling back to default locale");
+                        textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
+                    }
+
+                    Log.d("TTS", "TextToSpeech engine initialized successfully");
+                } else {
+                    Log.e("TTS", "TextToSpeech initialization failed");
+                }
+            });
+        } else {
+            // Already initialized, log it or update the state as needed
+            Log.d("TTS", "TextToSpeech already initialized");
+        }
+    }
+
 
     @NonNull
     @Override
@@ -95,17 +126,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     }
 
     @Override
-    /*public void onBindViewHolder(@NonNull SentenceViewHolder holder, int position) {
-        String current = sentences[position];
-        holder.sentenceViewBox.setText(current);
-        holder.sentenceViewBox.setTypeRead();
-        holder.sentenceViewBox.setHighlightedText(context, current, highlighted);
-        holder.sentenceViewBox.setCallback(callback);
-        holder.sentenceViewBox.setPosition(position);
-        //int audioResId = sentenceAudioMap.getOrDefault(current, -1); // Use -1 if no audio file is found.
-        holder.sentenceViewBox.setPhonemeAudioMap(phonemeAudioMap);
-    }*/
-
     public void onBindViewHolder(@NonNull SentenceViewHolder holder, int position) {
         String current = sentences[position];
         holder.sentenceViewBox.setText(current);
@@ -115,36 +135,54 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         holder.sentenceViewBox.setPosition(position);
 
         holder.sentenceViewBox.setPlayButtonListener(view -> {
-            String phoneme = current.split(" ")[0]; // First word as phoneme
-            language = language.substring(0, 1).toLowerCase() + language.substring(1);
-            phoneme = phoneme.toLowerCase();
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+
+            String phoneme = highlighted.toLowerCase();
+            language = language.toLowerCase();
             String baseKey = language + "_" + phoneme;
 
-            Log.d("setPlayButtonListener", "Phoneme: " + phoneme + ", Base Key: " + baseKey);
+            int variantIndex = position + 1;
+            String variantKey = baseKey + "_" + variantIndex;
+            String audioFileName = phonemeAudioMap.get(variantKey);
 
-            boolean audioPlayed = false;
+            Log.d("PlayButton", "Variant Key: " + variantKey + ", File: " + audioFileName);
 
-            // Check for available audio variants (e.g., A_1, A_2, ...)
-            for (int i = 1; i <= 10; i++) { // Adjust max index as needed
-                String variantKey = baseKey + "_" + i;
-                String audioFileName = phonemeAudioMap.get(variantKey);
+            if (audioFileName != null) {
+                int resId = context.getResources().getIdentifier(audioFileName.replace(".mp3", ""), "raw", context.getPackageName());
+                if (resId != 0) {
+                    mediaPlayer = MediaPlayer.create(context, resId);
+                    mediaPlayer.setOnCompletionListener(mp -> {
+                        mp.release();
+                        mediaPlayer = null;
+                    });
+                    mediaPlayer.start();
+                    playedAudio = true;
+                } else {
+                    Toast.makeText(context, "Audio file not found in resources: " + audioFileName, Toast.LENGTH_SHORT).show();
+                    playedAudio = false;
+                }
+            } else {
+                Toast.makeText(context, "Audio mapping not found for " + variantKey, Toast.LENGTH_SHORT).show();
+                playedAudio = false;
+            }
 
-                if (audioFileName != null) {
-                    int resId = context.getResources().getIdentifier(audioFileName.replace(".mp3", ""), "raw", context.getPackageName());
-                    if (resId != 0) {
-                        MediaPlayer mediaPlayer = MediaPlayer.create(context, resId);
-                        mediaPlayer.setOnCompletionListener(mp -> mp.release());
-                        mediaPlayer.start();
-                        audioPlayed = true;
-                        break; // Play the first valid variant and exit loop
-                    }
+            if (!playedAudio) {
+                Log.d("TTS", "Fallback to TextToSpeech");
+
+                if (textToSpeech != null) {
+                    textToSpeech.speak(current, TextToSpeech.QUEUE_FLUSH, null, "TTS_AudioUnavailable");
+                    Log.d("TTS", "Speaking text: " + current);
+                } else {
+                    Log.e("TTS", "TextToSpeech not initialized yet.");
                 }
             }
-
-            if (!audioPlayed) {
-                Toast.makeText(context, "Audio file not found for " + phoneme, Toast.LENGTH_SHORT).show();
-            }
         });
+
+
     }
 
     @Override
