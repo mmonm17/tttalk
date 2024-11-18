@@ -6,12 +6,14 @@ public class Level {
     private int levelNumber;
     private int age;
     private int color;
+    private String language;
     private ArrayList<Phoneme> phonemeList;
 
-    public Level(int levelNumber, int age, int color, ArrayList<Phoneme> phonemeList) {
+    public Level(int levelNumber, int age, int color, String language, ArrayList<Phoneme> phonemeList) {
         this.levelNumber = levelNumber;
         this.age = age;
         this.color = color;
+        this.language = language;
         this.phonemeList = phonemeList;
     }
 
@@ -19,31 +21,23 @@ public class Level {
         return levelNumber;
     }
 
-    public void setLevelNumber(int levelNumber) {
-        this.levelNumber = levelNumber;
-    }
-
     public ArrayList<Phoneme> getPhonemeList() {
         return phonemeList;
-    }
-
-    public void setPhonemeList(ArrayList<Phoneme> phonemeList) {
-        this.phonemeList = phonemeList;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public int getColor() {
         return color;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public String getCode() {
+        return this.language + "-" + String.valueOf(this.levelNumber);
     }
 }
