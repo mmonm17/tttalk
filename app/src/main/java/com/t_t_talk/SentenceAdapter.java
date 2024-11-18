@@ -50,9 +50,14 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     private MediaRecorder mediaRecorder;
     private Uri audioUri;
 
+    String languageLower;
+    String phonemeLower;
+
     public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity){
         this.sentences = sentences;
-        populatePhonemeAudioMap(sentences, highlighted, language.toLowerCase());
+        this.languageLower = language.toLowerCase();
+        this.phonemeLower = highlighted.toLowerCase();
+        populatePhonemeAudioMap(sentences, phonemeLower, languageLower);
 
         this.sentenceCompletions = new boolean[this.sentences.length];
 
@@ -90,7 +95,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         initializeTextToSpeech();
     }
     private void populatePhonemeAudioMap(String[] sentences, String phoneme, String language) {
-        // Ensure phoneme and language are lowercase for consistency
         phoneme = phoneme.toLowerCase();
         language = language.toLowerCase();
 
@@ -201,18 +205,14 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                 }
             }
-            else if (isPlaying) {
 
-            }
             previousSpeakingHolder = currentlySpeakingHolder;
             currentlySpeakingHolder = holder;
             isPlaying = true;
             currentlyPlaying = holder.getAdapterPosition();
 
             holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
-            String phoneme = highlighted.toLowerCase();
-            language = language.toLowerCase();
-            String baseKey = language + "_" + phoneme;
+            String baseKey = languageLower + "_" + phonemeLower;
 
             int variantIndex = position + 1;
             String variantKey = baseKey + "_" + variantIndex;
@@ -251,10 +251,9 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
 
         holder.sentenceViewBox.setMicButtonListener(view -> {
             //check if another component is playing
-            //check if the component is already submitted -> might remove this tbh
             //check if another component is recording
-
-            if(isPlaying || (isRecording && currentRecording != holder.getAdapterPosition()) || holder.sentenceViewBox.getSubmitted()) {
+            //check if the component is already submitted -> might remove this tbh
+            if(isPlaying || (isRecording && currentRecording != holder.getAdapterPosition()) ) { // || holder.sentenceViewBox.getSubmitted()
                 return;
             }
 
@@ -262,12 +261,12 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 stopRecording();
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.orange));
                 isRecording = false;
+                holder.sentenceViewBox.setCorrectFeedback();
             } else {
                 isRecording = true;
                 currentRecording = holder.getAdapterPosition();
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
-                //holder.sentenceViewBox.resetFeedback();
-                //holder.sentenceViewBox.setCorrectFeedback();
+                holder.sentenceViewBox.resetFeedback();
 
                 startRecordingForSentence(position);
             }
@@ -277,7 +276,8 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     private void startRecordingForSentence(int position) {
         // Get the content resolver
         ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "sentence_" + position + ".3gp"); // Display name
+        String filename = languageLower + "_" + phonemeLower + "_" + (position + 1) + ".3gp";
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, filename); // Display name
         values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/3gpp"); // Audio format
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_MUSIC); // Save in Music folder
 
@@ -293,7 +293,9 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            mediaRecorder.setAudioSamplingRate(44100); // Set to 44.1 kHz for better audio quality
+            mediaRecorder.setAudioEncodingBitRate(64000);
             mediaRecorder.setOutputFile(context.getContentResolver().openFileDescriptor(audioUri, "w").getFileDescriptor()); // Output to MediaStore URI
 
             mediaRecorder.prepare();
