@@ -128,6 +128,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                         @Override
                         public void onStart(String utteranceId) {
                             Log.d("TTS", "Speech started for utterance ID: " + utteranceId);
+                            currentlySpeakingHolder.sentenceViewBox.switchPlayIcon(true);
                             currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
                         }
 
@@ -138,6 +139,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                             context.runOnUiThread(() -> {
                                 isPlaying = false;
                                 currentlyPlaying = -1;
+                                currentlySpeakingHolder.sentenceViewBox.switchPlayIcon(false);
                                 currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                             });
                         }
@@ -149,6 +151,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                             uiHandler.post(() -> {
                                 isPlaying = false;
                                 currentlyPlaying = -1;
+                                previousSpeakingHolder.sentenceViewBox.switchPlayIcon(false);
                                 previousSpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                             });
                         }
@@ -194,6 +197,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     mediaPlayer = null;
                     isPlaying = false;
                     currentlyPlaying = -1;
+                    holder.sentenceViewBox.switchPlayIcon(false);
                     holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                     return;
                 } else {
@@ -202,6 +206,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     mediaPlayer = null;
                     isPlaying = false;
                     currentlyPlaying = -1;
+                    currentlySpeakingHolder.sentenceViewBox.switchPlayIcon(false);
                     currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                 }
             }
@@ -211,6 +216,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             isPlaying = true;
             currentlyPlaying = holder.getAdapterPosition();
 
+            holder.sentenceViewBox.switchPlayIcon(true);
             holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
             String baseKey = languageLower + "_" + phonemeLower;
 
@@ -228,7 +234,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                         mediaPlayer = null;
                         isPlaying = false;
                         currentlyPlaying = -1;
-                        holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
+                        holder.sentenceViewBox.switchPlayIcon(false);
                     });
                     mediaPlayer.start();
                     playedAudio = true;
@@ -250,9 +256,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         });
 
         holder.sentenceViewBox.setMicButtonListener(view -> {
-            //check if another component is playing
-            //check if another component is recording
-            //check if the component is already submitted -> might remove this tbh
             if(isPlaying || (isRecording && currentRecording != holder.getAdapterPosition()) ) { // || holder.sentenceViewBox.getSubmitted()
                 return;
             }
@@ -260,12 +263,14 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             if (isRecording) {
                 stopRecording();
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.orange));
+                holder.sentenceViewBox.switchMicIcon(false);
                 isRecording = false;
                 holder.sentenceViewBox.setCorrectFeedback();
             } else {
                 isRecording = true;
                 currentRecording = holder.getAdapterPosition();
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
+                holder.sentenceViewBox.switchMicIcon(true);
                 holder.sentenceViewBox.resetFeedback();
 
                 startRecordingForSentence(position);
@@ -301,7 +306,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             mediaRecorder.prepare();
             mediaRecorder.start();
             Log.d("Recording", "Recording started for sentence " + position);
-            Toast.makeText(context, "Recording started for sentence " + position, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Recording started for sentence " + position, Toast.LENGTH_SHORT).show();
 
 
         } catch (IOException e) {
@@ -315,16 +320,15 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
 
     private void stopRecording() {
         if (mediaRecorder != null) {
-            mediaRecorder.stop();  // Stop recording
-            mediaRecorder.release(); // Release the mediaRecorder resources
+            mediaRecorder.stop();
+            mediaRecorder.release();
             mediaRecorder = null;
-            isRecording = false; // Reset the recording flag
+            isRecording = false;
             Log.d("Recording", "Recording stopped");
-            //Toast.makeText(context, "Recording stopped", Toast.LENGTH_SHORT).show();
 
             ContentValues values = new ContentValues();
             values.put(MediaStore.Audio.Media.DATE_MODIFIED, System.currentTimeMillis() / 1000);
-            context.getContentResolver().update(audioUri, values, null, null); // Update metadata
+            context.getContentResolver().update(audioUri, values, null, null);
 
             Toast.makeText(context, "Recording saved", Toast.LENGTH_SHORT).show();
         }

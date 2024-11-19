@@ -39,6 +39,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
                 "Ibabato ni Babols ang bato.",
                 "Ibabato ni Babols ang bato.",
                 "Ibabato ni Babols ang bato.",
+                //change to empty
         };
 
         ArrayList<Phoneme> phonemes = new ArrayList<>();
@@ -47,6 +48,10 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
         phonemes.add(new Phoneme(sentences, 3, "BI"));
         phonemes.add(new Phoneme(sentences, 0, "BO"));
         phonemes.add(new Phoneme(sentences, 1, "BU"));
+        //query the db for the phonemes and the stars?
+        /* for each phoneme in the db
+         *      phonemes.add(new Phoneme(sentences, stars, phoneme));
+         */
 
         data = new ArrayList<>();
         data.add(new Level(1, 3, Color.rgb(249, 222, 104), phonemes));
@@ -56,6 +61,9 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
         data.add(new Level(5, 4, Color.rgb(182, 213, 240), phonemes));
         data.add(new Level(6, 5, Color.rgb(135, 162, 122), phonemes));
         data.add(new Level(7, 5, Color.rgb(219, 153, 5), phonemes));
+        /* for each level in the db
+         *      data.add(new Level(levelNumber, age, color, phonemes));
+         */
 
         curved_levels = findViewById(R.id.curved_levels);
         curved_levels.setText("MGA LEBEL");
