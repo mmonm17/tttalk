@@ -115,12 +115,22 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         if (textToSpeech == null) {
             textToSpeech = new TextToSpeech(context, status -> {
                 if (status == TextToSpeech.SUCCESS) {
-                    Locale targetLocale = new Locale("tl", "PH"); // Tagalog (Philippines)
-                    if (textToSpeech.isLanguageAvailable(targetLocale) >= TextToSpeech.LANG_AVAILABLE) {
-                        textToSpeech.setLanguage(targetLocale);
+                    if(language.equals("Tagalog")){
+                        Locale targetLocale = new Locale("fil", "PH"); // Tagalog (Philippines)
+                        if (textToSpeech.isLanguageAvailable(targetLocale) >= TextToSpeech.LANG_AVAILABLE) {
+                            textToSpeech.setLanguage(targetLocale);
+                        } else {
+                            Log.w("TTS", "Tagalog TTS not available, falling back to default locale");
+                            textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
+                        }
                     } else {
-                        Log.w("TTS", "Tagalog TTS not available, falling back to default locale");
-                        textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
+                        Locale targetLocale = new Locale("en", "US"); // English (United States)
+                        if (textToSpeech.isLanguageAvailable(targetLocale) >= TextToSpeech.LANG_AVAILABLE) {
+                            textToSpeech.setLanguage(targetLocale);
+                        } else {
+                            Log.w("TTS", "English TTS not available, falling back to default locale");
+                            textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
+                        }
                     }
                     uiHandler = new Handler(context.getMainLooper());
                     // Set the UtteranceProgressListener here
@@ -228,6 +238,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                         mediaPlayer = null;
                         isPlaying = false;
                         currentlyPlaying = -1;
+                        holder.sentenceViewBox.switchPlayIcon(false);
                         holder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.green_light));
                     });
                     mediaPlayer.start();
