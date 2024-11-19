@@ -116,12 +116,12 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             textToSpeech = new TextToSpeech(context, status -> {
                 if (status == TextToSpeech.SUCCESS) {
                     if(language.equals("Tagalog")){
-                        Locale targetLocale = new Locale("fil", "PH"); // Tagalog (Philippines)
+                        Locale targetLocale = new Locale("fil", "PH"); 
                         if (textToSpeech.isLanguageAvailable(targetLocale) >= TextToSpeech.LANG_AVAILABLE) {
                             textToSpeech.setLanguage(targetLocale);
                         } else {
                             Log.w("TTS", "Tagalog TTS not available, falling back to default locale");
-                            textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
+                            textToSpeech.setLanguage(Locale.getDefault()); 
                         }
                     } else {
                         Locale targetLocale = new Locale("en", "US"); // English (United States)
@@ -129,11 +129,10 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                             textToSpeech.setLanguage(targetLocale);
                         } else {
                             Log.w("TTS", "English TTS not available, falling back to default locale");
-                            textToSpeech.setLanguage(Locale.getDefault()); // Fallback to default language
+                            textToSpeech.setLanguage(Locale.getDefault()); 
                         }
                     }
                     uiHandler = new Handler(context.getMainLooper());
-                    // Set the UtteranceProgressListener here
                     textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                         @Override
                         public void onStart(String utteranceId) {
@@ -293,8 +292,8 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         // Get the content resolver
         ContentValues values = new ContentValues();
         String filename = languageLower + "_" + phonemeLower + "_" + (position + 1) + ".3gp";
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, filename); // Display name
-        values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/3gpp"); // Audio format
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, filename); 
+        values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/3gpp"); 
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_MUSIC); // Save in Music folder
 
         // Insert into MediaStore to get a Uri
@@ -310,9 +309,9 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-            mediaRecorder.setAudioSamplingRate(44100); // Set to 44.1 kHz for better audio quality
+            mediaRecorder.setAudioSamplingRate(44100); 
             mediaRecorder.setAudioEncodingBitRate(64000);
-            mediaRecorder.setOutputFile(context.getContentResolver().openFileDescriptor(audioUri, "w").getFileDescriptor()); // Output to MediaStore URI
+            mediaRecorder.setOutputFile(context.getContentResolver().openFileDescriptor(audioUri, "w").getFileDescriptor()); 
 
             mediaRecorder.prepare();
             mediaRecorder.start();
