@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SettingsDialog {
     private Dialog settingsDialog;
     private ConstraintLayout cl_setMusic;
@@ -17,6 +19,7 @@ public class SettingsDialog {
     private ImageView muteImage;
     private Button logOutButton;
     private Button closeButton;
+    private FirebaseAuth mAuth;
 
     public SettingsDialog(Context context) {
         this.settingsDialog = new Dialog(context);
@@ -42,6 +45,8 @@ public class SettingsDialog {
         });
 
         this.logOutButton.setOnClickListener(v -> {
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
             Intent intent = new Intent(context, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);

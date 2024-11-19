@@ -113,9 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Log.d("RegisterActivity", "onStart: currentUser");
-        Log.d("RegisterActivity", currentUser.getEmail());
-        Log.d("RegisterActivity", currentUser.isEmailVerified() + "");
         if (currentUser != null && currentUser.isEmailVerified()) {
             Intent intent = new Intent(RegisterActivity.this, LanguageSelectActivity.class);
             startActivity(intent);

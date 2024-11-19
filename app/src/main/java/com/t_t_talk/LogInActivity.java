@@ -2,7 +2,6 @@ package com.t_t_talk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -53,42 +52,50 @@ public class LogInActivity extends AppCompatActivity {
 
                 if (email.isEmpty()) {
                     input_email.setError("Email is required");
-                    handleRegistrationError("Email is required");
+                    handleLoginError("Email is required");
                     return;
                 }
 
                 if (password.isEmpty()) {
                     input_pass.setError("Password is required");
-                    handleRegistrationError("Password is required");
+                    handleLoginError("Password is required");
                     return;
                 }
 
                 mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         FirebaseUser user = mAuth.getCurrentUser();
+                        if (user == null) {
+                            handleLoginError("User does not exist");
+                            return;
+                        }
                         if (task.isSuccessful() && user != null && user.isEmailVerified()) {
                             Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
                             startActivity(intent);
                             finish();
-                        } else {
-                            String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
-                            handleRegistrationError(errorMessage);
+                            return;
                         }
+                        if (user.isEmailVerified()) {
+                            String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                            handleLoginError(errorMessage);
+                        } else {
+                            handleLoginError("Please verify your email");
+                            user.sendEmailVerification()
+                                .addOnCompleteListener(verificationTask -> {
+                                    if (verificationTask.isSuccessful()) {
+                                        Intent intent = new Intent(LogInActivity.this, VerifyEmailActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        String errorMessage = verificationTask.getException() != null
+                                                ? verificationTask.getException().getMessage()
+                                                : "Unknown error";
+                                        handleLoginError(errorMessage);
+                                    }
+                                });
+                        }
+                        mAuth.signOut();
                     });
-                Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        btn_log_in = findViewById(R.id.btn_log_in);
-
-        btn_log_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
 
@@ -114,9 +121,21 @@ public class LogInActivity extends AppCompatActivity {
             layout_register.setVisibility(View.GONE);
     }
 
-    protected void handleRegistrationError(String errorMessage) {
+    protected void handleLoginError(String errorMessage) {
         Toast toast = Toast.makeText(this, "Registration failed: " + errorMessage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 200);
         toast.show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null && currentUser.isEmailVerified()) {
+            Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        mAuth.signOut();
     }
 }
