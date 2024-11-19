@@ -15,7 +15,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="verification_instructions">We\'ve sent a 6-digit code to %1$s. Please enter the code below to verify your account</string>
+    <string name="verification_instructions">We\'ve sent a verification link to your email. Please click the link to verify your account.</string>
     <string name="resend_code"><u>Resend Code</u></string>
     <string name="try_again">Try again in %1$ds</string>
 

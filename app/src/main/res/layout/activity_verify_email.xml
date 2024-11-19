@@ -149,7 +149,7 @@
             android:layout_marginRight="40dp"
             android:backgroundTint="@color/primary"
             android:fontFamily="@font/telegraf_bold"
-            android:text="Verify"
+            android:text="Log In"
             android:textSize="20sp"
             app:cornerRadius="15dp" />
 

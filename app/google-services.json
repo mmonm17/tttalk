@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "587258463731",
+    "project_id": "tttalk-625ac",
+    "storage_bucket": "tttalk-625ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587258463731:android:1124ab4a51712680d07e86",
+        "android_client_info": {
+          "package_name": "com.t_t_talk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKp_CHi4vwVUNNCPluX56UisBsqiy4luI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
