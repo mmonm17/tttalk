@@ -2,6 +2,7 @@ package com.t_t_talk;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
@@ -31,10 +32,15 @@ public class SentenceBoxComponent extends LinearLayout {
     private EditText et_user_input;
     private CardView btn_play;
     private CardView btn_mic;
+    private ImageView btn_play_icon;
+    private ImageView btn_mic_icon;
     private SentenceAdapter.EventCallback callback;
     private ImageView circular_feedback;
     private CardView circular_feedback_check;
     private CardView circular_feedback_close;
+
+    boolean isPlaying;
+    boolean isRecording;
 
     private Map<String, String> phonemeAudioMap;
 
@@ -64,6 +70,8 @@ public class SentenceBoxComponent extends LinearLayout {
         et_user_input = findViewById(R.id.et_user_input);
         btn_play = findViewById(R.id.btn_play);
         btn_mic = findViewById(R.id.btn_mic);
+        btn_play_icon = findViewById(R.id.btn_play_icon);
+        btn_mic_icon = findViewById(R.id.btn_mic_icon);
         circular_feedback = findViewById(R.id.circular_feedback);
         circular_feedback_check = findViewById(R.id.circular_feedback_check);
         circular_feedback_close = findViewById(R.id.circular_feedback_close);
@@ -151,6 +159,28 @@ public class SentenceBoxComponent extends LinearLayout {
     public void setBtnMicColor(int color){
         btn_mic.setCardBackgroundColor(color);
     }
+
+    public void switchPlayIcon(boolean isPlaying) {
+        if (isPlaying) {
+            btn_play_icon.setImageResource(R.drawable.ic_replay);
+            //setBtnPlayColor(R.color.red);
+        } else {
+            btn_play_icon.setImageResource(R.drawable.ic_play_arrow);
+            //setBtnPlayColor(R.color.green_light);
+        }
+    }
+
+
+    public void switchMicIcon(boolean isRecording) {
+        if (isRecording) {
+            btn_mic_icon.setImageResource(R.drawable.ic_stop);
+            //setBtnMicColor(R.color.red);
+        } else {
+            btn_mic_icon.setImageResource(R.drawable.ic_mic);
+            //setBtnMicColor(R.color.orange);
+        }
+    }
+
 
     public void setHighlightedText(Context context, String text, String substring) {
         SpannableString spannableString = new SpannableString(text);

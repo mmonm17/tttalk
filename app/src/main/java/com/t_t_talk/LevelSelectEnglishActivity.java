@@ -48,13 +48,13 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
         phonemes.add(new Phoneme(sentences, 0, "P"));
 
         data = new ArrayList<>();
-        data.add(new Level(1, 3, Color.rgb(249, 222, 104), phonemes));
-        data.add(new Level(2, 3, Color.rgb(179, 179, 179), phonemes));
-        data.add(new Level(3, 4, Color.rgb(238, 118, 24), phonemes));
-        data.add(new Level(4, 4, Color.rgb(112, 176, 69), phonemes));
-        data.add(new Level(5, 4, Color.rgb(182, 213, 240), phonemes));
-        data.add(new Level(6, 5, Color.rgb(135, 162, 122), phonemes));
-        data.add(new Level(7, 5, Color.rgb(219, 153, 5), phonemes));
+        data.add(new Level(1, 3, Color.rgb(249, 222, 104), "English", phonemes));
+        data.add(new Level(2, 3, Color.rgb(179, 179, 179), "English", phonemes));
+        data.add(new Level(3, 4, Color.rgb(238, 118, 24), "English", phonemes));
+        data.add(new Level(4, 4, Color.rgb(112, 176, 69), "English", phonemes));
+        data.add(new Level(5, 4, Color.rgb(182, 213, 240), "English", phonemes));
+        data.add(new Level(6, 5, Color.rgb(135, 162, 122), "English", phonemes));
+        data.add(new Level(7, 5, Color.rgb(219, 153, 5), "English", phonemes));
 
         curved_levels = findViewById(R.id.curved_levels);
         curved_levels.setText("LEVELS");

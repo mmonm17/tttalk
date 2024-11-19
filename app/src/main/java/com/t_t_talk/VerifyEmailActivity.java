@@ -48,6 +48,4 @@ public class VerifyEmailActivity extends AppCompatActivity {
             finish();
         });
     }
-
-
 }
