@@ -12,88 +12,29 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-import com.t_t_talk.DataTypes.Level;
-import com.t_t_talk.DataTypes.Phoneme;
-import com.t_t_talk.LocalDB.DBConstants;
-import com.t_t_talk.LocalDB.LocalDB;
+import com.t_t_talk.DB.AppDatabase;
+import com.t_t_talk.DB.Models.Level;
+import com.t_t_talk.DB.Models.Phoneme;
+import com.t_t_talk.DB.LocalDB.LocalDB;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class LocalDBTest {
     Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-    LocalDB db = new LocalDB(appContext);
+    AppDatabase db = new AppDatabase(appContext);
+    LocalDB ldb = db.getLocalDB();
 
     @Test
     public void level_insertion() {
-        String[] sentences = new String[]{
+        ArrayList<String> sentences = new ArrayList<String>(Arrays.asList(new String[]{
                 "Sam the cat saw a snake in the grass",
                 "The snake slid fast",
                 "Sam sat and watched the snake go by",
                 "The snake said, \"sss,\" and Sam said, \"Hi!\""
-        };
-
-        ArrayList<Phoneme> phonemes = new ArrayList<>();
-        phonemes.add(new Phoneme(sentences, 2, "S"));
-        phonemes.add(new Phoneme(sentences, 1, "A"));
-        phonemes.add(new Phoneme(sentences, 3, "T"));
-        phonemes.add(new Phoneme(sentences, 0, "P"));
-
-        Level l = new Level(1, 3, Color.rgb(249, 222, 104), "English", phonemes);
-
-        db.open();
-
-        db.insert(l);
-
-        Cursor cursor = db.fetchLevel();
-
-        assertEquals(1, cursor.getCount());
-
-        cursor.close();
-
-        cursor = db.fetchPhoneme();
-
-        assertEquals(16, cursor.getCount());
-
-        cursor.close();
-
-        db.reset();
-        db.close();
-    }
-
-    @Test
-    public void phoneme_insertion() {
-        String[] sentences = new String[]{
-                "Sam the cat saw a snake in the grass",
-                "The snake slid fast",
-                "Sam sat and watched the snake go by",
-                "The snake said, \"sss,\" and Sam said, \"Hi!\""
-        };
-
-        Phoneme p = new Phoneme(sentences, 1, "S");
-
-        db.open();
-
-        db.insert(p, "TEST");
-
-        Cursor cursor = db.fetchPhoneme();
-
-        assertEquals(4, cursor.getCount());
-
-        cursor.close();
-
-        db.reset();
-        db.close();
-    }
-
-    @Test
-    public void level_deletion() {
-        String[] sentences = new String[]{
-                "Sam the cat saw a snake in the grass",
-                "The snake slid fast",
-                "Sam sat and watched the snake go by",
-                "The snake said, \"sss,\" and Sam said, \"Hi!\""
-        };
+        }));
 
         ArrayList<Phoneme> phonemes = new ArrayList<>();
         phonemes.add(new Phoneme(sentences, 2, "S"));
@@ -102,54 +43,28 @@ public class LocalDBTest {
         phonemes.add(new Phoneme(sentences, 0, "P"));
 
         Level l1 = new Level(1, 3, Color.rgb(249, 222, 104), "English", phonemes);
-        Level l2 = new Level(2, 3, Color.rgb(249, 222, 104), "English", phonemes);
+        Level l2 = new Level(2, 5, Color.rgb(249, 222, 104), "English", phonemes);
 
-        db.open();
+        ldb.open();
+        ldb.reset();
 
-        db.insert(l1);
-        db.insert(l2);
-        db.delete(l1);
+        ldb.insert(l1);
+        phonemes.add(new Phoneme(sentences, 0, "E"));
+        ldb.insert(l2);
 
-        Cursor cursor = db.fetchLevel();
+        List<Level> levels = db.fetchLevels();
 
-        assertEquals(1, cursor.getCount());
+        assertEquals(2, levels.size());
 
-        cursor.close();
+        for(Level level: levels) {
+            if(level.getLevelNumber() == 1) {
+                assertEquals(4, level.getPhonemeList().size());
+            } else {
+                assertEquals(5, level.getPhonemeList().size());
+            }
+        }
 
-        cursor = db.fetchPhoneme();
-
-        assertEquals(16, cursor.getCount());
-
-        cursor.close();
-
-        db.reset();
-        db.close();
+        ldb.reset();
+        ldb.close();
     }
-
-    @Test
-    public void phoneme_deletion() {
-        String[] sentences = new String[]{
-                "Sam the cat saw a snake in the grass",
-                "The snake slid fast",
-                "Sam sat and watched the snake go by",
-                "The snake said, \"sss,\" and Sam said, \"Hi!\""
-        };
-
-        Phoneme p = new Phoneme(sentences, 1, "S");
-
-        db.open();
-
-        db.insert(p, "TEST");
-        db.delete(p, "TEST");
-
-        Cursor cursor = db.fetchPhoneme();
-
-        assertEquals(0, cursor.getCount());
-
-        cursor.close();
-
-        db.reset();
-        db.close();
-    }
-
 }

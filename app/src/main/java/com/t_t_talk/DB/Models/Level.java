@@ -1,4 +1,4 @@
-package com.t_t_talk.DataTypes;
+package com.t_t_talk.DB.Models;
 
 import java.util.ArrayList;
 

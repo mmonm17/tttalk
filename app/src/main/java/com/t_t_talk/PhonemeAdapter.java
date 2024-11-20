@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.t_t_talk.DataTypes.Phoneme;
+import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
                 } else {
                     i = new Intent(context, PhonemeSoundTagalogActivity.class);
                 }
-                i.putExtra("Sentences", current.getSentences());
+                i.putExtra("Sentences", current.getSentences().toArray(new String[0]));
                 i.putExtra("PhonemeCode", current.getCode());
                 context.startActivity(i);
             }

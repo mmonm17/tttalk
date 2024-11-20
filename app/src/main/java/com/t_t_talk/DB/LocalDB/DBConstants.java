@@ -1,4 +1,4 @@
-package com.t_t_talk.LocalDB;
+package com.t_t_talk.DB.LocalDB;
 
 public class DBConstants {
     public static class PhonemeTableConstants {
@@ -15,6 +15,12 @@ public class DBConstants {
         public static final String COLNAME_NUMBER = "level_number";
         public static final String COLNAME_LANGUAGE = "language";
         public static final String COLNAME_AGE = "age";
+        public static final String COLNAME_COLOR = "color";
+    }
+
+    public static class UserTableConstants {
+        public static final String TABLE_NAME = "Users";
+        public static final String COLNAME_UID = "user_id";
     }
 
     public static final String CREATE_PHONEME_TABLE_STATEMENT =
@@ -24,13 +30,19 @@ public class DBConstants {
         PhonemeTableConstants.COLNAME_LEVEL_CODE + " TEXT," +
         PhonemeTableConstants.COLNAME_STAR + " INTEGER)";
 
+    public static final String CREATE_USER_TABLE_STATEMENT =
+        "CREATE TABLE IF NOT EXISTS " + UserTableConstants.TABLE_NAME + "(" +
+        UserTableConstants.COLNAME_UID + " INTEGER PRIMARY KEY)";
+
     public static final String CREATE_LEVEL_TABLE_STATEMENT =
         "CREATE TABLE IF NOT EXISTS " + LevelTableConstants.TABLE_NAME + "(" +
         LevelTableConstants.COLNAME_CODE + " TEXT PRIMARY KEY," +
         LevelTableConstants.COLNAME_NUMBER + " INTEGER," +
+        LevelTableConstants.COLNAME_COLOR + " INTEGER," +
         LevelTableConstants.COLNAME_LANGUAGE + " TEXT," +
         LevelTableConstants.COLNAME_AGE + " INTEGER)";
 
+    public static final String DROP_USER_TABLE_STATEMENT = "DROP TABLE IF EXISTS " + UserTableConstants.TABLE_NAME;
     public static final String DROP_PHONEME_TABLE_STATEMENT = "DROP TABLE IF EXISTS " + PhonemeTableConstants.TABLE_NAME;
     public static final String DROP_LEVEL_TABLE_STATEMENT = "DROP TABLE IF EXISTS " + LevelTableConstants.TABLE_NAME;
 }

@@ -1,4 +1,4 @@
-package com.t_t_talk.DB;
+package com.t_t_talk.DB.RemoteDB;
 
 public interface Listener {
     void onSuccess(Response response);

@@ -11,10 +11,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.t_t_talk.DataTypes.Level;
-import com.t_t_talk.DataTypes.Phoneme;
+import com.t_t_talk.DB.Models.Level;
+import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LevelSelectEnglishActivity extends AppCompatActivity {
     CurvedTextView curved_levels;
@@ -34,12 +35,12 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
             return insets;
         });
 
-        String[] sentences = new String[]{
+        ArrayList<String> sentences = new ArrayList<String>(Arrays.asList(new String[]{
                 "Sam the cat saw a snake in the grass",
                 "The snake slid fast",
                 "Sam sat and watched the snake go by",
                 "The snake said, \"sss,\" and Sam said, \"Hi!\""
-        };
+        }));
 
         ArrayList<Phoneme> phonemes = new ArrayList<>();
         phonemes.add(new Phoneme(sentences, 2, "S"));
