@@ -122,7 +122,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     protected void handleLoginError(String errorMessage) {
-        Toast toast = Toast.makeText(this, "Registration failed: " + errorMessage, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "LogIn failed: " + errorMessage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 200);
         toast.show();
     }
