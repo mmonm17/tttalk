@@ -1,17 +1,18 @@
-package com.t_t_talk.DataTypes;
+package com.t_t_talk.DB.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Phoneme implements Serializable {
     private String code;
-    private String[] sentences;
+    private List<String> sentences;
     private int starCount;
 
     public Phoneme() {
 
     }
 
-    public Phoneme(String[] sentences, int starCount, String code) {
+    public Phoneme(List<String> sentences, int starCount, String code) {
         this.sentences = sentences;
         this.starCount = starCount;
         this.code = code;
@@ -25,12 +26,12 @@ public class Phoneme implements Serializable {
         this.code = code;
     }
 
-    public String[] getSentences() {
+    public List<String> getSentences() {
         return sentences;
     }
 
-    public void setSentences(String[] sentences) {
-        this.sentences = sentences;
+    public void addSentence(String sentences) {
+        this.sentences.add(sentences);
     }
 
     public int getStarCount() {

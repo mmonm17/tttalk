@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.t_t_talk.DataTypes.Level;
+import com.t_t_talk.DB.Models.Level;
 
 import java.io.Serializable;
 import java.util.ArrayList;
