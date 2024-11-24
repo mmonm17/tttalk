@@ -11,6 +11,7 @@ import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AppDatabase {
     private LocalDB localDB;
@@ -42,28 +43,22 @@ public class AppDatabase {
     }
 
     public List<Level> fetchLevels() {
-        List<Level> levels = new ArrayList<>();
+        AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
 
         if(isOnline()) {
-            List<Level> cachedLevelData = localDB.fetchLevels();
-            levels = remoteDB.fetchLevels();
-
-            //Update remoteDB with new starCounts
-
-            //Clear localDB cache
-
-            //insert update levels to localDB cache
-            for(Level l: levels) {
-                localDB.insert();
-            }
+            remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
+                levels.set(levelsList);
+            });
         } else {
-            levels = localDB.fetchLevels();
+            levels.set(localDB.fetchLevels());
         }
 
-        return levels;
+        return levels.get();
     }
 
     public LocalDB getLocalDB() {
         return this.localDB;
     }
+
+    public FirestoreDbHelper getRemoteDB() { return this.remoteDB; }
 }

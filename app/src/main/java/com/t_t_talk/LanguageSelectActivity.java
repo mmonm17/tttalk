@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +14,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.t_t_talk.DB.AppDatabase;
+
+import java.util.concurrent.CountDownLatch;
+
 public class LanguageSelectActivity extends AppCompatActivity {
     ConstraintLayout cl_english, cl_tagalog;
     CurvedTextView curved_language;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,8 @@ public class LanguageSelectActivity extends AppCompatActivity {
             return insets;
         });
 
+        db = new AppDatabase(LanguageSelectActivity.this);
+
         cl_english = findViewById(R.id.cl_english);
         cl_tagalog = findViewById(R.id.cl_tagalog);
         curved_language = findViewById(R.id.curved_language);
@@ -39,12 +47,12 @@ public class LanguageSelectActivity extends AppCompatActivity {
         bg_alter.setColor(getColor(R.color.green));
         cl_tagalog.setBackground(bg_alter);
 
-
         cl_english.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+//            startActivity(intent);
+            db.fetchLevels();
         });
 
         cl_tagalog.setOnClickListener(view -> {

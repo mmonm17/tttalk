@@ -8,10 +8,6 @@ public class Phoneme implements Serializable {
     private List<String> sentences;
     private int starCount;
 
-    public Phoneme() {
-
-    }
-
     public Phoneme(List<String> sentences, int starCount, String code) {
         this.sentences = sentences;
         this.starCount = starCount;
