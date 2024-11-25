@@ -1,8 +1,9 @@
 package com.t_t_talk.DB.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Level {
+public class Level implements Serializable {
     private int levelNumber;
     private int age;
     private int color;
@@ -39,5 +40,9 @@ public class Level {
 
     public String getCode() {
         return this.language + "-" + String.valueOf(this.levelNumber);
+    }
+
+    public String toString() {
+        return "Level " + this.levelNumber + " - " + this.language + " - " + this.age + " years old" + " - " + this.color + " - " + this.phonemeList.size() + " phonemes";
     }
 }

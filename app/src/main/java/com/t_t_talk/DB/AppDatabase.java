@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.util.Log;
 
 import com.t_t_talk.DB.LocalDB.LocalDB;
 import com.t_t_talk.DB.Models.Level;
@@ -41,18 +42,39 @@ public class AppDatabase {
 
         return false;
     }
+    public interface LevelsCallback {
+        void onLevelsFetched(List<Level> levels);
+    }
+    public void fetchLevels(LevelsCallback callback) {
+        AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
+
+        if (isOnline()) {
+            Log.d("AppDatabase", "Fetching levels from remote database");
+            remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
+                levels.set(levelsList);
+                callback.onLevelsFetched(levelsList);  // Notify when levels are fetched
+            });
+        } else {
+            levels.set(localDB.fetchLevels());
+            Log.d("AppDatabase", "is offline, fetching levels from local database");
+            callback.onLevelsFetched(levels.get());  // Notify when levels are fetched
+        }
+    }
+
 
     public List<Level> fetchLevels() {
         AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
 
-        if(isOnline()) {
+        if (isOnline()) {
+            Log.d("AppDatabase", "Fetching levels from remote database");
             remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
                 levels.set(levelsList);
             });
         } else {
             levels.set(localDB.fetchLevels());
-        }
+            Log.d("AppDatabase", "is offline, fetching levels from local database");
 
+        }
         return levels.get();
     }
 

@@ -15,7 +15,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.t_t_talk.DB.AppDatabase;
+import com.t_t_talk.DB.Models.Level;
 
+import java.io.Serializable;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class LanguageSelectActivity extends AppCompatActivity {
@@ -47,18 +50,36 @@ public class LanguageSelectActivity extends AppCompatActivity {
         bg_alter.setColor(getColor(R.color.green));
         cl_tagalog.setBackground(bg_alter);
 
-        cl_english.setOnClickListener(view -> {
+        /*cl_english.setOnClickListener(view -> {
 //            Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //Toast.makeText(LanguageActivity.this, "English", Toast.LENGTH_SHORT).show();
 //            startActivity(intent);
             db.fetchLevels();
+        });*/
+
+        cl_english.setOnClickListener(view -> {
+            db.fetchLevels(new AppDatabase.LevelsCallback() {
+                @Override
+                public void onLevelsFetched(List<Level> levels) {
+                    // Handle the levels here
+                    Log.d("LanguageSelectActivity", "Fetched levels: " + levels.size());
+                    for (Level level : levels) {
+                        Log.d("LanguageSelectActivity", "Fetched level: " + level.toString());
+                    }
+                    Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("levels", (Serializable) levels);
+                    startActivity(intent);
+                }
+            });
+
         });
+
 
         cl_tagalog.setOnClickListener(view -> {
             Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //Toast.makeText(LanguageActivity.this, "Filipino", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 

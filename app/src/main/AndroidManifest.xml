@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -15,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TTTalk"
         tools:targetApi="31">
+        <meta-data android:name="com.google.firebase.database.database.url"
+            android:value="AIzaSyBKp_CHi4vwVUNNCPluX56UisBsqiy4luI" />
         <activity
             android:name=".PhonemeSelectTagalogActivity"
             android:exported="false" />
