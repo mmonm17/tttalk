@@ -18,11 +18,13 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
     public Context context;
     private ArrayList<Phoneme> data;
     public String language;
+    private int levelNum;
 
-    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language) {
+    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, int levelNum) {
         this.context = activity;
         this.data = data;
         this.language = language;
+        this.levelNum = levelNum;
     }
 
     @NonNull
@@ -49,6 +51,7 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
                 }
                 i.putExtra("Sentences", current.getSentences().toArray(new String[0]));
                 i.putExtra("PhonemeCode", current.getCode());
+                i.putExtra("LevelNum", levelNum);
                 context.startActivity(i);
             }
         });

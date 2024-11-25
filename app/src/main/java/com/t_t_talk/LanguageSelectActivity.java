@@ -62,25 +62,24 @@ public class LanguageSelectActivity extends AppCompatActivity {
             db.fetchLevels(new AppDatabase.LevelsCallback() {
                 @Override
                 public void onLevelsFetched(List<Level> levels) {
-                    // Handle the levels here
-                    Log.d("LanguageSelectActivity", "Fetched levels: " + levels.size());
-                    for (Level level : levels) {
-                        Log.d("LanguageSelectActivity", "Fetched level: " + level.toString());
-                    }
                     Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("levels", (Serializable) levels);
                     startActivity(intent);
                 }
             });
-
         });
 
 
         cl_tagalog.setOnClickListener(view -> {
-            Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            db.fetchLevels(new AppDatabase.LevelsCallback() {
+                @Override
+                public void onLevelsFetched(List<Level> levels) {
+                    Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
         });
 
         curved_language.setText("LANGUAGE");

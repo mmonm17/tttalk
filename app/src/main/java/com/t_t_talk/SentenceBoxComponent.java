@@ -134,15 +134,13 @@ public class SentenceBoxComponent extends LinearLayout {
         submitted = false;
     }
 
-    public void setCorrectFeedback(){
+    public void setCorrectFeedback(int levelNum, String phonemeCode){
         circular_feedback.setVisibility(VISIBLE);
         circular_feedback_check.setVisibility(VISIBLE);
         circular_feedback_close.setVisibility(GONE);
         submitted = true;
 
-        Random random = new Random();
-        int mistakes = random.nextInt(2);
-        callback.onClick(this.position, mistakes);
+        callback.onClick(this.position, levelNum, phonemeCode);
     }
 
     public void setIncorrectFeedback(){

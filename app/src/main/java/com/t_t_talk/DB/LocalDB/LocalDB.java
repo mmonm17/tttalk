@@ -11,6 +11,7 @@ import com.t_t_talk.DB.Models.Level;
 import com.t_t_talk.DB.Models.Phoneme;
 import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +63,26 @@ public class LocalDB {
 
         cursor.close();
         return phonemes;
+    }
+
+    private int fetchPhonemeProgress(String levelCode, String phonemeCode) {
+        Log.d("LocalDB", "FETCHING " + levelCode + " " + phonemeCode);
+        Cursor cursor = database.query(DBConstants.PhonemeTableConstants.TABLE_NAME, null, DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + "=? AND " + DBConstants.PhonemeTableConstants.COLNAME_CODE + "=?", new String[]{ levelCode, phonemeCode }, null, null, null);
+
+        //        if (cursor == null) {
+//            return 0;
+//        }
+//
+//        if(cursor.getCount() == 0) {
+//            cursor.close();
+//            return 0;
+//        }
+//
+//        cursor.moveToFirst();
+//        int starCount = cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_STAR));
+        cursor.close();
+//        return starCount;
+        return 0;
     }
 
     public void open() throws SQLException {
@@ -155,5 +176,18 @@ public class LocalDB {
     //REMOVE THIS IN PROD
     public void reset() {
         dbHelper.reset(database);
+    }
+
+    public void updatePhonemeProgress(int levelCode, String phonemeCode, int starCount) {
+        Log.d("LocalDB", "UPDATING INSIDE DB");
+        int currentProgress = fetchPhonemeProgress(String.valueOf(levelCode), phonemeCode);
+        Log.d("LocalDB", "CURRENT PROGRESS: " +  currentProgress);
+//        if (currentProgress <= starCount) {
+//            return;
+//        }
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(DBConstants.PhonemeTableConstants.COLNAME_STAR, starCount);
+//        String whereClause = DBConstants.PhonemeTableConstants.COLNAME_CODE + " = ? AND " + DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + " = ?";
+//        database.update(DBConstants.PhonemeTableConstants.TABLE_NAME, contentValues, whereClause, new String[]{ phonemeCode, String.valueOf(levelCode) });
     }
 }

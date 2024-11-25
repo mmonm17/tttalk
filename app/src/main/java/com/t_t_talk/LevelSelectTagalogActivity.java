@@ -1,5 +1,6 @@
 package com.t_t_talk;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LevelSelectTagalogActivity extends AppCompatActivity {
     CurvedTextView curved_levels;
@@ -35,35 +37,12 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
             return insets;
         });
 
-        ArrayList<String> sentences = new ArrayList<String>(Arrays.asList(new String[]{
-                "Ibabato ni Babols ang bato.",
-                "Ibabato ni Babols ang bato.",
-                "Ibabato ni Babols ang bato.",
-                "Ibabato ni Babols ang bato.",
-        }));
-
-        ArrayList<Phoneme> phonemes = new ArrayList<>();
-        phonemes.add(new Phoneme(sentences, 2, "BA"));
-        phonemes.add(new Phoneme(sentences, 1, "BE"));
-        phonemes.add(new Phoneme(sentences, 3, "BI"));
-        phonemes.add(new Phoneme(sentences, 0, "BO"));
-        phonemes.add(new Phoneme(sentences, 1, "BU"));
-        //query the db for the phonemes and the stars?
-        /* for each phoneme in the db
-         *      phonemes.add(new Phoneme(sentences, stars, phoneme));
-         */
-
+        Intent i = getIntent();
+        List<Level> levels = (List<Level>) i.getSerializableExtra("levels");
         data = new ArrayList<>();
-        data.add(new Level(1, 3, Color.rgb(249, 222, 104), "Tagalog", phonemes));
-        data.add(new Level(2, 3, Color.rgb(179, 179, 179), "Tagalog", phonemes));
-        data.add(new Level(3, 4, Color.rgb(238, 118, 24), "Tagalog", phonemes));
-        data.add(new Level(4, 4, Color.rgb(112, 176, 69), "Tagalog", phonemes));
-        data.add(new Level(5, 4, Color.rgb(182, 213, 240), "Tagalog", phonemes));
-        data.add(new Level(6, 5, Color.rgb(135, 162, 122), "Tagalog", phonemes));
-        data.add(new Level(7, 5, Color.rgb(219, 153, 5), "Tagalog", phonemes));
-        /* for each level in the db
-         *      data.add(new Level(levelNumber, age, color, phonemes));
-         */
+        for (Level level : levels) {
+            data.add(new Level(level.getLevelNumber(), level.getAge(), Color.rgb(249, 222, 104), level.getLanguage(), level.getPhonemeList()));
+        }
 
         curved_levels = findViewById(R.id.curved_levels);
         curved_levels.setText("MGA LEBEL");

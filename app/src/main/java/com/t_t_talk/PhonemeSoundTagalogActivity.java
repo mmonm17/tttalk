@@ -37,7 +37,6 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         txt_title = findViewById(R.id.txt_title);
         mic_animation = findViewById(R.id.mic_animation);
         btn_mic = findViewById(R.id.btn_mic);
-        txt_lvl.setText("Lebel 1");
 
         btn_mic.setOnClickListener(view -> {
             mic_animation.setVisibility(View.VISIBLE);
@@ -50,13 +49,16 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
+        int levelNum = i.getIntExtra("LevelNum", 1);
+
+        txt_lvl.setText("Lebel " + levelNum);
         txt_title.setText(String.format("\" %s \" ", highlighted.toUpperCase()));
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "Tagalog", PhonemeSoundTagalogActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "Tagalog", PhonemeSoundTagalogActivity.this, levelNum, highlighted);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()

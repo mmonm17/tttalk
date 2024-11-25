@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.t_t_talk.DB.AppDatabase;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,7 +35,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     boolean playedAudio = false;
     String[] sentences;
     boolean[] sentenceCompletions;
-    int[] mistakeCount;
     String highlighted;
     AppCompatActivity context;
     EventCallback callback;
@@ -52,8 +53,11 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
 
     String languageLower;
     String phonemeLower;
+    AppDatabase db;
+    int levelNum;
+    String phonemeCode;
 
-    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity){
+    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity, int levelNum, String phonemeCode){
         this.sentences = sentences;
         this.languageLower = language.toLowerCase();
         this.phonemeLower = highlighted.toLowerCase();
@@ -65,24 +69,23 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             sentenceCompletions[i] = false;
         }
 
-        this.mistakeCount = new int[this.sentences.length];
-
-        for(int i = 0; i < this.mistakeCount.length; i++) {
-            mistakeCount[i] = 0;
-        }
-
         this.highlighted = highlighted;
         this.language = language;
         this.context = activity;
+        this.db = new AppDatabase(context);
+        this.levelNum = levelNum;
+        this.phonemeCode = phonemeCode;
         this.callback = new EventCallback() {
             @Override
-            public void onClick(int position, int mistakes) {
+            public void onClick(int position, int levelNum, String phonemeCode) {
                 sentenceCompletions[position] = true;
-                mistakeCount[position] = mistakes;
+                int starCount = computeStars();
+                Log.d("SentenceAdapter", "FETCHING FROM SENTENCE ADAPTER");
+                db.updatePhonemeProgress(levelNum, phonemeCode, starCount);
 
                 if (checkAllForCompletion()) {
                     Intent i = new Intent(context, ProgressActivity.class);
-                    i.putExtra("star_count", computeStars());
+                    i.putExtra("star_count", starCount);
                     i.putExtra("language", language);
                     i.putExtra("phoneme", highlighted);
                     context.startActivity(i);
@@ -275,7 +278,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.orange));
                 holder.sentenceViewBox.switchMicIcon(false);
                 isRecording = false;
-                holder.sentenceViewBox.setCorrectFeedback();
+                holder.sentenceViewBox.setCorrectFeedback(levelNum, phonemeCode);
             } else {
                 isRecording = true;
                 currentRecording = holder.getAdapterPosition();
@@ -360,16 +363,19 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     }
 
     public int computeStars() {
-        int total = 0;
-        for(int mistake: mistakeCount) {
-            total += mistake;
+        int completed_sentences = 0;
+        for(boolean b: this.sentenceCompletions) {
+            if(b) {
+                completed_sentences++;
+            }
         }
 
-        if(total < 2) {
+        float progress_percentage = (float) completed_sentences / (float) this.sentenceCompletions.length;
+        if (progress_percentage > 0.99) {
             return 3;
-        } else if(total < 4) {
+        } else if (progress_percentage > 0.66) {
             return 2;
-        } else if(total < 6) {
+        } else if (progress_percentage > 0.33) {
             return 1;
         } else {
             return 0;
@@ -377,6 +383,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     }
 
     interface EventCallback {
-        void onClick(int position, int mistakes);
+        void onClick(int position, int levelNum, String phonemeCode);
     }
 }

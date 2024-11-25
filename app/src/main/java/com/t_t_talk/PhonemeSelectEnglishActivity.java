@@ -21,6 +21,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
     GridLayoutManager layoutManager;
     ArrayList<Phoneme> data;
     PhonemeAdapter adapter;
+    int level_num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,13 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
         });
 
         level_display = findViewById(R.id.level_display);
-        level_display.setText("Level 1");
 
         Intent i = getIntent();
         Bundle phonemes = i.getBundleExtra("Phonemes");
         assert phonemes != null;
         data = (ArrayList<Phoneme>) phonemes.getSerializable("Phonemes");
+        level_num = i.getIntExtra("LevelNum", 1);
+        level_display.setText("Level " + level_num);
 
         setRecyclerView();
         getSupportFragmentManager()
@@ -59,7 +61,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English");
+        this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English", level_num);
         this.recyclerView.setAdapter(this.adapter);
     }
 }

@@ -37,7 +37,6 @@ public class PhonemeSoundEnglishActivity extends AppCompatActivity {
         txt_title = findViewById(R.id.txt_title);
         mic_animation = findViewById(R.id.mic_animation);
         btn_mic = findViewById(R.id.btn_mic);
-        txt_lvl.setText("Level 1");
 
         btn_mic.setOnClickListener(view -> {
             mic_animation.setVisibility(View.VISIBLE);
@@ -54,9 +53,12 @@ public class PhonemeSoundEnglishActivity extends AppCompatActivity {
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
+        int levelNum = i.getIntExtra("LevelNum", 1);
+
+        txt_lvl.setText("Level " + levelNum);
         txt_title.setText(String.format("\" %s \" ", highlighted.toUpperCase()));
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "English", PhonemeSoundEnglishActivity.this);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "English", PhonemeSoundEnglishActivity.this, levelNum, highlighted);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()

@@ -42,6 +42,16 @@ public class AppDatabase {
 
         return false;
     }
+
+    public void updatePhonemeProgress(int levelCode, String phonemeCode, int starCount) {
+        if (isOnline()) {
+            Log.d("AppDatabase", "Updating phoneme progress in remote database");
+            localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
+        } else {
+            Log.d("AppDatabase", "is offline, updating phoneme progress in local database");
+        }
+    }
+
     public interface LevelsCallback {
         void onLevelsFetched(List<Level> levels);
     }
@@ -69,6 +79,9 @@ public class AppDatabase {
             Log.d("AppDatabase", "Fetching levels from remote database");
             remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
                 levels.set(levelsList);
+                for (Level level : levelsList) {
+                    localDB.insert(level);
+                }
             });
         } else {
             levels.set(localDB.fetchLevels());
