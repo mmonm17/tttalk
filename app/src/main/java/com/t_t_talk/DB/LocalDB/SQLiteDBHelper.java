@@ -17,18 +17,21 @@ public class SQLiteDBHelper extends SQLiteOpenHelper  {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DBConstants.CREATE_PHONEME_TABLE_STATEMENT);
         sqLiteDatabase.execSQL(DBConstants.CREATE_LEVEL_TABLE_STATEMENT);
+        sqLiteDatabase.execSQL(DBConstants.CREATE_USER_PROGRESS_TABLE_STATEMENT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(DBConstants.DROP_PHONEME_TABLE_STATEMENT);
         sqLiteDatabase.execSQL(DBConstants.DROP_LEVEL_TABLE_STATEMENT);
+        sqLiteDatabase.execSQL(DBConstants.DROP_USER_PROGRESS_TABLE_STATEMENT);
         onCreate(sqLiteDatabase);
     }
 
     public void reset(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DBConstants.DROP_PHONEME_TABLE_STATEMENT);
         sqLiteDatabase.execSQL(DBConstants.DROP_LEVEL_TABLE_STATEMENT);
+        sqLiteDatabase.execSQL(DBConstants.DROP_USER_PROGRESS_TABLE_STATEMENT);
         onCreate(sqLiteDatabase);
     }
 }

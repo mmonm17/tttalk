@@ -49,7 +49,8 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
-        int levelNum = i.getIntExtra("LevelNum", 1);
+        String levelCode = i.getStringExtra("LevelCode");
+        int levelNum = Integer.valueOf(levelCode.split("-")[1]);
 
         txt_lvl.setText("Lebel " + levelNum);
         txt_title.setText(String.format("\" %s \" ", highlighted.toUpperCase()));
@@ -58,7 +59,7 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "Tagalog", PhonemeSoundTagalogActivity.this, levelNum, highlighted);
+        SentenceAdapter sentenceAdapter = new SentenceAdapter(sentences, highlighted, "Tagalog", PhonemeSoundTagalogActivity.this, levelCode, highlighted);
         recyclerView.setAdapter(sentenceAdapter);
         getSupportFragmentManager()
                 .beginTransaction()

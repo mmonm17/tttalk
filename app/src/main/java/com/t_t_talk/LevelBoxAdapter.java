@@ -58,7 +58,7 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
                 Bundle phonemes = new Bundle();
                 phonemes.putSerializable("Phonemes", (Serializable) current.getPhonemeList());
                 i.putExtra("Phonemes", phonemes);
-                i.putExtra("LevelNum", current.getLevelNumber());
+                i.putExtra("LevelCode", current.getCode());
 
                 context.startActivity(i);
             }

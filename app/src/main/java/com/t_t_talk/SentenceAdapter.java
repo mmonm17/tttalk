@@ -54,10 +54,10 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     String languageLower;
     String phonemeLower;
     AppDatabase db;
-    int levelNum;
     String phonemeCode;
+    String levelCode;
 
-    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity, int levelNum, String phonemeCode){
+    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity, String levelCode, String phonemeCode){
         this.sentences = sentences;
         this.languageLower = language.toLowerCase();
         this.phonemeLower = highlighted.toLowerCase();
@@ -73,15 +73,15 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         this.language = language;
         this.context = activity;
         this.db = new AppDatabase(context);
-        this.levelNum = levelNum;
         this.phonemeCode = phonemeCode;
+        this.levelCode = levelCode;
         this.callback = new EventCallback() {
             @Override
-            public void onClick(int position, int levelNum, String phonemeCode) {
+            public void onClick(int position, String levelCode, String phonemeCode) {
                 sentenceCompletions[position] = true;
                 int starCount = computeStars();
                 Log.d("SentenceAdapter", "FETCHING FROM SENTENCE ADAPTER");
-                db.updatePhonemeProgress(levelNum, phonemeCode, starCount);
+                db.updatePhonemeProgress(levelCode, phonemeCode, starCount);
 
                 if (checkAllForCompletion()) {
                     Intent i = new Intent(context, ProgressActivity.class);
@@ -278,7 +278,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.orange));
                 holder.sentenceViewBox.switchMicIcon(false);
                 isRecording = false;
-                holder.sentenceViewBox.setCorrectFeedback(levelNum, phonemeCode);
+                holder.sentenceViewBox.setCorrectFeedback(levelCode, phonemeCode);
             } else {
                 isRecording = true;
                 currentRecording = holder.getAdapterPosition();
@@ -383,6 +383,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     }
 
     interface EventCallback {
-        void onClick(int position, int levelNum, String phonemeCode);
+        void onClick(int position, String levelCode, String phonemeCode);
     }
 }

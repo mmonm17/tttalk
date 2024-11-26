@@ -20,10 +20,6 @@ public class Phoneme implements Serializable {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public List<String> getSentences() {
         return sentences;
     }
@@ -34,10 +30,6 @@ public class Phoneme implements Serializable {
 
     public int getStarCount() {
         return starCount;
-    }
-
-    public void setStarCount(int starCount) {
-        this.starCount = starCount;
     }
 
     public int getOrder() { return this.order; }

@@ -21,7 +21,7 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
     GridLayoutManager layoutManager;
     ArrayList<Phoneme> data;
     PhonemeAdapter adapter;
-    int level_num;
+    String levelCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,8 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
         Bundle phonemes = i.getBundleExtra("Phonemes");
         assert phonemes != null;
         data = (ArrayList<Phoneme>) phonemes.getSerializable("Phonemes");
-        level_num = i.getIntExtra("LevelNum", 1);
-
-        level_display.setText("Lebel " + level_num);
+        levelCode = i.getStringExtra("LevelCode");
+        level_display.setText("Level " + levelCode.split("-")[1]);
 
         setRecyclerView();
 
@@ -62,7 +61,7 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(PhonemeSelectTagalogActivity.this, this.data, "Tagalog", level_num);
+        this.adapter = new PhonemeAdapter(PhonemeSelectTagalogActivity.this, this.data, "Tagalog", levelCode);
         this.recyclerView.setAdapter(this.adapter);
     }
 }

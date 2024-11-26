@@ -30,9 +30,33 @@ public class LocalDB {
         dbHelper.reset(database);
     }
 
+    private Map<String, Integer> fetchUserProgress() {
+        Map<String, Integer> progress = new HashMap<>();
+        Cursor cursor = database.query(DBConstants.UserProgressTableConstants.TABLE_NAME, null, null, null, null, null, null);
+
+        if (cursor == null) {
+            return progress;
+        }
+
+        if(cursor.getCount() == 0) {
+            cursor.close();
+            return progress;
+        }
+
+        cursor.moveToFirst();
+        do {
+            progress.put(cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.UserProgressTableConstants.COLNAME_ID)), cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.UserProgressTableConstants.COLNAME_STAR)));
+        } while (cursor.moveToNext());
+
+        return progress;
+    }
+
     private ArrayList<Phoneme> fetchPhoneme(String levelCode) {
+        Map<String, Integer> userProgress = fetchUserProgress();
+        for (Map.Entry<String, Integer> entry : userProgress.entrySet()) {
+            Log.d("TEST", entry.getKey() + " " + entry.getValue());
+        }
         ArrayList<Phoneme> phonemes = new ArrayList<>();
-        String code;
         Map<String, Phoneme> phonemeMap = new HashMap<>();
         Cursor cursor = database.query(DBConstants.PhonemeTableConstants.TABLE_NAME, null, DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + "=?", new String[]{ levelCode }, null, null, null);
 
@@ -47,13 +71,17 @@ public class LocalDB {
 
         cursor.moveToFirst();
         do {
-            code = cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_CODE));
+            String code = cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_CODE));
+            int starCount = 0;
+            if(userProgress.containsKey(levelCode + "-" + code)) {
+                starCount = userProgress.get(levelCode + "-" + code);
+            }
             if(!phonemeMap.containsKey(code)) {
                 phonemeMap.put(code, new Phoneme(
-                        new ArrayList<>(),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_STAR)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_CODE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_ORDER))
+                    new ArrayList<>(),
+                    starCount,
+                    code,
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_ORDER))
                 ));
             }
 
@@ -61,16 +89,14 @@ public class LocalDB {
         } while (cursor.moveToNext());
 
         phonemes.addAll(phonemeMap.values());
+        phonemes.sort((p1, p2) -> Integer.compare(p1.getOrder(), p2.getOrder()));
 
         cursor.close();
         return phonemes;
     }
 
     private int fetchPhonemeProgress(String levelCode, String phonemeCode) {
-        Log.d("LocalDB", "FETCHING " + levelCode + " " + phonemeCode);
-        Log.d("LocalDB", "Statement" + DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + "=? AND " + DBConstants.PhonemeTableConstants.COLNAME_CODE + "=?;" + levelCode + " " + phonemeCode);
-//        Cursor cursor = database.query(DBConstants.PhonemeTableConstants.TABLE_NAME, new String[]{DBConstants.PhonemeTableConstants.COLNAME_STAR, DBConstants.PhonemeTableConstants.COLNAME_CODE, DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE}, DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + "=? AND " + DBConstants.PhonemeTableConstants.COLNAME_CODE + "=?", new String[]{ levelCode, phonemeCode }, null, null, null);
-        Cursor cursor = database.query(DBConstants.PhonemeTableConstants.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = database.query(DBConstants.UserProgressTableConstants.TABLE_NAME, new String[]{DBConstants.UserProgressTableConstants.COLNAME_STAR}, DBConstants.UserProgressTableConstants.COLNAME_ID + "=?", new String[]{ levelCode + "-" + phonemeCode }, null, null, null);
         if (cursor == null) {
             return 0;
         }
@@ -81,11 +107,7 @@ public class LocalDB {
         }
 
         cursor.moveToFirst();
-        do {
-            Log.d("LocalDB", "Cursor Code: " + cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_CODE)));
-            Log.d("LocalDB", "Cursor Level Code: " +  cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE)));
-        } while (cursor.moveToNext());
-        int starCount = cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_STAR));
+        int starCount = cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.UserProgressTableConstants.COLNAME_STAR));
         cursor.close();
         return starCount;
     }
@@ -114,12 +136,13 @@ public class LocalDB {
 
         cursor.moveToFirst();
         do {
+            ArrayList<Phoneme> phonemes = fetchPhoneme(cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_CODE)));
             levels.add(new Level(
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_NUMBER)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_AGE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_COLOR)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_LANGUAGE)),
-                    fetchPhoneme(cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_CODE)))
+                cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_NUMBER)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_AGE)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_COLOR)),
+                cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.LevelTableConstants.COLNAME_LANGUAGE)),
+                phonemes
             ));
         } while (cursor.moveToNext());
 
@@ -137,15 +160,14 @@ public class LocalDB {
         database.insert(DBConstants.LevelTableConstants.TABLE_NAME, null, contentValue);
 
         for(Phoneme p: level.getPhonemeList()) {
-            this.insert(p, level.getLevelNumber());
+            this.insert(p, level.getCode());
         }
     }
 
-    public void insert(Phoneme phoneme, int level_number) {
+    public void insert(Phoneme phoneme, String level_code) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DBConstants.PhonemeTableConstants.COLNAME_CODE, phoneme.getCode());
-        contentValue.put(DBConstants.PhonemeTableConstants.COLNAME_STAR, phoneme.getStarCount());
-        contentValue.put(DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE, level_number);
+        contentValue.put(DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE, level_code);
         contentValue.put(DBConstants.PhonemeTableConstants.COLNAME_ORDER, phoneme.getOrder());
 
         for(String sentence: phoneme.getSentences()) {
@@ -153,6 +175,15 @@ public class LocalDB {
             database.insert(DBConstants.PhonemeTableConstants.TABLE_NAME, null, contentValue);
             contentValue.remove(DBConstants.PhonemeTableConstants.COLNAME_SENTENCE);
         }
+
+        this.insert(level_code + "-" + phoneme.getCode(), phoneme.getStarCount());
+    }
+
+    public void insert(String id, int starCount) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(DBConstants.UserProgressTableConstants.COLNAME_ID, id);
+        contentValue.put(DBConstants.UserProgressTableConstants.COLNAME_STAR, starCount);
+        database.insert(DBConstants.UserProgressTableConstants.TABLE_NAME, null, contentValue);
     }
 
     public void delete(Level level) {
@@ -173,17 +204,17 @@ public class LocalDB {
         dbHelper.reset(database);
     }
 
-    public void updatePhonemeProgress(int levelCode, String phonemeCode, int starCount) {
-        Log.d("LocalDB", "UPDATING INSIDE DB");
-        int currentProgress = fetchPhonemeProgress(String.valueOf(levelCode), phonemeCode);
-        Log.d("LocalDB", "CURRENT PROGRESS: " +  currentProgress);
-//        Log.d("LocalDB", "CURRENT PROGRESS: " +  currentProgress);
-//        if (currentProgress <= starCount) {
-//            return;
-//        }
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(DBConstants.PhonemeTableConstants.COLNAME_STAR, starCount);
-//        String whereClause = DBConstants.PhonemeTableConstants.COLNAME_CODE + " = ? AND " + DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + " = ?";
-//        database.update(DBConstants.PhonemeTableConstants.TABLE_NAME, contentValues, whereClause, new String[]{ phonemeCode, String.valueOf(levelCode) });
+    public void updatePhonemeProgress(String levelCode, String phonemeCode, int starCount) {
+        int currentProgress = fetchPhonemeProgress(levelCode, phonemeCode);
+
+        Log.d("LocalDB", "Current Progress: " + currentProgress);
+        Log.d("LocalDB", "New Progress: " + starCount);
+        if (starCount > currentProgress) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBConstants.UserProgressTableConstants.COLNAME_STAR, starCount);
+//
+            String whereClause = DBConstants.UserProgressTableConstants.COLNAME_ID + " = ?";
+            database.update(DBConstants.UserProgressTableConstants.TABLE_NAME, contentValues, whereClause, new String[]{levelCode + "-" + phonemeCode});
+        }
     }
 }
