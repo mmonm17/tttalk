@@ -7,11 +7,13 @@ public class Phoneme implements Serializable {
     private String code;
     private List<String> sentences;
     private int starCount;
+    private int order;
 
-    public Phoneme(List<String> sentences, int starCount, String code) {
+    public Phoneme(List<String> sentences, int starCount, String code, int order) {
         this.sentences = sentences;
         this.starCount = starCount;
         this.code = code;
+        this.order = order;
     }
 
     public String getCode() {
@@ -37,4 +39,6 @@ public class Phoneme implements Serializable {
     public void setStarCount(int starCount) {
         this.starCount = starCount;
     }
+
+    public int getOrder() { return this.order; }
 }

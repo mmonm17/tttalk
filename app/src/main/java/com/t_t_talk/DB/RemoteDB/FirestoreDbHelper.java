@@ -11,34 +11,43 @@ import com.t_t_talk.DB.Models.Level;
 import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class FirestoreDbHelper {
     private FirebaseFirestore db;
     private static FirestoreDbHelper instance;
     private FirebaseAuth mAuth;
-    private int current_level;
 
     private FirestoreDbHelper() {
         this.db = FirebaseFirestore.getInstance();
         this.mAuth = FirebaseAuth.getInstance();
     }
 
-    private CompletableFuture<Integer> fetchUserProgress(String code) {
+    private CompletableFuture<Map<String, Integer>> fetchUserProgress() {
         return CompletableFuture.supplyAsync(() -> {
             CountDownLatch latch = new CountDownLatch(1);
             FirebaseUser user = mAuth.getCurrentUser();
             String userID = user.getUid();
-            AtomicReference<Integer> starCount = new AtomicReference<>(0);
-            db.collection("UserProgress").document(userID + "-" + this.current_level + "-" + code)
+            Map<String, Integer> progress = new HashMap<>();
+            db.collection("UserProgress").document(userID)
                     .get().addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult() != null) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.getLong("starCount") != null)
-                                starCount.set(document.getLong("starCount").intValue());
+
+                            if (document.exists()){
+                                Map<String, Object> data = document.getData();
+                                if (data != null) {
+                                    for (Map.Entry<String, Object> entry : data.entrySet()) {
+                                        String key = entry.getKey();
+                                        Object value = entry.getValue();
+                                        progress.put(key, ((Long) value).intValue());
+                                    }
+                                }
+                            }
                         }
                         latch.countDown();
                     });
@@ -47,34 +56,42 @@ public class FirestoreDbHelper {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return starCount.get();
+            return progress;
         });
     }
 
-    private CompletableFuture<ArrayList<Phoneme>> fetchPhonemes(List<DocumentReference> phonemeRef) {
+    private CompletableFuture<ArrayList<Phoneme>> fetchPhonemes(List<DocumentReference> phonemeRef, int level_number) {
         return CompletableFuture.supplyAsync(() -> {
             CountDownLatch latch = new CountDownLatch(phonemeRef.size());
             ArrayList<Phoneme> phonemes = new ArrayList<>();
-            for (DocumentReference ref : phonemeRef) {
-                CountDownLatch latch2 = new CountDownLatch(1);
-                ref.get().addOnCompleteListener(phonemeTask -> {
-                    if (phonemeTask.isSuccessful() && phonemeTask.getResult() != null) {
-                        DocumentSnapshot documentPhoneme = phonemeTask.getResult();
-                        List<String> sentences = (List<String>) documentPhoneme.get("sentences");
-                        fetchUserProgress(documentPhoneme.getId()).thenAccept(starCount -> {
-                            latch2.countDown();
-                            Phoneme phoneme = new Phoneme(sentences, starCount, documentPhoneme.getId());
+            fetchUserProgress().thenAccept(progress -> {
+                for (DocumentReference ref : phonemeRef) {
+                    CountDownLatch latch2 = new CountDownLatch(1);
+                    ref.get().addOnCompleteListener(phonemeTask -> {
+                        if (phonemeTask.isSuccessful() && phonemeTask.getResult() != null) {
+                            DocumentSnapshot documentPhoneme = phonemeTask.getResult();
+                            String[] documentId = documentPhoneme.getId().split("-");
+                            String language = documentId[0].substring(0,1);
+                            String code = documentId[1];
+                            Integer starCount = progress.get(language + "-" + String.valueOf(level_number) + "-" + code);
+                            if (starCount == null) {
+                                starCount = 0;
+                            }
+                            List<String> sentences = (List<String>) documentPhoneme.get("sentences");
+                            int order = documentPhoneme.getLong("order").intValue();
+                            Phoneme phoneme = new Phoneme(sentences, starCount, code, order);
                             phonemes.add(phoneme);
                             latch.countDown();
-                        });
+                            latch2.countDown();
+                        }
+                    });
+                    try {
+                        latch2.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
-                try {
-                    latch2.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
-            }
+            });
             try {
                 latch.await();
             } catch (InterruptedException e) {
@@ -99,14 +116,14 @@ public class FirestoreDbHelper {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult() != null) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                this.current_level = document.getLong("level_number").intValue();
+                                int level_number = document.getLong("level_number").intValue();
                                 int age = document.getLong("age").intValue();
                                 int color = document.getLong("color").intValue();
                                 String language = document.getString("language");
                                 List<DocumentReference> phonemeRef = (List<DocumentReference>) document.get("phonemes");
                                 if (!phonemeRef.isEmpty()) {
-                                    fetchPhonemes(phonemeRef).thenAccept(phonemeArrayList -> {
-                                        Level level = new Level(this.current_level, age, color, language, phonemeArrayList);
+                                    fetchPhonemes(phonemeRef, level_number).thenAccept(phonemeArrayList -> {
+                                        Level level = new Level(level_number, age, color, language, phonemeArrayList);
                                         levels.add(level);
                                         latch.countDown();
                                     });

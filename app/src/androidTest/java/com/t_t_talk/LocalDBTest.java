@@ -1,7 +1,6 @@
 package com.t_t_talk;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Color;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -20,6 +19,7 @@ import com.t_t_talk.DB.LocalDB.LocalDB;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RunWith(AndroidJUnit4.class)
 public class LocalDBTest {
@@ -52,11 +52,14 @@ public class LocalDBTest {
         phonemes.add(new Phoneme(sentences, 0, "E"));
         ldb.insert(l2);
 
-        List<Level> levels = db.fetchLevels();
+        AtomicReference<List<Level>> levels = null;
+        db.fetchLevels().thenAccept(listLevels -> {
+            levels.set(listLevels);
+        });
 
-        assertEquals(2, levels.size());
+        assertEquals(2, levels.get().size());
 
-        for(Level level: levels) {
+        for(Level level: levels.get()) {
             if(level.getLevelNumber() == 1) {
                 assertEquals(4, level.getPhonemeList().size());
             } else {

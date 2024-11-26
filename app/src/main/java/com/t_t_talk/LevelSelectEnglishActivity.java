@@ -44,6 +44,7 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
         data = new ArrayList<>();
         assert levels != null;
         for(Level level : levels) {
+            Log.d("LevelSelect", level.getCode() + " " + level.getLevelNumber());
             data.add(new Level(level.getLevelNumber(), level.getAge(), Color.rgb(249, 222, 104), level.getLanguage(), level.getPhonemeList()));
         }
 

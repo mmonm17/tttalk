@@ -12,6 +12,7 @@ import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AppDatabase {
@@ -46,7 +47,9 @@ public class AppDatabase {
     public void updatePhonemeProgress(int levelCode, String phonemeCode, int starCount) {
         if (isOnline()) {
             Log.d("AppDatabase", "Updating phoneme progress in remote database");
+            localDB.open();
             localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
+            localDB.close();
         } else {
             Log.d("AppDatabase", "is offline, updating phoneme progress in local database");
         }
@@ -60,10 +63,8 @@ public class AppDatabase {
         AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
 
         if (isOnline()) {
-            Log.d("AppDatabase", "Fetching levels from remote database");
             remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
                 levels.set(levelsList);
-
                 localDB.open();
                 for (Level level : levelsList) {
                     localDB.insert(level);
@@ -76,29 +77,30 @@ public class AppDatabase {
             localDB.open();
             levels.set(localDB.fetchLevels());
             localDB.close();
-            Log.d("AppDatabase", "is offline, fetching levels from local database");
             callback.onLevelsFetched(levels.get());  // Notify when levels are fetched
         }
     }
 
+    public CompletableFuture<List<Level>> fetchLevels() {
+        return CompletableFuture.supplyAsync(() -> {
+            AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
 
-    public List<Level> fetchLevels() {
-        AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
-
-        if (isOnline()) {
-            Log.d("AppDatabase", "Fetching levels from remote database");
-            remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
-                levels.set(levelsList);
-                for (Level level : levelsList) {
-                    localDB.insert(level);
-                }
-            });
-        } else {
-            levels.set(localDB.fetchLevels());
-            Log.d("AppDatabase", "is offline, fetching levels from local database");
-
-        }
-        return levels.get();
+            if (isOnline()) {
+                remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
+                    levels.set(levelsList);
+                    localDB.open();
+                    for (Level level : levelsList) {
+                        localDB.insert(level);
+                    }
+                    localDB.close();
+                });
+            } else {
+                localDB.open();
+                levels.set(localDB.fetchLevels());
+                localDB.close();
+            }
+            return levels.get();
+        });
     }
 
     public LocalDB getLocalDB() {
