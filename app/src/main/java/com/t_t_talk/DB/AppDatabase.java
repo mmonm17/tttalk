@@ -13,6 +13,7 @@ import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AppDatabase {
@@ -83,6 +84,7 @@ public class AppDatabase {
 
     public CompletableFuture<List<Level>> fetchLevels() {
         return CompletableFuture.supplyAsync(() -> {
+            CountDownLatch latch = new CountDownLatch(1);
             AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
 
             if (isOnline()) {
@@ -92,12 +94,19 @@ public class AppDatabase {
                     for (Level level : levelsList) {
                         localDB.insert(level);
                     }
+                    latch.countDown();
                     localDB.close();
                 });
             } else {
                 localDB.open();
                 levels.set(localDB.fetchLevels());
                 localDB.close();
+            }
+
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             return levels.get();
         });

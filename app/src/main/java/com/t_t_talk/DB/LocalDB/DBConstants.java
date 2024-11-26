@@ -23,7 +23,7 @@ public class DBConstants {
 
     public static final String CREATE_PHONEME_TABLE_STATEMENT =
         "CREATE TABLE IF NOT EXISTS " + PhonemeTableConstants.TABLE_NAME + "(" +
-        PhonemeTableConstants.COLNAME_ID + " TEXT PRIMARY KEY," +
+//        PhonemeTableConstants.COLNAME_ID + " TEXT PRIMARY KEY," +
         PhonemeTableConstants.COLNAME_CODE + " TEXT," +
         PhonemeTableConstants.COLNAME_SENTENCE + " TEXT," +
         PhonemeTableConstants.COLNAME_LEVEL_CODE + " INTEGER," +
@@ -32,7 +32,7 @@ public class DBConstants {
 
     public static final String CREATE_LEVEL_TABLE_STATEMENT =
         "CREATE TABLE IF NOT EXISTS " + LevelTableConstants.TABLE_NAME + "(" +
-        LevelTableConstants.COLNAME_ID + " TEXT PRIMARY KEY," +
+//        LevelTableConstants.COLNAME_ID + " TEXT PRIMARY KEY," +
         LevelTableConstants.COLNAME_CODE + " TEXT," +
         LevelTableConstants.COLNAME_NUMBER + " INTEGER," +
         LevelTableConstants.COLNAME_COLOR + " INTEGER," +

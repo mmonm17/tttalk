@@ -54,21 +54,18 @@ public class LanguageSelectActivity extends AppCompatActivity {
         cl_english.setOnClickListener(view -> {
             PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
             pauseDialog.show();
-            db.fetchLevels(new AppDatabase.LevelsCallback() {
-                @Override
-                public void onLevelsFetched(List<Level> levels) {
-                    pauseDialog.dismiss();
-                    List<Level> englishLevels = new ArrayList<>();
-                    for (Level level : levels) {
-                        if (level.getLanguage().equals("English")) {
-                            englishLevels.add(level);
-                        }
+            db.fetchLevels().thenAccept(levels -> {
+                pauseDialog.dismiss();
+                List<Level> englishLevels = new ArrayList<>();
+                for (Level level : levels) {
+                    if (level.getLanguage().equals("English")) {
+                        englishLevels.add(level);
                     }
-                    Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("levels", (Serializable) englishLevels);
-                    startActivity(intent);
                 }
+                Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("levels", (Serializable) englishLevels);
+                startActivity(intent);
             });
         });
 
@@ -76,22 +73,19 @@ public class LanguageSelectActivity extends AppCompatActivity {
         cl_tagalog.setOnClickListener(view -> {
             PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
             pauseDialog.show();
-            db.fetchLevels(new AppDatabase.LevelsCallback() {
-                @Override
-                public void onLevelsFetched(List<Level> levels) {
-                    pauseDialog.dismiss();
-                    List<Level> tagalogLevels = new ArrayList<>();
-                    for (Level level : levels) {
-                        if (level.getLanguage().equals("Tagalog")) {
-                            Log.d("Level", "Language: " + level.getLanguage() + " ");
-                            tagalogLevels.add(level);
-                        }
+            db.fetchLevels().thenAccept(levels -> {
+                pauseDialog.dismiss();
+                List<Level> tagalogLevels = new ArrayList<>();
+                for (Level level : levels) {
+                    if (level.getLanguage().equals("Tagalog")) {
+                        Log.d("Level", "Language: " + level.getLanguage() + " ");
+                        tagalogLevels.add(level);
                     }
-//                    Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
-//                    intent.putExtra("levels", (Serializable) tagalogLevels);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
                 }
+                Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
+                intent.putExtra("levels", (Serializable) tagalogLevels);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             });
         });
 

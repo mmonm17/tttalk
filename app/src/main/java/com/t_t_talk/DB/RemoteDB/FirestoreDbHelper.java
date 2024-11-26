@@ -11,6 +11,8 @@ import com.t_t_talk.DB.Models.Level;
 import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,76 +30,84 @@ public class FirestoreDbHelper {
     }
 
     private CompletableFuture<Map<String, Integer>> fetchUserProgress() {
-        return CompletableFuture.supplyAsync(() -> {
-            CountDownLatch latch = new CountDownLatch(1);
-            FirebaseUser user = mAuth.getCurrentUser();
-            String userID = user.getUid();
-            Map<String, Integer> progress = new HashMap<>();
-            db.collection("UserProgress").document(userID)
-                    .get().addOnCompleteListener(task -> {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            DocumentSnapshot document = task.getResult();
+        CompletableFuture<Map<String, Integer>> future = new CompletableFuture<>();
 
-                            if (document.exists()){
-                                Map<String, Object> data = document.getData();
-                                if (data != null) {
-                                    for (Map.Entry<String, Object> entry : data.entrySet()) {
-                                        String key = entry.getKey();
-                                        Object value = entry.getValue();
-                                        progress.put(key, ((Long) value).intValue());
-                                    }
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        Map<String, Integer> progress = new HashMap<>();
+        db.collection("UserProgress").document(userID)
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()){
+                            Map<String, Object> data = document.getData();
+                            if (data != null) {
+                                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                                    String key = entry.getKey();
+                                    Object value = entry.getValue();
+                                    progress.put(key, ((Long) value).intValue());
                                 }
+                                future.complete(progress);
                             }
                         }
-                        latch.countDown();
-                    });
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return progress;
-        });
+                    }
+                });
+        return future;
     }
 
-    private CompletableFuture<ArrayList<Phoneme>> fetchPhonemes(List<DocumentReference> phonemeRef, int level_number) {
-        return CompletableFuture.supplyAsync(() -> {
-            CountDownLatch latch = new CountDownLatch(phonemeRef.size());
-            ArrayList<Phoneme> phonemes = new ArrayList<>();
-            fetchUserProgress().thenAccept(progress -> {
-                for (DocumentReference ref : phonemeRef) {
-                    CountDownLatch latch2 = new CountDownLatch(1);
-                    ref.get().addOnCompleteListener(phonemeTask -> {
-                        if (phonemeTask.isSuccessful() && phonemeTask.getResult() != null) {
-                            DocumentSnapshot documentPhoneme = phonemeTask.getResult();
-                            String[] documentId = documentPhoneme.getId().split("-");
-                            String language = documentId[0].substring(0,1);
-                            String code = documentId[1];
-                            Integer starCount = progress.get(language + "-" + String.valueOf(level_number) + "-" + code);
-                            if (starCount == null) {
-                                starCount = 0;
-                            }
-                            List<String> sentences = (List<String>) documentPhoneme.get("sentences");
-                            int order = documentPhoneme.getLong("order").intValue();
-                            Phoneme phoneme = new Phoneme(sentences, starCount, code, order);
-                            phonemes.add(phoneme);
-                            latch.countDown();
-                            latch2.countDown();
+    private CompletableFuture<ArrayList<Phoneme>> fetchPhonemes(List<DocumentReference> phonemeRefs, int levelNumber) {
+        // Create a future to store the phonemes
+        ArrayList<Phoneme> phonemes = new ArrayList<>();
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+        // Call fetchUserProgress asynchronously to get user progress
+        CompletableFuture<Map<String, Integer>> userProgressFuture = fetchUserProgress();
+
+        // Combine the two futures: user progress and phoneme fetch
+        return userProgressFuture.thenCompose(userProgress -> {
+            // For each phoneme reference, we fetch the corresponding document
+            for (DocumentReference ref : phonemeRefs) {
+                // Create a CompletableFuture for each phoneme fetch
+                CompletableFuture<Void> phonemeFuture = new CompletableFuture<>();
+
+                ref.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        DocumentSnapshot documentPhoneme = task.getResult();
+                        String[] documentId = documentPhoneme.getId().split("-");
+                        String language = documentId[0].substring(0, 1);
+                        String code = documentId[1];
+
+                        // Extract the fields from the document
+                        List<String> sentences = (List<String>) documentPhoneme.get("sentences");
+                        int order = documentPhoneme.getLong("order").intValue();
+
+                        // Use the user progress here (optional, depending on your needs)
+                        Integer starCount = userProgress.get(language + "-" + levelNumber + "-" + code);
+                        if (starCount == null) {
+                            starCount = 0;
                         }
-                    });
-                    try {
-                        latch2.await();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+
+                        // Create a Phoneme object
+                        Phoneme phoneme = new Phoneme(sentences, starCount, code, order);
+                        phonemes.add(phoneme);
+
+                        Log.d("TEST", "FETCHPHONEME DONE: " + documentPhoneme.getId());
+                    } else {
+                        Log.e("TEST", "Error fetching phoneme: " + task.getException());
                     }
-                }
-            });
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                    // Complete the individual future
+                    phonemeFuture.complete(null);
+                });
+
+                futures.add(phonemeFuture);
             }
-            return phonemes;
+
+            // Wait for all phoneme fetch operations to finish
+            return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                    .thenApply(v -> phonemes);  // Return the phonemes once all operations are complete
+        }).exceptionally(e -> {
+            Log.e("TEST", "Error fetching phonemes", e);
+            return phonemes; // Return the phonemes (empty or partial) in case of error
         });
     }
 
@@ -109,34 +119,46 @@ public class FirestoreDbHelper {
     }
 
     public CompletableFuture<List<Level>> asyncFetchLevels() {
-        return CompletableFuture.supplyAsync(() -> {
-            List<Level> levels = new ArrayList<>();
-            CountDownLatch latch = new CountDownLatch(1);
-            db.collection("Levels").get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                int level_number = document.getLong("level_number").intValue();
-                                int age = document.getLong("age").intValue();
-                                int color = document.getLong("color").intValue();
-                                String language = document.getString("language");
-                                List<DocumentReference> phonemeRef = (List<DocumentReference>) document.get("phonemes");
-                                if (!phonemeRef.isEmpty()) {
-                                    fetchPhonemes(phonemeRef, level_number).thenAccept(phonemeArrayList -> {
-                                        Level level = new Level(level_number, age, color, language, phonemeArrayList);
-                                        levels.add(level);
-                                        latch.countDown();
-                                    });
-                                }
-                            }
-                        }
+        CompletableFuture<List<Level>> future = new CompletableFuture<>();
+        List<Level> levels = new ArrayList<>();
+
+        db.collection("Levels").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                List<CompletableFuture<Void>> levelFutures = new ArrayList<>();
+
+                for (DocumentSnapshot document : task.getResult()) {
+                    int levelNumber = document.getLong("level_number").intValue();
+                    int age = document.getLong("age").intValue();
+                    int color = document.getLong("color").intValue();
+                    String language = document.getString("language");
+                    List<DocumentReference> phonemeRef = (List<DocumentReference>) document.get("phonemes");
+
+                    // Fetch phonemes asynchronously
+                    CompletableFuture<Void> levelFuture = fetchPhonemes(phonemeRef, levelNumber).thenAccept(phonemeArrayList -> {
+                        Level level = new Level(levelNumber, age, color, language, phonemeArrayList);
+                        levels.add(level);
                     });
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                    levelFutures.add(levelFuture);
+                }
+
+                // Combine all level futures
+                CompletableFuture.allOf(levelFutures.toArray(new CompletableFuture[0]))
+                        .thenRun(() -> {
+                            levels.sort((l1, l2) -> Integer.compare(l1.getLevelNumber(), l2.getLevelNumber()));
+                            future.complete(levels);
+                        })
+                        .exceptionally(e -> {
+                            Log.e("TEST", "Error fetching levels: " + e.getMessage(), e);
+                            future.completeExceptionally(e);
+                            return null;
+                        });
+            } else {
+                Log.e("TEST", "Error fetching Levels collection: " + task.getException());
+                future.completeExceptionally(task.getException());
             }
-            return levels;
         });
+
+        return future;
     }
 }
