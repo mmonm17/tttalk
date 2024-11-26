@@ -38,13 +38,25 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
             return insets;
         });
 
-        Intent intent = getIntent();
-        List<Level> levels = (List<Level>) intent.getSerializableExtra("levels");
+        List<Integer> colors = Arrays.asList(
+                Color.rgb(249, 222, 104),
+                Color.rgb(179, 179, 179),
+                Color.rgb(238, 118, 24),
+                Color.rgb(112, 176, 69),
+                Color.rgb(182, 213, 240),
+                Color.rgb(135, 162, 122),
+                Color.rgb(219, 153, 5)
+        );
 
+        Intent i = getIntent();
+        List<Level> levels = (List<Level>) i.getSerializableExtra("levels");
         data = new ArrayList<>();
+        int colorIndex = 0;
+
         assert levels != null;
-        for(Level level : levels) {
-            data.add(new Level(level.getLevelNumber(), level.getAge(), Color.rgb(249, 222, 104), level.getLanguage(), level.getPhonemeList()));
+        for (Level level : levels) {
+            data.add(new Level(level.getLevelNumber(), level.getAge(), colors.get(colorIndex), level.getLanguage(), level.getPhonemeList()));
+            colorIndex = (colorIndex + 1) % colors.size();
         }
 
         curved_levels = findViewById(R.id.curved_levels);

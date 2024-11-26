@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -29,9 +31,10 @@ public class FlagIconFragment extends Fragment{
 
         img_flag_content.setImageResource(imageResource);
 
-
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.scale);
         img_flag_stroke.setOnClickListener(
                 v -> {
+                    v.startAnimation(animation);
                     Intent intent = new Intent(getActivity(), LanguageSelectActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

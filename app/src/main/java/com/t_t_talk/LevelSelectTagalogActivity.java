@@ -37,12 +37,49 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
             return insets;
         });
 
+        List<Integer> colors = Arrays.asList(
+                Color.rgb(249, 222, 104),
+                Color.rgb(179, 179, 179),
+                Color.rgb(238, 118, 24),
+                Color.rgb(112, 176, 69),
+                Color.rgb(182, 213, 240),
+                Color.rgb(135, 162, 122),
+                Color.rgb(219, 153, 5)
+        );
+
         Intent i = getIntent();
         List<Level> levels = (List<Level>) i.getSerializableExtra("levels");
         data = new ArrayList<>();
+        int colorIndex = 0;
+
+        assert levels != null;
         for (Level level : levels) {
-            data.add(new Level(level.getLevelNumber(), level.getAge(), Color.rgb(249, 222, 104), level.getLanguage(), level.getPhonemeList()));
+            data.add(new Level(level.getLevelNumber(), level.getAge(), colors.get(colorIndex), level.getLanguage(), level.getPhonemeList()));
+            colorIndex = (colorIndex + 1) % colors.size();
         }
+
+        /*
+        Intent i = getIntent();
+        List<Level> levels = (List<Level>) i.getSerializableExtra("levels");
+        data = new ArrayList<>();
+
+        for (Level level : levels) {
+            int color;
+            switch (level.getLevelNumber() % 7) {  // Cycle through 7 different colors
+                case 0: color = Color.rgb(249, 222, 104); break;
+                case 1: color = Color.rgb(179, 179, 179); break;
+                case 2: color = Color.rgb(238, 118, 24); break;
+                case 3: color = Color.rgb(112, 176, 69); break;
+                case 4: color = Color.rgb(182, 213, 240); break;
+                case 5: color = Color.rgb(135, 162, 122); break;
+                case 6: color = Color.rgb(219, 153, 5); break;
+                default: color = Color.rgb(0, 0, 0);  // Default color
+            }
+            data.add(new Level(level.getLevelNumber(), level.getAge(), color, level.getLanguage(), level.getPhonemeList()));
+        }
+
+        */
+
 
         curved_levels = findViewById(R.id.curved_levels);
         curved_levels.setText("MGA LEBEL");

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,10 +46,12 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
         } else {
             holder.setText("LEBEL " + current.getLevelNumber() + " (" + current.getAge() + " Anyos)");
         }
-
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale);
         holder.setOnclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.startAnimation(animation);
+
                 Intent i;
                 if(language.equals("English")) {
                     i = new Intent(context, PhonemeSelectEnglishActivity.class);
