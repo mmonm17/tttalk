@@ -104,7 +104,10 @@ public class FirestoreDbHelper {
 
             // Wait for all phoneme fetch operations to finish
             return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                    .thenApply(v -> phonemes);  // Return the phonemes once all operations are complete
+                    .thenApply(v -> {
+                        phonemes.sort((p1, p2) -> Integer.compare(p1.getOrder(), p2.getOrder()));
+                        return phonemes;
+                    });  // Return the phonemes once all operations are complete
         }).exceptionally(e -> {
             Log.e("TEST", "Error fetching phonemes", e);
             return phonemes; // Return the phonemes (empty or partial) in case of error
