@@ -55,6 +55,7 @@ public class AppDatabase {
     public interface LevelsCallback {
         void onLevelsFetched(List<Level> levels);
     }
+
     public void fetchLevels(LevelsCallback callback) {
         AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
 
@@ -62,10 +63,19 @@ public class AppDatabase {
             Log.d("AppDatabase", "Fetching levels from remote database");
             remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
                 levels.set(levelsList);
+
+                localDB.open();
+                for (Level level : levelsList) {
+                    localDB.insert(level);
+                }
+                localDB.close();
+
                 callback.onLevelsFetched(levelsList);  // Notify when levels are fetched
             });
         } else {
+            localDB.open();
             levels.set(localDB.fetchLevels());
+            localDB.close();
             Log.d("AppDatabase", "is offline, fetching levels from local database");
             callback.onLevelsFetched(levels.get());  // Notify when levels are fetched
         }

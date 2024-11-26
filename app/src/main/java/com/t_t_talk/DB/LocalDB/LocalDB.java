@@ -87,7 +87,7 @@ public class LocalDB {
 
     public void open() throws SQLException {
         dbHelper = new SQLiteDBHelper(context);
-        database = dbHelper.getWritableDatabase();//REMOVE ME WHEN DONE
+        database = dbHelper.getWritableDatabase();
     }
 
     public void close() {
