@@ -3,6 +3,7 @@ package com.t_t_talk;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     LevelBoxAdapter adapter;
     ArrayList<Level> data;
+    ProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        progress_bar = findViewById(R.id.progress_bar);
 
         List<Integer> colors = Arrays.asList(
                 Color.rgb(249, 222, 104),
@@ -101,7 +104,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
         this.layoutManager = new LinearLayoutManager(this);
         this.level_display.setLayoutManager(layoutManager);
 
-        this.adapter = new LevelBoxAdapter(LevelSelectTagalogActivity.this, this.data, "Tagalog");
+        this.adapter = new LevelBoxAdapter(LevelSelectTagalogActivity.this, this.data, "Tagalog", progress_bar);
         this.level_display.setAdapter(this.adapter);
     }
 }

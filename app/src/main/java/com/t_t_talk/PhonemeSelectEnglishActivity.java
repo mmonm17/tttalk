@@ -2,6 +2,7 @@ package com.t_t_talk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
     ArrayList<Phoneme> data;
     PhonemeAdapter adapter;
     int level_num;
+    ProgressBar loading_progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        loading_progress_bar = findViewById(R.id.loading_progress_bar);
 
         level_display = findViewById(R.id.level_display);
 
@@ -61,7 +64,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English", level_num);
+        this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English", level_num, loading_progress_bar);
         this.recyclerView.setAdapter(this.adapter);
     }
 }

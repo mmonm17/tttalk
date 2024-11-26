@@ -17,16 +17,19 @@ import com.t_t_talk.DB.Models.Level;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import android.widget.ProgressBar;
 
 public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
     public Context context;
     private ArrayList<Level> data;
     private String language;
+    private ProgressBar progress_bar;
 
-    public LevelBoxAdapter(AppCompatActivity context, ArrayList<Level> data, String language) {
+    public LevelBoxAdapter(AppCompatActivity context, ArrayList<Level> data, String language, ProgressBar progress_bar) {
         this.context = context;
         this.data = data;
         this.language = language;
+        this.progress_bar = progress_bar;
     }
 
     @NonNull
@@ -46,12 +49,15 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
         } else {
             holder.setText("LEBEL " + current.getLevelNumber() + " (" + current.getAge() + " Anyos)");
         }
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale);
+
+        Animation scale = AnimationUtils.loadAnimation(context, R.anim.scale);
+        Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
         holder.setOnclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.startAnimation(animation);
-
+                view.startAnimation(scale);
+                progress_bar.setVisibility(View.VISIBLE);
+                progress_bar.startAnimation(rotate);
                 Intent i;
                 if(language.equals("English")) {
                     i = new Intent(context, PhonemeSelectEnglishActivity.class);
@@ -63,7 +69,8 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
                 phonemes.putSerializable("Phonemes", (Serializable) current.getPhonemeList());
                 i.putExtra("Phonemes", phonemes);
                 i.putExtra("LevelNum", current.getLevelNumber());
-
+                progress_bar.setVisibility(View.INVISIBLE);
+                progress_bar.clearAnimation();
                 context.startActivity(i);
             }
         });
