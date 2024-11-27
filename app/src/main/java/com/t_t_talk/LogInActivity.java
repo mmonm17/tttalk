@@ -81,6 +81,7 @@ public class LogInActivity extends AppCompatActivity {
                             return;
                         }
                         if (task.isSuccessful() && user != null && user.isEmailVerified()) {
+                            db.clearLocalDB();
                             db.createRemoteUser();
                             db.createRemoteUserVersion();
                             Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
