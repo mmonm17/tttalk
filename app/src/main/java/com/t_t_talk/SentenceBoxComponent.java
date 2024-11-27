@@ -76,33 +76,6 @@ public class SentenceBoxComponent extends LinearLayout {
         circular_feedback_check = findViewById(R.id.circular_feedback_check);
         circular_feedback_close = findViewById(R.id.circular_feedback_close);
 
-
-        /*btn_mic.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "Mic button for 3 secs", Toast.LENGTH_SHORT).show();
-
-            resetFeedback();
-
-            // Set the button tint to red
-            btn_mic.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.red)));
-
-            new CountDownTimer(3000, 50) {
-
-                @Override
-                public void onTick(long arg0) {
-                    // No action needed on each tick
-                }
-
-                @Override
-                public void onFinish() {
-                    // Change the tint to orange after the timer finishes
-                    btn_mic.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.orange)));
-                    // Change the feedback to check
-                    setCorrectFeedback();
-                    Toast.makeText(getContext(), "Complete all 4 to star up", Toast.LENGTH_SHORT).show();
-                }
-            }.start();
-
-        });*/
         submitted = false;
     }
 
@@ -172,10 +145,8 @@ public class SentenceBoxComponent extends LinearLayout {
     public void switchMicIcon(boolean isRecording) {
         if (isRecording) {
             btn_mic_icon.setImageResource(R.drawable.ic_stop);
-            //setBtnMicColor(R.color.red);
         } else {
             btn_mic_icon.setImageResource(R.drawable.ic_mic);
-            //setBtnMicColor(R.color.orange);
         }
     }
 
