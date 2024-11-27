@@ -77,6 +77,7 @@ public class LogInActivity extends AppCompatActivity {
                             return;
                         }
                         if (task.isSuccessful() && user != null && user.isEmailVerified()) {
+                            //Clear localDB as that data is acting as a cache associated with an individual user
                             db.clearLocalDB();
                             db.createRemoteUser();
                             db.createRemoteUserVersion();

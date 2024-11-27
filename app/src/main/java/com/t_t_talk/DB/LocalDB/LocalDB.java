@@ -45,6 +45,7 @@ public class LocalDB {
 
         cursor.moveToFirst();
         do {
+            //Map progress to appropriate phoneme
             progress.put(cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.UserProgressTableConstants.COLNAME_ID)), cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.UserProgressTableConstants.COLNAME_STAR)));
         } while (cursor.moveToNext());
 
@@ -82,9 +83,11 @@ public class LocalDB {
                 ));
             }
 
+            //Aggregate all sentences to the appropriate phoneme using a map
             phonemeMap.get(code).addSentence(cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.PhonemeTableConstants.COLNAME_SENTENCE)));
         } while (cursor.moveToNext());
 
+        //Convert map to list format
         phonemes.addAll(phonemeMap.values());
         phonemes.sort((p1, p2) -> Integer.compare(p1.getOrder(), p2.getOrder()));
 

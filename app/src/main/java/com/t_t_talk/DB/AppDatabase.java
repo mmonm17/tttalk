@@ -89,6 +89,7 @@ public class AppDatabase {
         if (isOnline()) {
             int remoteDBVersion = getFirestoreVersion();
             Log.d("TEST", "RV " + remoteDBVersion + " LV " + localDBVersion);
+            //Check if need to update the localDB
             if ((remoteDBVersion > localDBVersion) || (remoteDBVersion == 0 && localDBVersion == 0)) {
                 // Fetch levels from the remote database
                 return remoteDB.asyncFetchLevels().thenCompose(levelsList -> {
@@ -113,6 +114,7 @@ public class AppDatabase {
                     return new ArrayList<>(); // Return an empty list on failure
                 });
             } else {
+                //Use the pre-fetched data if synced or wifi is not available
                 localDB.open();
                 List<Level> levels = localDB.fetchLevels();
                 localDB.close();
