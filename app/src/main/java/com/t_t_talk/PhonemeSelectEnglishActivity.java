@@ -27,6 +27,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
     String levelCode;
     AppDatabase db;
     ProgressBar loading_bar;
+    ProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_us))
                 .commit();
+
+        progress_bar = findViewById(R.id.progress_bar);
+        progress_bar.setProgress(computeStarProgress());
     }
 
     @Override
@@ -67,6 +71,8 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
         db = new AppDatabase(PhonemeSelectEnglishActivity.this);
         this.data = db.localFetchPhonemes(this.levelCode);
         setRecyclerView();
+
+        progress_bar.setProgress(computeStarProgress());
     }
 
     private void setRecyclerView() {
@@ -77,5 +83,13 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
 
         this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English", levelCode, loading_bar);
         this.recyclerView.setAdapter(this.adapter);
+    }
+
+    private int computeStarProgress(){
+        int totalStars = 0;
+        for(Phoneme phoneme:this.data){
+            totalStars += phoneme.getStarCount();
+        }
+        return totalStars / (data.size() * 3) * 100;
     }
 }

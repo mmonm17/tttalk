@@ -26,6 +26,7 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
     String levelCode;
     AppDatabase db;
     ProgressBar loading_bar;
+    ProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,9 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_ph))
                 .commit();
+
+        progress_bar = findViewById(R.id.progress_bar);
+        progress_bar.setProgress(computeStarProgress());
     }
 
     @Override
@@ -66,6 +70,8 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
         db = new AppDatabase(PhonemeSelectTagalogActivity.this);
         this.data = db.localFetchPhonemes(this.levelCode);
         setRecyclerView();
+
+        progress_bar.setProgress(computeStarProgress());
     }
 
     private void setRecyclerView() {
@@ -76,5 +82,13 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
 
         this.adapter = new PhonemeAdapter(PhonemeSelectTagalogActivity.this, this.data, "Tagalog", levelCode, loading_bar);
         this.recyclerView.setAdapter(this.adapter);
+    }
+
+    private int computeStarProgress(){
+        int totalStars = 0;
+        for(Phoneme phoneme:this.data){
+            totalStars += phoneme.getStarCount();
+        }
+        return (int) ((float) totalStars / (float) (data.size() * 3) * 100);
     }
 }
