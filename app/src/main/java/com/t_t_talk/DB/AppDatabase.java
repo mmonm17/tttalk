@@ -13,8 +13,6 @@ import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AppDatabase {
     private LocalDB localDB;
@@ -47,25 +45,21 @@ public class AppDatabase {
 
     public void updatePhonemeProgress(String levelCode, String phonemeCode, int starCount) {
         if (isOnline()) {
-//            remoteDB.updateUserProgress(levelCode, phonemeCode, starCount)
-//                    .thenRun(() -> {
-//                        localDB.open();
-//                        localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
-//                        localDB.close();
-//                    })
-//                    .exceptionally(e -> {
-//                        Log.e("UPDATE", "Failed to update progress", e);
-//                        return null;
-//                    });
+            remoteDB.updateUserProgress(levelCode, phonemeCode, starCount)
+                .thenRun(() -> {
+                    localDB.open();
+                    localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
+                    localDB.close();
+                })
+                .exceptionally(e -> {
+                    Log.e("UPDATE", "Failed to update progress", e);
+                    return null;
+                });
         } else {
             localDB.open();
             localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
             localDB.close();
         }
-    }
-
-    public interface LevelsCallback {
-        void onLevelsFetched(List<Level> levels);
     }
 
     public CompletableFuture<List<Level>> fetchLevels() {
@@ -98,10 +92,4 @@ public class AppDatabase {
             });
         }
     }
-
-    public LocalDB getLocalDB() {
-        return this.localDB;
-    }
-
-    public FirestoreDbHelper getRemoteDB() { return this.remoteDB; }
 }

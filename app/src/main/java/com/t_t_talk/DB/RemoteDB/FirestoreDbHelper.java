@@ -181,19 +181,23 @@ public class FirestoreDbHelper {
             String levelNumber = levelCode.split("-")[1];
             String progressKey = language + "-" + levelNumber + "-" + phonemeCode;
 
-            Log.d("TEST", "IS PROGRESS KEY IN DB " + userProgress.containsKey(progressKey));
-//            db.collection("UserProgress").document(userID)
-//                    .update(progressKey, starCount)
-//                    .addOnCompleteListener(task -> {
-//                        Log.d("TEST", "IS TASK SUCCESSFUL " + task.isSuccessful());
-//                        if (task.isSuccessful()) {
-//                            Log.d("DATABASE", "Successfully updated progress for " + progressKey);
-//                            future.complete(null);
-//                        } else {
-//                            Log.e("DATABASE", "Failed to update progress for " + progressKey, task.getException());
-//                            future.completeExceptionally(task.getException());
-//                        }
-//                    });
+            Log.d("TEST", "IS PROGRESS KEY EXISTS " + userProgress.containsKey(progressKey));
+            Log.d("TEST", "IS STAR COUNT GREATER " + starCount + " " + userProgress.get(progressKey));
+
+            if (!userProgress.containsKey(progressKey) || starCount > userProgress.get(progressKey)) {
+                db.collection("UserProgress").document(userID)
+                        .update(progressKey, starCount)
+                        .addOnCompleteListener(task -> {
+                            Log.d("TEST", "IS TASK SUCCESSFUL " + task.isSuccessful());
+                            if (task.isSuccessful()) {
+                                Log.d("DATABASE", "Successfully updated progress for " + progressKey);
+                                future.complete(null);
+                            } else {
+                                Log.e("DATABASE", "Failed to update progress for " + progressKey, task.getException());
+                                future.completeExceptionally(task.getException());
+                            }
+                        });
+            }
 
             return future;
         });
