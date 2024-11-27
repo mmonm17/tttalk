@@ -90,8 +90,6 @@ public class FirestoreDbHelper {
                         // Create a Phoneme object
                         Phoneme phoneme = new Phoneme(sentences, starCount, code, order);
                         phonemes.add(phoneme);
-
-                        Log.d("TEST", "FETCHPHONEME DONE: " + documentPhoneme.getId());
                     } else {
                         Log.e("TEST", "Error fetching phoneme: " + task.getException());
                     }
@@ -181,19 +179,13 @@ public class FirestoreDbHelper {
             String levelNumber = levelCode.split("-")[1];
             String progressKey = language + "-" + levelNumber + "-" + phonemeCode;
 
-            Log.d("TEST", "IS PROGRESS KEY EXISTS " + userProgress.containsKey(progressKey));
-            Log.d("TEST", "IS STAR COUNT GREATER " + starCount + " " + userProgress.get(progressKey));
-
             if (!userProgress.containsKey(progressKey) || starCount > userProgress.get(progressKey)) {
                 db.collection("UserProgress").document(userID)
                         .update(progressKey, starCount)
                         .addOnCompleteListener(task -> {
-                            Log.d("TEST", "IS TASK SUCCESSFUL " + task.isSuccessful());
                             if (task.isSuccessful()) {
-                                Log.d("DATABASE", "Successfully updated progress for " + progressKey);
                                 future.complete(null);
                             } else {
-                                Log.e("DATABASE", "Failed to update progress for " + progressKey, task.getException());
                                 future.completeExceptionally(task.getException());
                             }
                         });
@@ -201,5 +193,46 @@ public class FirestoreDbHelper {
 
             return future;
         });
+    }
+
+    public CompletableFuture<Integer> getVersion() {
+        CompletableFuture<Integer> future = new CompletableFuture<>();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        db.collection("UserVersion").document(userID)
+            .get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Long version = document.getLong("version");
+                        if (version == null)
+                            future.complete(0);
+                        else
+                            future.complete(version.intValue());
+                    } else {
+                        future.complete(0);
+                    }
+                } else {
+                    future.completeExceptionally(task.getException());
+                }
+            });
+        return future;
+    }
+
+    public CompletableFuture<Void> setVersion(int version) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        db.collection("UserVersion").document(userID)
+            .update("version", version).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    future.complete(null);
+                } else {
+                    future.completeExceptionally(task.getException());
+                }
+            });
+
+        return future;
     }
 }

@@ -1,6 +1,7 @@
 package com.t_t_talk.DB;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -14,6 +15,7 @@ import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppDatabase {
     private LocalDB localDB;
@@ -26,6 +28,24 @@ public class AppDatabase {
         this.localDB = new LocalDB(context);
         this.remoteDB = FirestoreDbHelper.getInstance();
         this.instance = this;
+    }
+
+    private void setLocalDBVersion(int version) {
+        SharedPreferences refs = context.getSharedPreferences("LocalDB", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = refs.edit();
+        editor.putInt("Version", version);
+        editor.apply();
+    }
+
+    private int getLocalDBVersion() {
+        SharedPreferences refs = context.getSharedPreferences("LocalDB", Context.MODE_PRIVATE);
+        return refs.getInt("Version", 0);
+    }
+
+    private int getFirestoreVersion() {
+        AtomicInteger version = new AtomicInteger(0);
+        remoteDB.getVersion().thenAccept(version::set);
+        return version.get();
     }
 
     private boolean isOnline() {
@@ -60,38 +80,66 @@ public class AppDatabase {
             localDB.open();
             localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
             localDB.close();
+            setLocalDBVersion(getLocalDBVersion() + 1);
         }
     }
 
     public CompletableFuture<List<Level>> fetchLevels() {
+        int localDBVersion = getLocalDBVersion();
+        int remoteDBVersion = getFirestoreVersion();
+
         if (isOnline()) {
-            // Fetch levels from the remote database
-            return remoteDB.asyncFetchLevels().thenCompose(levelsList -> {
-                // Open local database and save the fetched levels
-                localDB.open();
-                localDB.reset();
-                for (Level level : levelsList) {
-                    localDB.insert(level);
-                }
-                localDB.close();
-                // Return the fetched levels
-                return CompletableFuture.completedFuture(levelsList);
-            }).exceptionally(e -> {
-                Log.e("FETCH_LEVELS", "Error fetching levels from remote DB", e);
-                return new ArrayList<>(); // Return an empty list on failure
-            });
-        } else {
-            // Fetch levels from the local database if offline
-            return CompletableFuture.supplyAsync(() -> {
+            Log.d("TEST", "RV " + remoteDBVersion + " LV " + localDBVersion);
+            if ((remoteDBVersion > localDBVersion) || (remoteDBVersion == 0 && localDBVersion == 0)) {
+                // Fetch levels from the remote database
+                return remoteDB.asyncFetchLevels().thenCompose(levelsList -> {
+                    // Open local database and save the fetched levels
+                    localDB.open();
+                    localDB.reset();
+                    for (Level level : levelsList) {
+                        localDB.insert(level);
+                    }
+                    localDB.close();
+
+                    if (remoteDBVersion == 0 && localDBVersion == 0) {
+                        remoteDB.setVersion(1);
+                        setLocalDBVersion(1);
+                    } else {
+                        setLocalDBVersion(remoteDBVersion);
+                    }
+                    // Return the fetched levels
+                    return CompletableFuture.completedFuture(levelsList);
+                }).exceptionally(e -> {
+                    Log.e("FETCH_LEVELS", "Error fetching levels from remote DB", e);
+                    return new ArrayList<>(); // Return an empty list on failure
+                });
+            } else {
                 localDB.open();
                 List<Level> levels = localDB.fetchLevels();
                 localDB.close();
-                return levels;
-            }).exceptionally(e -> {
-                Log.e("FETCH_LEVELS", "Error fetching levels from local DB", e);
-                return new ArrayList<>(); // Return an empty list on failure
-            });
+                if (remoteDBVersion < localDBVersion) {
+                    for (Level level : levels) {
+                        for (Phoneme phoneme : level.getPhonemeList()) {
+                            remoteDB.updateUserProgress(level.getCode(), phoneme.getCode(), phoneme.getStarCount());
+                        }
+                    }
+                    remoteDB.setVersion(localDBVersion);
+                }
+
+                return CompletableFuture.completedFuture(levels);
+            }
         }
+
+        // Fetch levels from the local database if offline
+        return CompletableFuture.supplyAsync(() -> {
+            localDB.open();
+            List<Level> levels = localDB.fetchLevels();
+            localDB.close();
+            return levels;
+        }).exceptionally(e -> {
+            Log.e("FETCH_LEVELS", "Error fetching levels from local DB", e);
+            return new ArrayList<>(); // Return an empty list on failure
+        });
     }
 
     public ArrayList<Phoneme> localFetchPhonemes(String levelCode) {

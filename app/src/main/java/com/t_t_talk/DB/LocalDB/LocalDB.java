@@ -100,12 +100,10 @@ public class LocalDB {
         if (cursor == null) {
             return 0;
         }
-        Log.d("LocalDB", "Cursor Count: " + cursor.getCount());
         if(cursor.getCount() == 0) {
             cursor.close();
             return 0;
         }
-
         cursor.moveToFirst();
         int starCount = cursor.getInt(cursor.getColumnIndexOrThrow(DBConstants.UserProgressTableConstants.COLNAME_STAR));
         cursor.close();

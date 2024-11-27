@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.t_t_talk.DB.AppDatabase;
 import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
     ArrayList<Phoneme> data;
     PhonemeAdapter adapter;
     String levelCode;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,14 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_ph))
                 .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db = new AppDatabase(PhonemeSelectTagalogActivity.this);
+        this.data = db.localFetchPhonemes(this.levelCode);
+        setRecyclerView();
     }
 
     private void setRecyclerView() {
