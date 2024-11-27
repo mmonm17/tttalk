@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     TextInputEditText input_email;
     Button btn_send_link;
     private FirebaseAuth mAuth;
+    TextInputLayout layout_input_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         txt_register = findViewById(R.id.txt_register);
         input_email = findViewById(R.id.input_email);
         btn_send_link = findViewById(R.id.btn_send_link);
+        layout_input_email = findViewById(R.id.layout_input_email);
 
         txt_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = input_email.getText().toString();
                 if (email.isEmpty()) {
-                    input_email.setError("Email is required");
+                    //input_email.setError("Email is required");
+                    layout_input_email.setError("Email is required");
                     return;
                 }
 

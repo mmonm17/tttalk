@@ -110,7 +110,8 @@
             app:layout_constraintTop_toBottomOf="@id/txt_header2"
             app:layout_constraintBottom_toTopOf="@id/layout_input_pass"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_email"
@@ -139,7 +140,8 @@
             app:layout_constraintTop_toBottomOf="@id/layout_input_email"
             app:layout_constraintBottom_toTopOf="@id/layout_remember_forgot"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_pass"
