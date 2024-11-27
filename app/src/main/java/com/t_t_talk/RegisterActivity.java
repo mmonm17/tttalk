@@ -134,11 +134,8 @@ public class RegisterActivity extends AppCompatActivity {
                             layout_input_pass.setError("Password should be at least 6 characters");
                         }
                         else {
-                            //layout_input_pass.setError(errorMessage);
-                            //layout_input_confirm_pass.setError(errorMessage);
                             handleRegistrationError(errorMessage);
                         }
-                        handleRegistrationError(errorMessage);
                     }
                 });
         });
