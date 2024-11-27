@@ -1,6 +1,6 @@
 package com.t_t_talk.DataTypes;
 
-
+// This class represents the information in the InformationActivity
 
 public class Info {
 
@@ -10,23 +10,8 @@ public class Info {
         PARTNERS
     }
 
-    //private InfoType type;
     private String title;
     private String[] content;
-
-//    public Info(InfoType type, String title, String[] content) {
-//        this.title = title;
-//        this.content = content;
-//        this.type = type;
-//    }
-
-//    public InfoType getType() {
-//        return type;
-//    }
-//
-//    public void setType(InfoType type) {
-//        this.type = type;
-//    }
 
     public Info(String title, String[] content) {
         this.title = title;
@@ -37,7 +22,6 @@ public class Info {
         this.title = title;
         this.content = new String[]{content};
     }
-
 
     public String getTitle() {
         return title;
