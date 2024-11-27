@@ -62,7 +62,6 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         db = new AppDatabase(PhonemeSelectEnglishActivity.this);
-        Log.d("TEST", "onResume PHONEME SELECT");
         this.data = db.localFetchPhonemes(this.levelCode);
         setRecyclerView();
     }

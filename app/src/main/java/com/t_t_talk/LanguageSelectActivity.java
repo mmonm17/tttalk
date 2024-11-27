@@ -78,7 +78,6 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 List<Level> tagalogLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("Tagalog")) {
-                        Log.d("Level", "Language: " + level.getLanguage() + " ");
                         tagalogLevels.add(level);
                     }
                 }

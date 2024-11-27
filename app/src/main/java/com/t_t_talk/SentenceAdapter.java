@@ -80,7 +80,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             public void onClick(int position, String levelCode, String phonemeCode) {
                 sentenceCompletions[position] = true;
                 int starCount = computeStars();
-                Log.d("SentenceAdapter", "FETCHING FROM SENTENCE ADAPTER");
                 db.updatePhonemeProgress(levelCode, phonemeCode, starCount);
 
                 if (checkAllForCompletion()) {
@@ -110,7 +109,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             String audioFileName = variantKey + ".mp3";
 
             phonemeAudioMap.put(variantKey, audioFileName);
-            Log.d("Audio Map", "Mapped: " + variantKey + " -> " + audioFileName);
         }
     }
 
@@ -139,14 +137,12 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                         @Override
                         public void onStart(String utteranceId) {
-                            Log.d("TTS", "Speech started for utterance ID: " + utteranceId);
                             currentlySpeakingHolder.sentenceViewBox.switchPlayIcon(true);
                             currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
                         }
 
                         @Override
                         public void onDone(String utteranceId) {
-                            Log.d("TTS", "Speech completed for utterance ID: " + utteranceId);
                             // Reset button color or handle post-speech logic
                             context.runOnUiThread(() -> {
                                 isPlaying = false;
@@ -159,7 +155,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                         @Override
                         public void onStop(String utteranceId, boolean interrupted) {
                             super.onStop(utteranceId, interrupted);
-                            Log.d("TTS", "Speech stopped for utterance ID: " + utteranceId);
+
                             uiHandler.post(() -> {
                                 isPlaying = false;
                                 currentlyPlaying = -1;
