@@ -41,7 +41,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
         List<Level> levels = (List<Level>) i.getSerializableExtra("levels");
         data = new ArrayList<>();
         for (Level level : levels) {
-            data.add(new Level(level.getLevelNumber(), level.getAge(), Color.rgb(249, 222, 104), level.getLanguage(), level.getPhonemeList()));
+            data.add(new Level(level.getLevelNumber(), level.getAge(), level.getColor(), level.getLanguage(), level.getPhonemeList()));
         }
 
         curved_levels = findViewById(R.id.curved_levels);

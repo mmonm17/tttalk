@@ -73,7 +73,6 @@ public class AppDatabase {
                     localDB.close();
                 })
                 .exceptionally(e -> {
-                    Log.e("UPDATE", "Failed to update progress", e);
                     return null;
                 });
         } else {

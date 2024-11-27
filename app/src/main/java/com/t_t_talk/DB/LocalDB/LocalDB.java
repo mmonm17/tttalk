@@ -53,9 +53,6 @@ public class LocalDB {
 
     public ArrayList<Phoneme> fetchPhoneme(String levelCode) {
         Map<String, Integer> userProgress = fetchUserProgress();
-        for (Map.Entry<String, Integer> entry : userProgress.entrySet()) {
-            Log.d("TEST", entry.getKey() + " " + entry.getValue());
-        }
         ArrayList<Phoneme> phonemes = new ArrayList<>();
         Map<String, Phoneme> phonemeMap = new HashMap<>();
         Cursor cursor = database.query(DBConstants.PhonemeTableConstants.TABLE_NAME, null, DBConstants.PhonemeTableConstants.COLNAME_LEVEL_CODE + "=?", new String[]{ levelCode }, null, null, null);
