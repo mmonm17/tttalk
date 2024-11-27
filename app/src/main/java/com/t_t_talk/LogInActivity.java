@@ -73,8 +73,8 @@ public class LogInActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user == null) {
-                            layout_input_email.setError("That combination does not exist");
-                            //handleLoginError("User does not exist");
+                            layout_input_email.setError(" ");
+                            layout_input_pass.setError("That combination does not exist");
                             return;
                         }
                         if (task.isSuccessful() && user != null && user.isEmailVerified()) {
