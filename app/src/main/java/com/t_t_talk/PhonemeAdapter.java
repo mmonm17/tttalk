@@ -50,9 +50,11 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
         holder.setOnclick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Animations
                 view.startAnimation(fade);
                 loading_bar.setVisibility(View.VISIBLE);
                 loading_bar.startAnimation(rotate);
+                // Setting Intents
                 Intent i;
                 if(language.equals("English")) {
                     i = new Intent(context, PhonemeSoundEnglishActivity.class);

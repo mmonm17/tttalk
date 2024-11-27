@@ -51,9 +51,12 @@ public class InfoBoxComponent extends RelativeLayout {
         card_title.setCardBackgroundColor(color);
     }
 
+    /**
+     * Set the content of the component.
+     * @param bullets
+     */
     public void setTextBullets(String[] bullets) {
         SpannableStringBuilder spannableBuilder = new SpannableStringBuilder();
-
         for (String bullet : bullets) {
             int indentLevel = 0;
             while (bullet.startsWith(" ")) {

@@ -44,24 +44,34 @@ public class LanguageSelectActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Declare a new DB
         db = new AppDatabase(LanguageSelectActivity.this);
-
+        // Get the views from the layouts
         cl_english = findViewById(R.id.cl_english);
         cl_tagalog = findViewById(R.id.cl_tagalog);
         curved_language = findViewById(R.id.curved_language);
         loading_bar = findViewById(R.id.loading_bar);
 
+        // Ensure background is present
         Drawable bg = ContextCompat.getDrawable(LanguageSelectActivity.this, R.drawable.shape_rnd_rect_blue_thick);
         assert bg != null;
 
+        // Set the color for Tagalog
         GradientDrawable bg_alter = (GradientDrawable) bg.mutate();
         bg_alter.setColor(getColor(R.color.green));
         cl_tagalog.setBackground(bg_alter);
 
+        // Set the text for the header
+        curved_language.setText("LANGUAGE");
+
+        // Animations
         Animation rotateAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.rotate);
         Animation scaleUpAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale);
         Animation scaleDownAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale_down);
+
+        // On Click Listener for English
         cl_english.setOnClickListener(view -> {
+            // Animations
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleUpAnimation);
@@ -78,7 +88,9 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationRepeat(Animation animation) {}
             });
+            // Set Tagalog Clickable to False
             cl_tagalog.setClickable(false);
+            // Fetch the levels for English and go to the next activity
             db.fetchLevels().thenAccept(levels -> {
                 List<Level> englishLevels = new ArrayList<>();
                 for (Level level : levels) {
@@ -95,8 +107,9 @@ public class LanguageSelectActivity extends AppCompatActivity {
             });
         });
 
-
+        // On Click Listener for Tagalog
         cl_tagalog.setOnClickListener(view -> {
+            // Animations
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleUpAnimation);
@@ -112,7 +125,9 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationRepeat(Animation animation) {}
             });
+            // Set English Clickable to False
             cl_english.setClickable(false);
+            // Set Tagalog Clickable to False
             db.fetchLevels().thenAccept(levels -> {
                 List<Level> tagalogLevels = new ArrayList<>();
                 for (Level level : levels) {
@@ -128,8 +143,6 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         });
-
-        curved_language.setText("LANGUAGE");
 
         getSupportFragmentManager()
                 .beginTransaction()

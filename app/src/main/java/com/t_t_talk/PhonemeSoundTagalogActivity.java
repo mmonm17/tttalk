@@ -33,11 +33,14 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Get views from layout
         txt_lvl = findViewById(R.id.txt_lvl);
         txt_title = findViewById(R.id.txt_title);
         mic_animation = findViewById(R.id.mic_animation);
         btn_mic = findViewById(R.id.btn_mic);
+        recyclerView = findViewById(R.id.recyclerView);
 
+        // Set listeners
         btn_mic.setOnClickListener(view -> {
             mic_animation.setVisibility(View.VISIBLE);
         });
@@ -45,17 +48,18 @@ public class PhonemeSoundTagalogActivity extends AppCompatActivity {
         mic_animation.setOnClickListener(view -> {
             mic_animation.setVisibility(View.GONE);
         });
-
+        // Get intent
         Intent i = getIntent();
         String[] sentences = i.getStringArrayExtra("Sentences");
         String highlighted = i.getStringExtra("PhonemeCode");
         String levelCode = i.getStringExtra("LevelCode");
         int levelNum = Integer.valueOf(levelCode.split("-")[1]);
 
+        // Set headers
         txt_lvl.setText("Lebel " + levelNum);
         txt_title.setText(String.format("\" %s \" ", highlighted.toUpperCase()));
 
-        recyclerView = findViewById(R.id.recyclerView);
+        // Set recycler view
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -20,6 +20,7 @@ public class ProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
 
+        // Get views from layout
         ConstraintLayout layout_star_1 = findViewById(R.id.layout_star_1);
         ConstraintLayout layout_star_2 = findViewById(R.id.layout_star_2);
         ConstraintLayout layout_star_3 = findViewById(R.id.layout_star_3);

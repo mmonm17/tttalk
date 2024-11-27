@@ -39,17 +39,22 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Get the view for the loading bar
         loading_bar = findViewById(R.id.loading_bar);
 
+        // Get the intent from previous activity
         Intent intent = getIntent();
         List<Level> levels = (List<Level>) intent.getSerializableExtra("levels");
 
+        // Create a new ArrayList for the data
         data = new ArrayList<>();
         assert levels != null;
         for(Level level : levels) {
             data.add(new Level(level.getLevelNumber(), level.getAge(), level.getColor(), level.getLanguage(), level.getPhonemeList()));
         }
 
+        // Set the header text to levels
         curved_levels = findViewById(R.id.curved_levels);
         curved_levels.setText("LEVELS");
 
@@ -66,6 +71,9 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
                 .commit();
     }
 
+    /**
+     * Sets up the RecyclerView for displaying levels.
+     */
     private void setupRecyclerView() {
         this.level_display = findViewById(R.id.level_display);
 

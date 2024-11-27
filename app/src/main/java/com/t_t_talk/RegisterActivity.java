@@ -43,7 +43,9 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        // Get views from layout
         txt_log_in = findViewById(R.id.txt_log_in);
         btn_register = findViewById(R.id.btn_register);
         input_email = findViewById(R.id.input_email);
@@ -53,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         layout_input_pass = findViewById(R.id.layout_input_pass);
         layout_input_confirm_pass = findViewById(R.id.layout_input_confirm_pass);
 
+        // Set listeners
         txt_log_in.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
             intent.putExtra("isRegistered", false);
@@ -60,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         });
 
+        // Registering
         btn_register.setOnClickListener(view -> {
             String email = input_email.getText().toString();
             String password = input_pass.getText().toString();
@@ -69,17 +73,11 @@ public class RegisterActivity extends AppCompatActivity {
             if (email.isEmpty()) {
                 layout_input_email.setError("Email is required");
                 inputError = true;
-
-                //input_email.setError("Email is required");
-                //inputError = true;
-
             }
 
             if (password.isEmpty()) {
                 layout_input_pass.setError("Password is required");
                 inputError = true;
-                //input_pass.setError("Password is required");
-                //inputError = true;
             }
 
             if (confirm_pass.isEmpty()) {
@@ -101,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            // Create user with email and password with auth
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -146,6 +145,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handle Registration Error Messages
+     * @param errorMessage
+     */
     protected void handleRegistrationError(String errorMessage) {
         Toast toast = Toast.makeText(this, "Registration failed: " + errorMessage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 200);

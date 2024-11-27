@@ -29,6 +29,10 @@ public class InfoViewHolder extends RecyclerView.ViewHolder {
         title.setText(titleText);
     }
 
+    /**
+     * Set and format the Content of the View Holder component.
+     * @param contentText
+     */
     public void setContent(String[] contentText) {
         SpannableStringBuilder spannableBuilder = new SpannableStringBuilder();
 
