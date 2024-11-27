@@ -164,4 +164,38 @@ public class FirestoreDbHelper {
 
         return future;
     }
+
+    public CompletableFuture<Void> updateUserProgress(String levelCode, String phonemeCode, int starCount) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        CompletableFuture<Map<String, Integer>> userProgressFuture = fetchUserProgress();
+
+        return userProgressFuture.thenCompose(userProgress -> {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user == null) {
+                future.completeExceptionally(new IllegalStateException("User not authenticated"));
+                return future;
+            }
+
+            String userID = user.getUid();
+            String language = levelCode.substring(0, 1);
+            String levelNumber = levelCode.split("-")[1];
+            String progressKey = language + "-" + levelNumber + "-" + phonemeCode;
+
+            Log.d("TEST", "IS PROGRESS KEY IN DB " + userProgress.containsKey(progressKey));
+//            db.collection("UserProgress").document(userID)
+//                    .update(progressKey, starCount)
+//                    .addOnCompleteListener(task -> {
+//                        Log.d("TEST", "IS TASK SUCCESSFUL " + task.isSuccessful());
+//                        if (task.isSuccessful()) {
+//                            Log.d("DATABASE", "Successfully updated progress for " + progressKey);
+//                            future.complete(null);
+//                        } else {
+//                            Log.e("DATABASE", "Failed to update progress for " + progressKey, task.getException());
+//                            future.completeExceptionally(task.getException());
+//                        }
+//                    });
+
+            return future;
+        });
+    }
 }

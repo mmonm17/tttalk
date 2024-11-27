@@ -47,11 +47,20 @@ public class AppDatabase {
 
     public void updatePhonemeProgress(String levelCode, String phonemeCode, int starCount) {
         if (isOnline()) {
+//            remoteDB.updateUserProgress(levelCode, phonemeCode, starCount)
+//                    .thenRun(() -> {
+//                        localDB.open();
+//                        localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
+//                        localDB.close();
+//                    })
+//                    .exceptionally(e -> {
+//                        Log.e("UPDATE", "Failed to update progress", e);
+//                        return null;
+//                    });
+        } else {
             localDB.open();
             localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
             localDB.close();
-        } else {
-            Log.d("AppDatabase", "is offline, updating phoneme progress in local database");
         }
     }
 

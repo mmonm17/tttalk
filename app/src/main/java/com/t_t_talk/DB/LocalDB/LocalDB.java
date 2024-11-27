@@ -207,12 +207,10 @@ public class LocalDB {
     public void updatePhonemeProgress(String levelCode, String phonemeCode, int starCount) {
         int currentProgress = fetchPhonemeProgress(levelCode, phonemeCode);
 
-        Log.d("LocalDB", "Current Progress: " + currentProgress);
-        Log.d("LocalDB", "New Progress: " + starCount);
         if (starCount > currentProgress) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBConstants.UserProgressTableConstants.COLNAME_STAR, starCount);
-//
+
             String whereClause = DBConstants.UserProgressTableConstants.COLNAME_ID + " = ?";
             database.update(DBConstants.UserProgressTableConstants.TABLE_NAME, contentValues, whereClause, new String[]{levelCode + "-" + phonemeCode});
         }

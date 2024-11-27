@@ -81,7 +81,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 sentenceCompletions[position] = true;
                 int starCount = computeStars();
                 Log.d("SentenceAdapter", "FETCHING FROM SENTENCE ADAPTER");
-                db.updatePhonemeProgress(levelCode, phonemeCode, starCount);
+//                db.updatePhonemeProgress(levelCode, phonemeCode, starCount);
 
                 if (checkAllForCompletion()) {
                     Intent i = new Intent(context, ProgressActivity.class);
@@ -285,7 +285,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
                 holder.sentenceViewBox.switchMicIcon(true);
                 holder.sentenceViewBox.resetFeedback();
-
+                Log.d("TEST", "INSIDE SETMICBUTTONLISTENER");
                 startRecordingForSentence(position);
             }
         });
