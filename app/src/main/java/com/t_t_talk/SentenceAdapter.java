@@ -54,10 +54,10 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     String languageLower;
     String phonemeLower;
     AppDatabase db;
-    int levelNum;
     String phonemeCode;
+    String levelCode;
 
-    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity, int levelNum, String phonemeCode){
+    public SentenceAdapter(String[] sentences, String highlighted, String language, AppCompatActivity activity, String levelCode, String phonemeCode){
         this.sentences = sentences;
         this.languageLower = language.toLowerCase();
         this.phonemeLower = highlighted.toLowerCase();
@@ -73,15 +73,14 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
         this.language = language;
         this.context = activity;
         this.db = new AppDatabase(context);
-        this.levelNum = levelNum;
         this.phonemeCode = phonemeCode;
+        this.levelCode = levelCode;
         this.callback = new EventCallback() {
             @Override
-            public void onClick(int position, int levelNum, String phonemeCode) {
+            public void onClick(int position, String levelCode, String phonemeCode) {
                 sentenceCompletions[position] = true;
                 int starCount = computeStars();
-                Log.d("SentenceAdapter", "FETCHING FROM SENTENCE ADAPTER");
-                db.updatePhonemeProgress(levelNum, phonemeCode, starCount);
+                db.updatePhonemeProgress(levelCode, phonemeCode, starCount);
 
                 if (checkAllForCompletion()) {
                     Intent i = new Intent(context, ProgressActivity.class);
@@ -110,7 +109,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             String audioFileName = variantKey + ".mp3";
 
             phonemeAudioMap.put(variantKey, audioFileName);
-            Log.d("Audio Map", "Mapped: " + variantKey + " -> " + audioFileName);
         }
     }
 
@@ -139,14 +137,12 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                         @Override
                         public void onStart(String utteranceId) {
-                            Log.d("TTS", "Speech started for utterance ID: " + utteranceId);
                             currentlySpeakingHolder.sentenceViewBox.switchPlayIcon(true);
                             currentlySpeakingHolder.sentenceViewBox.setBtnPlayColor(context.getColor(R.color.red));
                         }
 
                         @Override
                         public void onDone(String utteranceId) {
-                            Log.d("TTS", "Speech completed for utterance ID: " + utteranceId);
                             // Reset button color or handle post-speech logic
                             context.runOnUiThread(() -> {
                                 isPlaying = false;
@@ -159,7 +155,7 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                         @Override
                         public void onStop(String utteranceId, boolean interrupted) {
                             super.onStop(utteranceId, interrupted);
-                            Log.d("TTS", "Speech stopped for utterance ID: " + utteranceId);
+
                             uiHandler.post(() -> {
                                 isPlaying = false;
                                 currentlyPlaying = -1;
@@ -278,14 +274,13 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.orange));
                 holder.sentenceViewBox.switchMicIcon(false);
                 isRecording = false;
-                holder.sentenceViewBox.setCorrectFeedback(levelNum, phonemeCode);
+                holder.sentenceViewBox.setCorrectFeedback(levelCode, phonemeCode);
             } else {
                 isRecording = true;
                 currentRecording = holder.getAdapterPosition();
                 holder.sentenceViewBox.setBtnMicColor(context.getColor(R.color.red));
                 holder.sentenceViewBox.switchMicIcon(true);
                 holder.sentenceViewBox.resetFeedback();
-
                 startRecordingForSentence(position);
             }
         });
@@ -383,6 +378,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
     }
 
     interface EventCallback {
-        void onClick(int position, int levelNum, String phonemeCode);
+        void onClick(int position, String levelCode, String phonemeCode);
     }
 }

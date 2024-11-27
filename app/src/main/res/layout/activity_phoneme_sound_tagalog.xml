@@ -72,6 +72,9 @@
         android:id="@+id/btn_mic"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/orange"
         app:cardCornerRadius="24dp"
         app:cardElevation="4dp"
@@ -80,10 +83,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/txt_title"
         app:layout_constraintTop_toTopOf="@+id/txt_title"
-        app:layout_constraintVertical_bias="1.0"
-        android:clickable="true"
-        android:focusable="true"
-        >
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
             android:layout_width="24dp"

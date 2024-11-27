@@ -3,6 +3,7 @@ package com.t_t_talk;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
                 Bundle phonemes = new Bundle();
                 phonemes.putSerializable("Phonemes", (Serializable) current.getPhonemeList());
                 i.putExtra("Phonemes", phonemes);
-                i.putExtra("LevelNum", current.getLevelNumber());
+                i.putExtra("LevelCode", current.getCode());
                 progress_bar.setVisibility(View.INVISIBLE);
                 progress_bar.clearAnimation();
                 context.startActivity(i);

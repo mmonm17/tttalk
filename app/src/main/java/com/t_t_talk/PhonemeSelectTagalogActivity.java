@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.t_t_talk.DB.AppDatabase;
 import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
     GridLayoutManager layoutManager;
     ArrayList<Phoneme> data;
     PhonemeAdapter adapter;
-    int level_num;
+    String levelCode;
+    AppDatabase db;
     ProgressBar loading_progress_bar;
 
     @Override
@@ -43,9 +45,8 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
         Bundle phonemes = i.getBundleExtra("Phonemes");
         assert phonemes != null;
         data = (ArrayList<Phoneme>) phonemes.getSerializable("Phonemes");
-        level_num = i.getIntExtra("LevelNum", 1);
-
-        level_display.setText("Lebel " + level_num);
+        levelCode = i.getStringExtra("LevelCode");
+        level_display.setText("Level " + levelCode.split("-")[1]);
 
         setRecyclerView();
 
@@ -59,13 +60,21 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db = new AppDatabase(PhonemeSelectTagalogActivity.this);
+        this.data = db.localFetchPhonemes(this.levelCode);
+        setRecyclerView();
+    }
+
     private void setRecyclerView() {
         this.recyclerView = findViewById(R.id.recycler_view);
 
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(PhonemeSelectTagalogActivity.this, this.data, "Tagalog", level_num, loading_progress_bar);
+        this.adapter = new PhonemeAdapter(PhonemeSelectTagalogActivity.this, this.data, "Tagalog", levelCode, loading_progress_bar);
         this.recyclerView.setAdapter(this.adapter);
     }
 }

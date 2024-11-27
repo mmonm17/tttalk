@@ -21,22 +21,22 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
     public Context context;
     private ArrayList<Phoneme> data;
     public String language;
-    private int levelNum;
+    private String levelCode;
     ProgressBar progress_bar;
 
 
-    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, int levelNum) {
+    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, String levelCode) {
         this.context = activity;
         this.data = data;
         this.language = language;
-        this.levelNum = levelNum;
+        this.levelCode = levelCode;
     }
 
-    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, int levelNum, ProgressBar progress_bar) {
+    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, String levelCode, ProgressBar progress_bar) {
         this.context = activity;
         this.data = data;
         this.language = language;
-        this.levelNum = levelNum;
+        this.levelCode = levelCode;
         this.progress_bar = progress_bar;
     }
 
@@ -69,7 +69,7 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
                 }
                 i.putExtra("Sentences", current.getSentences().toArray(new String[0]));
                 i.putExtra("PhonemeCode", current.getCode());
-                i.putExtra("LevelNum", levelNum);
+                i.putExtra("LevelCode", levelCode);
                 progress_bar.setVisibility(View.INVISIBLE);
                 progress_bar.clearAnimation();
                 context.startActivity(i);

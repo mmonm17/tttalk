@@ -1,6 +1,7 @@
 package com.t_t_talk.DB;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -8,11 +9,13 @@ import android.util.Log;
 
 import com.t_t_talk.DB.LocalDB.LocalDB;
 import com.t_t_talk.DB.Models.Level;
+import com.t_t_talk.DB.Models.Phoneme;
 import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppDatabase {
     private LocalDB localDB;
@@ -25,6 +28,24 @@ public class AppDatabase {
         this.localDB = new LocalDB(context);
         this.remoteDB = FirestoreDbHelper.getInstance();
         this.instance = this;
+    }
+
+    private void setLocalDBVersion(int version) {
+        SharedPreferences refs = context.getSharedPreferences("LocalDB", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = refs.edit();
+        editor.putInt("Version", version);
+        editor.apply();
+    }
+
+    private int getLocalDBVersion() {
+        SharedPreferences refs = context.getSharedPreferences("LocalDB", Context.MODE_PRIVATE);
+        return refs.getInt("Version", 0);
+    }
+
+    private int getFirestoreVersion() {
+        AtomicInteger version = new AtomicInteger(0);
+        remoteDB.getVersion().thenAccept(version::set);
+        return version.get();
     }
 
     private boolean isOnline() {
@@ -43,67 +64,87 @@ public class AppDatabase {
         return false;
     }
 
-    public void updatePhonemeProgress(int levelCode, String phonemeCode, int starCount) {
+    public void updatePhonemeProgress(String levelCode, String phonemeCode, int starCount) {
         if (isOnline()) {
-            Log.d("AppDatabase", "Updating phoneme progress in remote database");
-            localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
-        } else {
-            Log.d("AppDatabase", "is offline, updating phoneme progress in local database");
-        }
-    }
-
-    public interface LevelsCallback {
-        void onLevelsFetched(List<Level> levels);
-    }
-
-    public void fetchLevels(LevelsCallback callback) {
-        AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
-
-        if (isOnline()) {
-            Log.d("AppDatabase", "Fetching levels from remote database");
-            remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
-                levels.set(levelsList);
-
-                localDB.open();
-                for (Level level : levelsList) {
-                    localDB.insert(level);
-                }
-                localDB.close();
-
-                callback.onLevelsFetched(levelsList);  // Notify when levels are fetched
-            });
+            remoteDB.updateUserProgress(levelCode, phonemeCode, starCount)
+                .thenRun(() -> {
+                    localDB.open();
+                    localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
+                    localDB.close();
+                })
+                .exceptionally(e -> {
+                    return null;
+                });
         } else {
             localDB.open();
-            levels.set(localDB.fetchLevels());
+            localDB.updatePhonemeProgress(levelCode, phonemeCode, starCount);
             localDB.close();
-            Log.d("AppDatabase", "is offline, fetching levels from local database");
-            callback.onLevelsFetched(levels.get());  // Notify when levels are fetched
+            setLocalDBVersion(getLocalDBVersion() + 1);
         }
     }
 
-
-    public List<Level> fetchLevels() {
-        AtomicReference<List<Level>> levels = new AtomicReference<>(new ArrayList<>());
+    public CompletableFuture<List<Level>> fetchLevels() {
+        int localDBVersion = getLocalDBVersion();
+        int remoteDBVersion = getFirestoreVersion();
 
         if (isOnline()) {
-            Log.d("AppDatabase", "Fetching levels from remote database");
-            remoteDB.asyncFetchLevels().thenAccept(levelsList -> {
-                levels.set(levelsList);
-                for (Level level : levelsList) {
-                    localDB.insert(level);
+            Log.d("TEST", "RV " + remoteDBVersion + " LV " + localDBVersion);
+            if ((remoteDBVersion > localDBVersion) || (remoteDBVersion == 0 && localDBVersion == 0)) {
+                // Fetch levels from the remote database
+                return remoteDB.asyncFetchLevels().thenCompose(levelsList -> {
+                    // Open local database and save the fetched levels
+                    localDB.open();
+                    localDB.reset();
+                    for (Level level : levelsList) {
+                        localDB.insert(level);
+                    }
+                    localDB.close();
+
+                    if (remoteDBVersion == 0 && localDBVersion == 0) {
+                        remoteDB.setVersion(1);
+                        setLocalDBVersion(1);
+                    } else {
+                        setLocalDBVersion(remoteDBVersion);
+                    }
+                    // Return the fetched levels
+                    return CompletableFuture.completedFuture(levelsList);
+                }).exceptionally(e -> {
+                    Log.e("FETCH_LEVELS", "Error fetching levels from remote DB", e);
+                    return new ArrayList<>(); // Return an empty list on failure
+                });
+            } else {
+                localDB.open();
+                List<Level> levels = localDB.fetchLevels();
+                localDB.close();
+                if (remoteDBVersion < localDBVersion) {
+                    for (Level level : levels) {
+                        for (Phoneme phoneme : level.getPhonemeList()) {
+                            remoteDB.updateUserProgress(level.getCode(), phoneme.getCode(), phoneme.getStarCount());
+                        }
+                    }
+                    remoteDB.setVersion(localDBVersion);
                 }
-            });
-        } else {
-            levels.set(localDB.fetchLevels());
-            Log.d("AppDatabase", "is offline, fetching levels from local database");
 
+                return CompletableFuture.completedFuture(levels);
+            }
         }
-        return levels.get();
+
+        // Fetch levels from the local database if offline
+        return CompletableFuture.supplyAsync(() -> {
+            localDB.open();
+            List<Level> levels = localDB.fetchLevels();
+            localDB.close();
+            return levels;
+        }).exceptionally(e -> {
+            Log.e("FETCH_LEVELS", "Error fetching levels from local DB", e);
+            return new ArrayList<>(); // Return an empty list on failure
+        });
     }
 
-    public LocalDB getLocalDB() {
-        return this.localDB;
+    public ArrayList<Phoneme> localFetchPhonemes(String levelCode) {
+        localDB.open();
+        ArrayList<Phoneme> phonemes = localDB.fetchPhoneme(levelCode);
+        localDB.close();
+        return phonemes;
     }
-
-    public FirestoreDbHelper getRemoteDB() { return this.remoteDB; }
 }
