@@ -1,5 +1,6 @@
 package com.t_t_talk.DB.LocalDB;
 
+// This class refers to the constant values used for consistency with DB Transactions
 public class DBConstants {
     public static class PhonemeTableConstants {
         public static final String TABLE_NAME = "Phonemes";
