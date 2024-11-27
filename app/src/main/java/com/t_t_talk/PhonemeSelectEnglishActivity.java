@@ -2,6 +2,7 @@ package com.t_t_talk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.t_t_talk.DB.AppDatabase;
 import com.t_t_talk.DB.Models.Phoneme;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
     ArrayList<Phoneme> data;
     PhonemeAdapter adapter;
     String levelCode;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,15 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_flag, new FlagIconFragment(R.drawable.img_flag_us))
                 .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db = new AppDatabase(PhonemeSelectEnglishActivity.this);
+        Log.d("TEST", "onResume PHONEME SELECT");
+        this.data = db.localFetchPhonemes(this.levelCode);
+        setRecyclerView();
     }
 
     private void setRecyclerView() {

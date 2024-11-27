@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.t_t_talk.DB.LocalDB.LocalDB;
 import com.t_t_talk.DB.Models.Level;
+import com.t_t_talk.DB.Models.Phoneme;
 import com.t_t_talk.DB.RemoteDB.FirestoreDbHelper;
 
 import java.util.ArrayList;
@@ -91,5 +92,12 @@ public class AppDatabase {
                 return new ArrayList<>(); // Return an empty list on failure
             });
         }
+    }
+
+    public ArrayList<Phoneme> localFetchPhonemes(String levelCode) {
+        localDB.open();
+        ArrayList<Phoneme> phonemes = localDB.fetchPhoneme(levelCode);
+        localDB.close();
+        return phonemes;
     }
 }

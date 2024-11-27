@@ -51,7 +51,7 @@ public class LocalDB {
         return progress;
     }
 
-    private ArrayList<Phoneme> fetchPhoneme(String levelCode) {
+    public ArrayList<Phoneme> fetchPhoneme(String levelCode) {
         Map<String, Integer> userProgress = fetchUserProgress();
         for (Map.Entry<String, Integer> entry : userProgress.entrySet()) {
             Log.d("TEST", entry.getKey() + " " + entry.getValue());
