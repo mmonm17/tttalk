@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.t_t_talk.DB.AppDatabase;
 
 public class LogInActivity extends AppCompatActivity {
     Button btn_log_in;
@@ -30,6 +31,7 @@ public class LogInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     TextInputLayout layout_input_email;
     TextInputLayout layout_input_pass;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class LogInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        db = new AppDatabase(LogInActivity.this);
         mAuth = FirebaseAuth.getInstance();
         input_email = findViewById(R.id.input_email);
         input_pass = findViewById(R.id.input_pass);
@@ -78,6 +81,8 @@ public class LogInActivity extends AppCompatActivity {
                             return;
                         }
                         if (task.isSuccessful() && user != null && user.isEmailVerified()) {
+                            db.createRemoteUser();
+                            db.createRemoteUserVersion();
                             Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
                             startActivity(intent);
                             finish();

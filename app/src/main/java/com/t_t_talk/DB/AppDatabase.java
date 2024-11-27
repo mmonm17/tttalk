@@ -147,4 +147,26 @@ public class AppDatabase {
         localDB.close();
         return phonemes;
     }
+
+    public CompletableFuture<Void> createRemoteUser() {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        remoteDB.createRemoteUser().thenRun(() -> {
+            future.complete(null);
+        }).exceptionally(e -> {
+            future.completeExceptionally(e);
+            return null;
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> createRemoteUserVersion() {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        remoteDB.createRemoteUserVersion().thenRun(() -> {
+            future.complete(null);
+        }).exceptionally(e -> {
+            future.completeExceptionally(e);
+            return null;
+        });
+        return future;
+    }
 }
