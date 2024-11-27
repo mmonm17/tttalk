@@ -169,4 +169,10 @@ public class AppDatabase {
         });
         return future;
     }
+
+    public void clearLocalDB() {
+        localDB.open();
+        localDB.reset();
+        localDB.close();
+    }
 }
