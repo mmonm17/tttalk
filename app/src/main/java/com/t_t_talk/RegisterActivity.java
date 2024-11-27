@@ -130,12 +130,12 @@ public class RegisterActivity extends AppCompatActivity {
                         if(errorMessage.contains("email address is already in use")) {
                             layout_input_email.setError("Email address is already in use");
                         }
+                        else if (errorMessage.contains("Password should be at least 6 characters")){
+                            layout_input_pass.setError("Password should be at least 6 characters");
+                        }
                         else {
-                            //layout_input_pass.setError(errorMessage);
-                            //layout_input_confirm_pass.setError(errorMessage);
                             handleRegistrationError(errorMessage);
                         }
-                        handleRegistrationError(errorMessage);
                     }
                 });
         });

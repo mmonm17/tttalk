@@ -100,7 +100,8 @@
             android:id="@+id/layout_resend_code"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txt_no_code"
