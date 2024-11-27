@@ -66,16 +66,33 @@ public class LanguageSelectActivity extends AppCompatActivity {
         cl_tagalog.setBackground(bg_alter);
 
         Animation rotateAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.rotate);
-        Animation scaleAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale);
+        Animation scaleUpAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale);
+        Animation scaleDownAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale_down);
         //Animation fadeAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.fade_bg);
+
+
+
         cl_english.setOnClickListener(view -> {
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
-            view.startAnimation(scaleAnimation);
-            PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
-            pauseDialog.show();
+            view.startAnimation(scaleUpAnimation);
+            scaleUpAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    view.startAnimation(scaleDownAnimation); // Using the passed view
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            cl_tagalog.setClickable(false);
+            //PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
+            //pauseDialog.show();
             db.fetchLevels().thenAccept(levels -> {
-                pauseDialog.dismiss();
+                //pauseDialog.dismiss();
                 List<Level> englishLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("English")) {
@@ -87,6 +104,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 intent.putExtra("levels", (Serializable) englishLevels);
                 loading_bar.setVisibility(ProgressBar.INVISIBLE);
                 loading_bar.clearAnimation();
+                cl_tagalog.setClickable(true);
                 startActivity(intent);
             });
         });
@@ -95,11 +113,24 @@ public class LanguageSelectActivity extends AppCompatActivity {
         cl_tagalog.setOnClickListener(view -> {
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
-            view.startAnimation(scaleAnimation);
-            PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
-            pauseDialog.show();
+            view.startAnimation(scaleUpAnimation);
+            scaleUpAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    view.startAnimation(scaleDownAnimation); // Using the passed view
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            cl_english.setClickable(false);
+            //PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
+            //pauseDialog.show();
             db.fetchLevels().thenAccept(levels -> {
-                pauseDialog.dismiss();
+                //pauseDialog.dismiss();
                 List<Level> tagalogLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("Tagalog")) {
@@ -111,6 +142,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 loading_bar.setVisibility(ProgressBar.INVISIBLE);
                 loading_bar.clearAnimation();
+                cl_english.setClickable(true);
                 startActivity(intent);
             });
         });

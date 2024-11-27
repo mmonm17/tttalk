@@ -16,8 +16,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.t_t_talk.DB.AppDatabase;
 
 public class LogInActivity extends AppCompatActivity {
     Button btn_log_in;
@@ -27,6 +29,9 @@ public class LogInActivity extends AppCompatActivity {
     TextInputEditText input_pass;
     LinearLayout layout_register;
     private FirebaseAuth mAuth;
+    TextInputLayout layout_input_email;
+    TextInputLayout layout_input_pass;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +43,12 @@ public class LogInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        db = new AppDatabase(LogInActivity.this);
         mAuth = FirebaseAuth.getInstance();
         input_email = findViewById(R.id.input_email);
         input_pass = findViewById(R.id.input_pass);
+        layout_input_email = findViewById(R.id.layout_input_email);
+        layout_input_pass = findViewById(R.id.layout_input_pass);
 
         btn_log_in = findViewById(R.id.btn_log_in);
 
@@ -51,14 +59,16 @@ public class LogInActivity extends AppCompatActivity {
                 String password = input_pass.getText().toString();
 
                 if (email.isEmpty()) {
-                    input_email.setError("Email is required");
-                    handleLoginError("Email is required");
+                    layout_input_email.setError("Email is required");
+                    //input_email.setError("Email is required");
+                    //handleLoginError("Email is required");
                     return;
                 }
 
                 if (password.isEmpty()) {
-                    input_pass.setError("Password is required");
-                    handleLoginError("Password is required");
+                    layout_input_pass.setError("Password is required");
+                    //input_pass.setError("Password is required");
+                    //handleLoginError("Password is required");
                     return;
                 }
 
@@ -66,10 +76,13 @@ public class LogInActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user == null) {
-                            handleLoginError("User does not exist");
+                            layout_input_email.setError(" ");
+                            layout_input_pass.setError("That combination does not exist");
                             return;
                         }
                         if (task.isSuccessful() && user != null && user.isEmailVerified()) {
+                            db.createRemoteUser();
+                            db.createRemoteUserVersion();
                             Intent intent = new Intent(LogInActivity.this, LanguageSelectActivity.class);
                             startActivity(intent);
                             finish();
@@ -79,7 +92,8 @@ public class LogInActivity extends AppCompatActivity {
                             String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
                             handleLoginError(errorMessage);
                         } else {
-                            handleLoginError("Please verify your email");
+                            layout_input_email.setError("Please verify your email");
+                            //handleLoginError("Please verify your email");
                             user.sendEmailVerification()
                                 .addOnCompleteListener(verificationTask -> {
                                     if (verificationTask.isSuccessful()) {

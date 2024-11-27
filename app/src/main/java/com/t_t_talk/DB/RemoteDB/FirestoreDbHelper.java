@@ -235,4 +235,63 @@ public class FirestoreDbHelper {
 
         return future;
     }
+
+    public CompletableFuture<Void> createRemoteUser() {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        Map<String, Integer> data = new HashMap<>();
+        data.put("E-1-A", 0);
+        db.collection("UserProgress").document(userID).get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Log.d("TEST", "USEREXISTS? " + document.exists() + " ");
+                    if (document.exists()) {
+                        future.complete(null);
+                    } else {
+                        db.collection("UserProgress").document(userID).set(data)
+                            .addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    future.complete(null);
+                                } else {
+                                    future.completeExceptionally(task1.getException());
+                                }
+                            });
+                    }
+                } else {
+                    future.completeExceptionally(task.getException());
+                }
+            });
+        return future;
+    }
+
+    public CompletableFuture<Void> createRemoteUserVersion() {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        Map<String, Integer> data = new HashMap<>();
+        data.put("version", 0);
+        db.collection("UserVersion").document(userID).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            future.complete(null);
+                        } else {
+                            db.collection("UserVersion").document(userID).set(data)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            future.complete(null);
+                                        } else {
+                                            future.completeExceptionally(task1.getException());
+                                        }
+                                    });
+                        }
+                    } else {
+                        future.completeExceptionally(task.getException());
+                    }
+                });
+        return future;
+    }
 }

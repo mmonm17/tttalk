@@ -90,6 +90,6 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
         for(Phoneme phoneme:this.data){
             totalStars += phoneme.getStarCount();
         }
-        return totalStars / (data.size() * 3) * 100;
+        return (int) ((float) totalStars / (float) (data.size() * 3) * 100);
     }
 }

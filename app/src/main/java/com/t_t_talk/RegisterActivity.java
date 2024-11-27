@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,10 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText input_pass;
     TextInputEditText input_confirm_pass;
     private FirebaseAuth mAuth;
+
+    TextInputLayout layout_input_email;
+    TextInputLayout layout_input_pass;
+    TextInputLayout layout_input_confirm_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +47,11 @@ public class RegisterActivity extends AppCompatActivity {
         txt_log_in = findViewById(R.id.txt_log_in);
         btn_register = findViewById(R.id.btn_register);
         input_email = findViewById(R.id.input_email);
+        layout_input_email = findViewById(R.id.layout_input_email);
         input_pass = findViewById(R.id.input_pass);
         input_confirm_pass = findViewById(R.id.input_confirm_pass);
+        layout_input_pass = findViewById(R.id.layout_input_pass);
+        layout_input_confirm_pass = findViewById(R.id.layout_input_confirm_pass);
 
         txt_log_in.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
@@ -59,28 +67,41 @@ public class RegisterActivity extends AppCompatActivity {
             boolean inputError = false;
 
             if (email.isEmpty()) {
-                input_email.setError("Email is required");
+                layout_input_email.setError("Email is required");
                 inputError = true;
+
+                //input_email.setError("Email is required");
+                //inputError = true;
+
             }
 
             if (password.isEmpty()) {
-                input_pass.setError("Password is required");
+                layout_input_pass.setError("Password is required");
                 inputError = true;
+                //input_pass.setError("Password is required");
+                //inputError = true;
             }
 
             if (confirm_pass.isEmpty()) {
-                input_confirm_pass.setError("Confirm your password");
-                inputError = true;
+                if(password.isEmpty()) {
+                    layout_input_confirm_pass.setError("Set your password first");
+                }
+                else {
+                    layout_input_confirm_pass.setError("Confirm your password");
+                    inputError = true;
+                }
+                //input_confirm_pass.setError("Confirm your password");
+                //inputError = true;
             }
 
             if (inputError) {
-                handleRegistrationError("Please check your inputs in the form");
+                //handleRegistrationError("Please check your inputs in the form");
                 return;
             }
 
             if (!password.equals(confirm_pass)) {
                 input_confirm_pass.setError("Passwords do not match");
-                handleRegistrationError("Passwords do not match");
+                //handleRegistrationError("Passwords do not match");
                 return;
             }
 
@@ -98,12 +119,23 @@ public class RegisterActivity extends AppCompatActivity {
                                     String errorMessage = verificationTask.getException() != null
                                             ? verificationTask.getException().getMessage()
                                             : "Unknown error";
+                                    //layout_input_pass.setError(errorMessage);
+                                    //layout_input_confirm_pass.setError(errorMessage);
                                     handleRegistrationError(errorMessage);
                                 }
                             });
                     } else {
                         String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
-                        handleRegistrationError(errorMessage);
+                        assert errorMessage != null;
+                        if(errorMessage.contains("email address is already in use")) {
+                            layout_input_email.setError("Email address is already in use");
+                        }
+                        else if (errorMessage.contains("Password should be at least 6 characters")){
+                            layout_input_pass.setError("Password should be at least 6 characters");
+                        }
+                        else {
+                            handleRegistrationError(errorMessage);
+                        }
                     }
                 });
         });
