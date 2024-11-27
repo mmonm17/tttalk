@@ -72,10 +72,10 @@ public class LanguageSelectActivity extends AppCompatActivity {
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleAnimation);
-            PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
-            pauseDialog.show();
+            //PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
+            //pauseDialog.show();
             db.fetchLevels().thenAccept(levels -> {
-                pauseDialog.dismiss();
+                //pauseDialog.dismiss();
                 List<Level> englishLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("English")) {
@@ -96,10 +96,10 @@ public class LanguageSelectActivity extends AppCompatActivity {
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleAnimation);
-            PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
-            pauseDialog.show();
+            //PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
+            //pauseDialog.show();
             db.fetchLevels().thenAccept(levels -> {
-                pauseDialog.dismiss();
+                //pauseDialog.dismiss();
                 List<Level> tagalogLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("Tagalog")) {
