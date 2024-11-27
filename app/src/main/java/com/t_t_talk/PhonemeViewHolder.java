@@ -21,6 +21,10 @@ public class PhonemeViewHolder extends RecyclerView.ViewHolder {
         this.layout_stars[2] = itemView.findViewById(R.id.layout_star_3);
     }
 
+    /**
+     * Sets the star count.
+     * @param starNum
+     */
     public void setStar(int starNum) {
         for(int i = 0; i < 3; i++) {
             if(i + 1 == starNum) {
@@ -31,10 +35,18 @@ public class PhonemeViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    /**
+     * Sets the text of the phoneme.
+     * @param text
+     */
     public void setText(String text) {
         this.phoneme_display.setText(text);
     }
 
+    /**
+     * Sets the listener for the phoneme card.
+     * @param listener
+     */
     public void setOnclick(View.OnClickListener listener) {
         this.phoneme_card.setOnClickListener(listener);
     }

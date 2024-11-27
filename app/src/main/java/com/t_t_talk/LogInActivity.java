@@ -43,15 +43,19 @@ public class LogInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Initialize db
         db = new AppDatabase(LogInActivity.this);
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        // Get views from layout
         input_email = findViewById(R.id.input_email);
         input_pass = findViewById(R.id.input_pass);
         layout_input_email = findViewById(R.id.layout_input_email);
         layout_input_pass = findViewById(R.id.layout_input_pass);
-
         btn_log_in = findViewById(R.id.btn_log_in);
 
+        // Set click listener for login button
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +72,7 @@ public class LogInActivity extends AppCompatActivity {
                     return;
                 }
 
+                // Authentication of Signing In
                 mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         FirebaseUser user = mAuth.getCurrentUser();

@@ -38,10 +38,11 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Get views from layout
         loading_bar = findViewById(R.id.loading_bar);
-
         level_display = findViewById(R.id.level_display);
 
+        // Get data from intent
         Intent i = getIntent();
         Bundle phonemes = i.getBundleExtra("Phonemes");
         assert phonemes != null;
@@ -74,6 +75,9 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
         progress_bar.setProgress(computeStarProgress());
     }
 
+    /**
+     * Sets the RecyclerView for the activity.
+     */
     private void setRecyclerView() {
         this.recyclerView = findViewById(R.id.recycler_view);
 
@@ -84,6 +88,10 @@ public class PhonemeSelectTagalogActivity extends AppCompatActivity {
         this.recyclerView.setAdapter(this.adapter);
     }
 
+    /**
+     * Computes the progress of the stars.
+     * @return star progress percentage (int)
+     */
     private int computeStarProgress(){
         int totalStars = 0;
         for(Phoneme phoneme:this.data){
