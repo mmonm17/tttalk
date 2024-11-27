@@ -104,7 +104,6 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 intent.putExtra("levels", (Serializable) englishLevels);
                 loading_bar.setVisibility(ProgressBar.INVISIBLE);
                 loading_bar.clearAnimation();
-                cl_tagalog.setClickable(true);
                 startActivity(intent);
             });
         });
@@ -142,7 +141,6 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 loading_bar.setVisibility(ProgressBar.INVISIBLE);
                 loading_bar.clearAnimation();
-                cl_english.setClickable(true);
                 startActivity(intent);
             });
         });
@@ -153,5 +151,12 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(LanguageSelectActivity.this, true, false))
                 .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cl_english.setClickable(true);
+        cl_tagalog.setClickable(true);
     }
 }

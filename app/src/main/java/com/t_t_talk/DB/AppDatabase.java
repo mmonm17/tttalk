@@ -85,9 +85,9 @@ public class AppDatabase {
 
     public CompletableFuture<List<Level>> fetchLevels() {
         int localDBVersion = getLocalDBVersion();
-        int remoteDBVersion = getFirestoreVersion();
 
         if (isOnline()) {
+            int remoteDBVersion = getFirestoreVersion();
             Log.d("TEST", "RV " + remoteDBVersion + " LV " + localDBVersion);
             if ((remoteDBVersion > localDBVersion) || (remoteDBVersion == 0 && localDBVersion == 0)) {
                 // Fetch levels from the remote database
