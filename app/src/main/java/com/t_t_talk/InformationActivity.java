@@ -20,7 +20,12 @@ import com.t_t_talk.DataTypes.Info;
 import java.util.ArrayList;
 
 public class InformationActivity extends AppCompatActivity {
-    String[] bullets = {
+    String sampleHeader = "This is a sample header.";
+    String[] sampleContent = {
+            "This is a sample text",
+            " This is another sample text in a bullet"
+    };
+    String[] information1 = {
             "Struggling to repeat",
             " An oral stop consonant or cluster",
             "  e.g. /tr/ in ‘electr-tr-tronically’",
@@ -33,17 +38,32 @@ public class InformationActivity extends AppCompatActivity {
             "Prolongations in stuttering",
             " e.g. sssseven"
     };
-    String[] sampleText = {
-            "This is a sample text",
-            " This is another sample text in a bullet"
+
+    String[] information2 = {
+            "The causes differ per person, these are only some of the possible causes",
+            " Genetics",
+            " Environment",
+            " Brain Injury",
+            "Please consult with a Speech-Language specialist to learn more."
     };
-    String sampleText2 = "Speaking slowly can be helpful for stuttering because it allows individuals to have more control over their speech. When speaking at a slower pace, it gives the person more time to plan and coordinate their words, which can reduce the likelihood of stuttering. It can also help decrease the tension and anxiety that often accompany stuttering.";
+
+    String[] strategies1 = {
+            "One of the most common strategies to avoid stuttering is to recognize what words are the most difficult for the " +
+                    "stutterer to pronounce. After recognizing these words, the following steps " +
+                    "can be taken as part of the intervention:",
+            " Find synonyms to use as replacement",
+            " Practice saying the trigger words",
+            " Slow down when trying to say the trigger words"
+    };
+
+    String strategies2 = "Speaking slowly can be helpful for stuttering because it allows individuals to have more control over their speech. When speaking at a slower pace, it gives the person more time to plan and coordinate their words, which can reduce the likelihood of stuttering. It can also help decrease the tension and anxiety that often accompany stuttering.";
 
     String[] partnersText1 = {
             "**Decode Intervention and Tutorial Center**",
             "Unit C Taas Road, Brgy, Bagumbong",
             "+63 927 421 7241/ 887-10",
             "__decodeitc@gmail.com__",
+            " ",
             "**Wordabilities Speech and Occupational Therapy Clinic**",
             "207 M.H. Del Pilar St., East Grace Park, Brgy. 106, District 2 Caloocan City",
             "+63 915 449 1000",
@@ -55,7 +75,7 @@ public class InformationActivity extends AppCompatActivity {
             "#2515, Centuria Medical Makati, Kalayaan Avenue, Brgy. Poblacion, Makati City",
             "+63 917 896 5195",
             "__helptherapy@gmail.com__",
-
+            " ",
             "**Spark Discovery Center**",
             "34 Jupiter St., Bel-Air, Makati City",
             "+63 977 823 1515",
@@ -90,18 +110,17 @@ public class InformationActivity extends AppCompatActivity {
         });
 
         ArrayList<Info> data_info = new ArrayList<>();
-        data_info.add(new Info("What are the characteristics of stuttered speech?", bullets));
-        data_info.add(new Info("What are the main causes of stuttering?", sampleText));
-        data_info.add(new Info("Question 3?", sampleText));
-        data_info.add(new Info("Question 4?", sampleText));
+        data_info.add(new Info("What are the characteristics of stuttered speech?", information1));
+        data_info.add(new Info("What are the main causes of stuttering?", information2));
+
 
         ArrayList<Info> data_strategies = new ArrayList<>();
-        data_strategies.add(new Info("Avoid Trigger Words", sampleText));
-        data_strategies.add(new Info("Practice Speaking Slowly", sampleText2));
+        data_strategies.add(new Info("Avoid Trigger Words", strategies1));
+        data_strategies.add(new Info("Practice Speaking Slowly", strategies2));
 
         ArrayList<Info> data_partners = new ArrayList<>();
-        data_partners.add(new Info("Caloocan, NCR, Philippines", sampleText));
-        data_partners.add(new Info("Makati, NCR, Philippines", sampleText2));
+        data_partners.add(new Info("Caloocan, NCR, Philippines", partnersText1));
+        data_partners.add(new Info("Makati, NCR, Philippines", partnersText2));
 
 
         //info_box_component = findViewById(R.id.info_box);
@@ -135,10 +154,6 @@ public class InformationActivity extends AppCompatActivity {
             partners_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
             partners_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
 
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, true))
-//                    .commit();
 
         });
 
@@ -153,10 +168,6 @@ public class InformationActivity extends AppCompatActivity {
             partners_text.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
             partners_icon.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray), PorterDuff.Mode.SRC_IN);
 
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, true))
-//                    .commit();
         });
 
         partners_section.setOnClickListener(v -> {
@@ -169,13 +180,7 @@ public class InformationActivity extends AppCompatActivity {
             partners_text.setTextColor(ContextCompat.getColor(this, R.color.primary));
             partners_icon.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
 
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_navigation_panel, new NavigationPanelFragment(false, false))
-//                    .commit();
-
         });
-
     }
 
     private void setUpRecyclerView(ArrayList<Info> data) {
