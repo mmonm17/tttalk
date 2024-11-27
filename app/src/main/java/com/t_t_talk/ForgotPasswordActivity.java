@@ -36,12 +36,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        // Get the views from the layout
         txt_register = findViewById(R.id.txt_register);
         input_email = findViewById(R.id.input_email);
         btn_send_link = findViewById(R.id.btn_send_link);
         layout_input_email = findViewById(R.id.layout_input_email);
 
+        // Set click listener for the "Register" text
         txt_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,16 +54,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
 
+        // Set click listener for the "Send Link" button
         btn_send_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = input_email.getText().toString();
                 if (email.isEmpty()) {
-                    //input_email.setError("Email is required");
                     layout_input_email.setError("Email is required");
                     return;
                 }
 
+                // Send password reset link to the user's email
                 mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -76,6 +80,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
+    // Helper method to show a toast message
     protected void showToast(String errorMessage) {
         Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 200);
