@@ -26,7 +26,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     LevelBoxAdapter adapter;
     ArrayList<Level> data;
-    ProgressBar progress_bar;
+    ProgressBar loading_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        progress_bar = findViewById(R.id.progress_bar);
+        loading_bar = findViewById(R.id.loading_bar);
 
         Intent i = getIntent();
         List<Level> levels = (List<Level>) i.getSerializableExtra("levels");
@@ -67,7 +67,7 @@ public class LevelSelectTagalogActivity extends AppCompatActivity {
         this.layoutManager = new LinearLayoutManager(this);
         this.level_display.setLayoutManager(layoutManager);
 
-        this.adapter = new LevelBoxAdapter(LevelSelectTagalogActivity.this, this.data, "Tagalog", progress_bar);
+        this.adapter = new LevelBoxAdapter(LevelSelectTagalogActivity.this, this.data, "Tagalog", loading_bar);
         this.level_display.setAdapter(this.adapter);
     }
 }

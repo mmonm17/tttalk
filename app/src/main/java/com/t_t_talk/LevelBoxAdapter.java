@@ -24,13 +24,13 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
     public Context context;
     private ArrayList<Level> data;
     private String language;
-    private ProgressBar progress_bar;
+    private ProgressBar loading_bar;
 
-    public LevelBoxAdapter(AppCompatActivity context, ArrayList<Level> data, String language, ProgressBar progress_bar) {
+    public LevelBoxAdapter(AppCompatActivity context, ArrayList<Level> data, String language, ProgressBar loading_bar) {
         this.context = context;
         this.data = data;
         this.language = language;
-        this.progress_bar = progress_bar;
+        this.loading_bar = loading_bar;
     }
 
     @NonNull
@@ -57,8 +57,8 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
             @Override
             public void onClick(View view) {
                 view.startAnimation(scale);
-                progress_bar.setVisibility(View.VISIBLE);
-                progress_bar.startAnimation(rotate);
+                loading_bar.setVisibility(View.VISIBLE);
+                loading_bar.startAnimation(rotate);
                 Intent i;
                 if(language.equals("English")) {
                     i = new Intent(context, PhonemeSelectEnglishActivity.class);
@@ -70,8 +70,8 @@ public class LevelBoxAdapter extends RecyclerView.Adapter<LevelViewHolder> {
                 phonemes.putSerializable("Phonemes", (Serializable) current.getPhonemeList());
                 i.putExtra("Phonemes", phonemes);
                 i.putExtra("LevelCode", current.getCode());
-                progress_bar.setVisibility(View.INVISIBLE);
-                progress_bar.clearAnimation();
+                loading_bar.setVisibility(View.INVISIBLE);
+                loading_bar.clearAnimation();
                 context.startActivity(i);
             }
         });

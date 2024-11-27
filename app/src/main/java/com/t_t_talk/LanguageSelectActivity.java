@@ -31,7 +31,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
     ConstraintLayout cl_english, cl_tagalog;
     CurvedTextView curved_language;
     AppDatabase db;
-    ProgressBar progress_bar;
+    ProgressBar loading_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
         cl_english = findViewById(R.id.cl_english);
         cl_tagalog = findViewById(R.id.cl_tagalog);
         curved_language = findViewById(R.id.curved_language);
-        progress_bar = findViewById(R.id.progress_bar);
+        loading_bar = findViewById(R.id.loading_bar);
 
         Drawable bg = ContextCompat.getDrawable(LanguageSelectActivity.this, R.drawable.shape_rnd_rect_blue_thick);
         assert bg != null;
@@ -69,8 +69,8 @@ public class LanguageSelectActivity extends AppCompatActivity {
         Animation scaleAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale);
         //Animation fadeAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.fade_bg);
         cl_english.setOnClickListener(view -> {
-            progress_bar.setVisibility(ProgressBar.VISIBLE);
-            progress_bar.startAnimation(rotateAnimation);
+            loading_bar.setVisibility(ProgressBar.VISIBLE);
+            loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleAnimation);
             PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
             pauseDialog.show();
@@ -85,14 +85,16 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectEnglishActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("levels", (Serializable) englishLevels);
+                loading_bar.setVisibility(ProgressBar.INVISIBLE);
+                loading_bar.clearAnimation();
                 startActivity(intent);
             });
         });
 
 
         cl_tagalog.setOnClickListener(view -> {
-            progress_bar.setVisibility(ProgressBar.VISIBLE);
-            progress_bar.startAnimation(rotateAnimation);
+            loading_bar.setVisibility(ProgressBar.VISIBLE);
+            loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleAnimation);
             PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
             pauseDialog.show();
@@ -107,6 +109,8 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 Intent intent = new Intent(LanguageSelectActivity.this, LevelSelectTagalogActivity.class);
                 intent.putExtra("levels", (Serializable) tagalogLevels);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                loading_bar.setVisibility(ProgressBar.INVISIBLE);
+                loading_bar.clearAnimation();
                 startActivity(intent);
             });
         });

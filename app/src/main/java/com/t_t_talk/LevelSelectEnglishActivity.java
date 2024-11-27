@@ -27,7 +27,7 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     LevelBoxAdapter adapter;
     ArrayList<Level> data;
-    ProgressBar progress_bar;
+    ProgressBar loading_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        progress_bar = findViewById(R.id.progress_bar);
+        loading_bar = findViewById(R.id.loading_bar);
 
         Intent intent = getIntent();
         List<Level> levels = (List<Level>) intent.getSerializableExtra("levels");
@@ -72,7 +72,7 @@ public class LevelSelectEnglishActivity extends AppCompatActivity {
         this.layoutManager = new LinearLayoutManager(this);
         this.level_display.setLayoutManager(layoutManager);
 
-        this.adapter = new LevelBoxAdapter(LevelSelectEnglishActivity.this, this.data, "English", progress_bar);
+        this.adapter = new LevelBoxAdapter(LevelSelectEnglishActivity.this, this.data, "English", loading_bar);
         this.level_display.setAdapter(this.adapter);
     }
 }

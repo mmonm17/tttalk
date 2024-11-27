@@ -22,22 +22,14 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
     private ArrayList<Phoneme> data;
     public String language;
     private String levelCode;
-    ProgressBar progress_bar;
+    ProgressBar loading_bar;
 
-
-    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, String levelCode) {
+    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, String levelCode, ProgressBar loading_bar) {
         this.context = activity;
         this.data = data;
         this.language = language;
         this.levelCode = levelCode;
-    }
-
-    public PhonemeAdapter(AppCompatActivity activity, ArrayList<Phoneme> data, String language, String levelCode, ProgressBar progress_bar) {
-        this.context = activity;
-        this.data = data;
-        this.language = language;
-        this.levelCode = levelCode;
-        this.progress_bar = progress_bar;
+        this.loading_bar = loading_bar;
     }
 
     @NonNull
@@ -59,8 +51,8 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
             @Override
             public void onClick(View view) {
                 view.startAnimation(fade);
-                progress_bar.setVisibility(View.VISIBLE);
-                progress_bar.startAnimation(rotate);
+                loading_bar.setVisibility(View.VISIBLE);
+                loading_bar.startAnimation(rotate);
                 Intent i;
                 if(language.equals("English")) {
                     i = new Intent(context, PhonemeSoundEnglishActivity.class);
@@ -70,8 +62,8 @@ public class PhonemeAdapter extends RecyclerView.Adapter<PhonemeViewHolder> {
                 i.putExtra("Sentences", current.getSentences().toArray(new String[0]));
                 i.putExtra("PhonemeCode", current.getCode());
                 i.putExtra("LevelCode", levelCode);
-                progress_bar.setVisibility(View.INVISIBLE);
-                progress_bar.clearAnimation();
+                loading_bar.setVisibility(View.INVISIBLE);
+                loading_bar.clearAnimation();
                 context.startActivity(i);
             }
         });

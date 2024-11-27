@@ -26,7 +26,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
     PhonemeAdapter adapter;
     String levelCode;
     AppDatabase db;
-    ProgressBar loading_progress_bar;
+    ProgressBar loading_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        loading_progress_bar = findViewById(R.id.loading_progress_bar);
+        loading_bar = findViewById(R.id.loading_bar);
 
         level_display = findViewById(R.id.level_display);
 
@@ -75,7 +75,7 @@ public class PhonemeSelectEnglishActivity extends AppCompatActivity {
         this.layoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-        this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English", levelCode, loading_progress_bar);
+        this.adapter = new PhonemeAdapter(PhonemeSelectEnglishActivity.this, this.data, "English", levelCode, loading_bar);
         this.recyclerView.setAdapter(this.adapter);
     }
 }
