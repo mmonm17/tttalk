@@ -43,13 +43,6 @@ public class LanguageSelectActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        /*ScaleAnimation scaleAnimation = new ScaleAnimation(
-                1.0f, 1.1f,
-                1.0f, 1.1f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setFillAfter(false);
-        scaleAnimation.setDuration(500);*/
 
         db = new AppDatabase(LanguageSelectActivity.this);
 
@@ -68,14 +61,11 @@ public class LanguageSelectActivity extends AppCompatActivity {
         Animation rotateAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.rotate);
         Animation scaleUpAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale);
         Animation scaleDownAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.scale_down);
-        //Animation fadeAnimation = AnimationUtils.loadAnimation(LanguageSelectActivity.this, R.anim.fade_bg);
-
-
-
         cl_english.setOnClickListener(view -> {
             loading_bar.setVisibility(ProgressBar.VISIBLE);
             loading_bar.startAnimation(rotateAnimation);
             view.startAnimation(scaleUpAnimation);
+
             scaleUpAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {}
@@ -89,10 +79,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 public void onAnimationRepeat(Animation animation) {}
             });
             cl_tagalog.setClickable(false);
-            //PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "We are downloading the levels, please wait a moment. Next time you open, it will be faster.", "Please Wait...");
-            //pauseDialog.show();
             db.fetchLevels().thenAccept(levels -> {
-                //pauseDialog.dismiss();
                 List<Level> englishLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("English")) {
@@ -126,10 +113,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 public void onAnimationRepeat(Animation animation) {}
             });
             cl_english.setClickable(false);
-            //PauseDialog pauseDialog = new PauseDialog(LanguageSelectActivity.this, "Kinukuha lang po namin ang mga lebels, saglit lang po. Sa susunod, mas mabilis na!", "Saglit po...");
-            //pauseDialog.show();
             db.fetchLevels().thenAccept(levels -> {
-                //pauseDialog.dismiss();
                 List<Level> tagalogLevels = new ArrayList<>();
                 for (Level level : levels) {
                     if (level.getLanguage().equals("Tagalog")) {

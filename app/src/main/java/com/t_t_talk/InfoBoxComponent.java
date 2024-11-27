@@ -68,8 +68,6 @@ public class InfoBoxComponent extends RelativeLayout {
                 spannableBullet.setSpan(new LeadingMarginSpan.Standard(bulletMargin), 0, bullet.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             spannableBullet.setSpan(new BulletSpan(20), 0, bullet.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            //spannableBuilder.append(spannableBullet).append("\n");
         }
 
         content.setText(spannableBuilder);

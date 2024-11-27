@@ -248,11 +248,9 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
                     mediaPlayer.start();
                     playedAudio = true;
                 } else {
-                    //Toast.makeText(context, "Audio file not found in resources: " + audioFileName, Toast.LENGTH_SHORT).show();
                     playedAudio = false;
                 }
             } else {
-                //Toast.makeText(context, "Audio mapping not found for " + variantKey, Toast.LENGTH_SHORT).show();
                 playedAudio = false;
             }
 
@@ -314,9 +312,6 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceViewHolder> {
             mediaRecorder.prepare();
             mediaRecorder.start();
             Log.d("Recording", "Recording started for sentence " + position);
-            //Toast.makeText(context, "Recording started for sentence " + position, Toast.LENGTH_SHORT).show();
-
-
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("Recording", "Error preparing or starting recording");

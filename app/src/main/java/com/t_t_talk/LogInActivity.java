@@ -60,15 +60,11 @@ public class LogInActivity extends AppCompatActivity {
 
                 if (email.isEmpty()) {
                     layout_input_email.setError("Email is required");
-                    //input_email.setError("Email is required");
-                    //handleLoginError("Email is required");
                     return;
                 }
 
                 if (password.isEmpty()) {
                     layout_input_pass.setError("Password is required");
-                    //input_pass.setError("Password is required");
-                    //handleLoginError("Password is required");
                     return;
                 }
 
@@ -93,7 +89,6 @@ public class LogInActivity extends AppCompatActivity {
                             handleLoginError(errorMessage);
                         } else {
                             layout_input_email.setError("Please verify your email");
-                            //handleLoginError("Please verify your email");
                             user.sendEmailVerification()
                                 .addOnCompleteListener(verificationTask -> {
                                     if (verificationTask.isSuccessful()) {

@@ -90,18 +90,14 @@ public class RegisterActivity extends AppCompatActivity {
                     layout_input_confirm_pass.setError("Confirm your password");
                     inputError = true;
                 }
-                //input_confirm_pass.setError("Confirm your password");
-                //inputError = true;
             }
 
             if (inputError) {
-                //handleRegistrationError("Please check your inputs in the form");
                 return;
             }
 
             if (!password.equals(confirm_pass)) {
                 input_confirm_pass.setError("Passwords do not match");
-                //handleRegistrationError("Passwords do not match");
                 return;
             }
 
@@ -119,8 +115,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     String errorMessage = verificationTask.getException() != null
                                             ? verificationTask.getException().getMessage()
                                             : "Unknown error";
-                                    //layout_input_pass.setError(errorMessage);
-                                    //layout_input_confirm_pass.setError(errorMessage);
                                     handleRegistrationError(errorMessage);
                                 }
                             });

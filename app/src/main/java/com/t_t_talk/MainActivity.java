@@ -27,11 +27,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        //request for audio/mic permissions
+        // Request for audio/mic permissions
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO)!= PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{android.Manifest.permission.RECORD_AUDIO}, 1);
         }
-        //should probably have a screen explaining why this is necessary...
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
