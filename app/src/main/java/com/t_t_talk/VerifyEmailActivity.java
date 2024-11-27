@@ -26,8 +26,11 @@ public class VerifyEmailActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize views
         btn_verify = findViewById(R.id.btn_verify);
+        txt_register = findViewById(R.id.txt_register);
 
+        // Set click listeners
         btn_verify.setOnClickListener(view -> {
             Intent intent = new Intent(VerifyEmailActivity.this, LogInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -41,7 +44,6 @@ public class VerifyEmailActivity extends AppCompatActivity {
             finish();
         });
 
-        txt_register = findViewById(R.id.txt_register);
         txt_register.setOnClickListener(view -> {
             Intent intent = new Intent(VerifyEmailActivity.this, RegisterActivity.class);
             startActivity(intent);

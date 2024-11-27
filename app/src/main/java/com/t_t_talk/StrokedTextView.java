@@ -10,11 +10,11 @@ public class StrokedTextView extends androidx.appcompat.widget.AppCompatTextView
 
     private static final float DEFAULT_STROKE_WIDTH = 1.2f;
 
-    // fields
+    // Dields
     private int _strokeColor;
     private float _strokeWidth;
 
-    // constructors
+    // Constructors
     public StrokedTextView(Context context) {
         this(context, null, 0);
     }
@@ -39,13 +39,13 @@ public class StrokedTextView extends androidx.appcompat.widget.AppCompatTextView
             _strokeColor = getCurrentTextColor();
             _strokeWidth = DEFAULT_STROKE_WIDTH;
         }
-        //convert values specified in dp in XML layout to
-        //px, otherwise stroke width would appear different
-        //on different screens
+        // Convert values specified in dp in XML layout to
+        // px, otherwise stroke width would appear different
+        // on different screens
         _strokeWidth = dpToPx(context, _strokeWidth);
     }
 
-    // getters + setters
+    // Getters + Setters
     public void setStrokeColor(int color) {
         _strokeColor = color;
     }
@@ -54,26 +54,26 @@ public class StrokedTextView extends androidx.appcompat.widget.AppCompatTextView
         _strokeWidth = width;
     }
 
-    // overridden methods
+    // Overridden Methods
     @Override
     protected void onDraw(Canvas canvas) {
         if(_strokeWidth > 0) {
-            //set paint to fill mode
+            // Set paint to fill mode
             Paint p = getPaint();
             p.setStyle(Paint.Style.FILL);
-            //draw the fill part of text
+            // Draw the fill part of text
             super.onDraw(canvas);
-            //save the text color
+            // Save the text color
             int currentTextColor = getCurrentTextColor();
-            //set paint to stroke mode and specify
-            //stroke color and width
+            // Set paint to stroke mode and specify
+            // Stroke color and width
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(_strokeWidth);
             setTextColor(_strokeColor);
-            //draw text stroke
+            // Draw text stroke
             super.onDraw(canvas);
-            //revert the color back to the one
-            //initially specified
+            // Revert the color back to the one
+            // Initially specified
             setTextColor(currentTextColor);
         } else {
             super.onDraw(canvas);

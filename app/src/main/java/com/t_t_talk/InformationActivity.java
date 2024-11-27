@@ -123,7 +123,6 @@ public class InformationActivity extends AppCompatActivity {
         data_partners.add(new Info("Makati, NCR, Philippines", partnersText2));
 
 
-        //info_box_component = findViewById(R.id.info_box);
         info_text = findViewById(R.id.info_text);
         strategies_text = findViewById(R.id.strategies_text);
         partners_text = findViewById(R.id.partners_text);
